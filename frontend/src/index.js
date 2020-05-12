@@ -7,7 +7,8 @@ import { createBrowserHistory } from 'history';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
-import App from './components/App';
+import Start from './components/Start';
+import Space from './components/Space';
 import * as serviceWorker from './serviceWorker';
 
 const history = createBrowserHistory();
@@ -15,7 +16,8 @@ const history = createBrowserHistory();
 const routing = (
   <Router history={history}>
     <Switch>
-      <Route path="/" component={App} />
+      <Route path="/s/" component={Space} />
+      <Route path="/" component={Start} />
     </Switch>
   </Router>
 )
