@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 from .serializers import SpaceSerializer
 from .serializers import UserSerializer
 from .serializers import MessageSerializer
+
 from .models import Space
 from .models import User
 from .models import Message
@@ -16,9 +17,23 @@ class SpaceView(viewsets.ModelViewSet):
 	serializer_class = SpaceSerializer
 	queryset = Space.objects.all()
 
+	@api_view(['GET',])
+	def getSpace(request, name):
+		queryset = Space.objects.all()
+		space = get_object_or_404(queryset, name=name)
+		serializer = SpaceSerializer(space)
+		return Response(serializer.data)
+
 class UserView(viewsets.ModelViewSet):
 	serializer_class = UserSerializer
 	queryset = User.objects.all()
+
+	@api_view(['GET',])
+	def getUser(request, name):
+		queryset = User.objects.all()
+		user = get_object_or_404(queryset, name=name)
+		serializer = UserSerializer(user)
+		return Response(serializer.data)
 
 class MessageView(viewsets.ModelViewSet):
 	serializer_class = MessageSerializer

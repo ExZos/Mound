@@ -1,67 +1,106 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import GeneralComponent from './GeneralComponent';
+import Header from './Header';
 import { server, api } from '../server';
-// import '../styles/Spaces.css';
+// import '../styles/spaces.css';
 
 class Space extends GeneralComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      spaces: []
+      space: {
+        name: ''
+      },
+      user: {
+        name: ''
+      }
     };
   }
 
   componentDidMount() {
-    this.getSpaces();
-    this.interval = setInterval(this.getSpaces, 1000);
+    this.getSpace();
   }
 
-  // componentDidUpdate() {
-  //   this.getSpaces();
-  // }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  getSpaces = () => {
-    server.get(api.spaces)
+  getSpace = () => {
+    server.get(api.spaces + this.props.match.params.id)
       .then(res => this.setState({
-        spaces: res.data
+        space: res.data
       }));
   }
 
-  renderSpaces = () => {
-    const spaces = this.state.spaces;
+  handleUserChange = (e) => {
+    let { name, value } = e.target;
+    const user = { ...this.state.user, [name]: value };
 
-    return spaces.map(space => (
-      <div key={space.id}>
-        {space.name}
+    this.setState({
+      user: user
+    });
+  }
+
+  getUser = () => {
+    server.get(api.getUser + this.state.user.name)
+      .then(
+        res => {
+          this.setState({
+            user: res.data,
+            toggle: true
+          });
+          console.log("OKOKOK");
+        },
+        error => console.log("NOPENOPE")
+      );
+  }
+
+  // TODO: Put into separate component/endpoint
+  renderMessages = () => {
+    if(this.state.toggle) {
+      return (
+        <div>
+          <div>
+            {this.state.user.name}
+          </div>
+
+          <br />
+
+          <div>
+            MESSAGES GO HERE
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div>
+        <form>
+          <input type="text" name="name" placeholder="User name"
+            value={this.state.user.name}
+            onChange={this.handleUserChange}
+          />
+        </form>
+
+        <div>
+          <button onClick={() => this.getUser()}>ENTER</button>
+        </div>
       </div>
-    ));
+    );
   }
 
   render() {
-    return (
+    return(
       <div>
-        <div>
-          {this.renderSpaces()}
-        </div>
+        <Header />
 
         <br />
 
         <div>
-          <div>
-            TESTING LINKS
-          </div>
-
-          <div>
-            <Link to='/'>Home</Link>
-          </div>
+          {this.state.space.name}
         </div>
+
+        <br />
+
+        {this.renderMessages()}
       </div>
     )
   }

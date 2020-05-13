@@ -9,5 +9,7 @@ export const server = axios.create({
 export const api = {
   messages: '/api/messages/',
   spaces: '/api/spaces/',
-  users: '/api/users/'
+  users: '/api/users/',
+  getSpace: '/space/get/',
+  getUser: '/user/get/',
 }

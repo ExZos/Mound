@@ -26,5 +26,7 @@ router.register(r'messages', views.MessageView)
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('api/', include(router.urls)),
+    path('space/get/<name>/', views.SpaceView.getSpace),
+    path('user/get/<name>/', views.UserView.getUser),
     path('test/', views.test)
 ]
