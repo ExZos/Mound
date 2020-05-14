@@ -15,4 +15,4 @@ class User(models.Model):
 class Message(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	content = models.TextField()
-	timestamp = models.DateField()
+	timestamp = models.DateTimeField()

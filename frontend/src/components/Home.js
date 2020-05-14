@@ -30,8 +30,8 @@ class Home extends GeneralComponent {
   //   server.post(api.spaces, space);
   // }
 
-  getSpace = () => {
-    server.get(api.getSpace + this.state.space.name + '/')
+  getSpaceByName = () => {
+    server.get(api.getSpaceByName + this.state.space.name + '/')
       .then(
         res => {
           this.setState({
@@ -46,7 +46,11 @@ class Home extends GeneralComponent {
 
   render() {
     if(this.state.redirect) {
-        return <Redirect push to={'/s/' + this.state.space.id} />
+        return <Redirect push to={{
+          pathname: '/s/temp',
+          state: {
+            id: this.state.space.id}
+        }} />
     }
 
     return (
@@ -64,7 +68,7 @@ class Home extends GeneralComponent {
           </form>
 
           <div>
-            <button onClick={() => this.getSpace()}>ENTER</button>
+            <button onClick={() => this.getSpaceByName()}>ENTER</button>
           </div>
         </div>
       </div>

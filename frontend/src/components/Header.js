@@ -7,7 +7,7 @@ import '../styles/header.css';
 class Header extends GeneralComponent {
   render() {
     return(
-      <div>
+      <div className="header">
         <span>
           <Link to="/">Home</Link>
         </span>

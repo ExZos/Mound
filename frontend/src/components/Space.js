@@ -2,6 +2,7 @@ import React from 'react';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
+import MessageSpace from './MessageSpace';
 import { server, api } from '../server';
 // import '../styles/spaces.css';
 
@@ -24,7 +25,7 @@ class Space extends GeneralComponent {
   }
 
   getSpace = () => {
-    server.get(api.spaces + this.props.match.params.id)
+    server.get(api.spaces + this.props.location.state.id)
       .then(res => this.setState({
         space: res.data
       }));
@@ -39,8 +40,8 @@ class Space extends GeneralComponent {
     });
   }
 
-  getUser = () => {
-    server.get(api.getUser + this.state.user.name)
+  getUserInSpaceByName = () => {
+    server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
       .then(
         res => {
           this.setState({
@@ -53,21 +54,11 @@ class Space extends GeneralComponent {
       );
   }
 
-  // TODO: Put into separate component/endpoint
-  renderMessages = () => {
+  //TODO: maintain user (state/props) on refresh
+  toggleMessages = () => {
     if(this.state.toggle) {
       return (
-        <div>
-          <div>
-            {this.state.user.name}
-          </div>
-
-          <br />
-
-          <div>
-            MESSAGES GO HERE
-          </div>
-        </div>
+        <MessageSpace space={this.state.space} user={this.state.user} />
       )
     }
 
@@ -81,7 +72,7 @@ class Space extends GeneralComponent {
         </form>
 
         <div>
-          <button onClick={() => this.getUser()}>ENTER</button>
+          <button onClick={() => this.getUserInSpaceByName()}>ENTER</button>
         </div>
       </div>
     );
@@ -100,7 +91,7 @@ class Space extends GeneralComponent {
 
         <br />
 
-        {this.renderMessages()}
+        {this.toggleMessages()}
       </div>
     )
   }

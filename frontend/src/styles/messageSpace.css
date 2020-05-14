@@ -1,0 +1,7 @@
+div.messageSpace span {
+  margin: 5px;
+}
+
+div.messageSpace div.own {
+  text-align: right;
+}

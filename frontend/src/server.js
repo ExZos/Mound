@@ -10,6 +10,8 @@ export const api = {
   messages: '/api/messages/',
   spaces: '/api/spaces/',
   users: '/api/users/',
-  getSpace: '/space/get/',
-  getUser: '/user/get/',
+  getSpaceByName: '/space/getByName/',
+  getUserByName: '/user/getByName/',
+  getUserInSpaceByName: '/user/getInSpaceByName/',
+  getMessagesInSpace: '/message/getInSpace/',
 }
