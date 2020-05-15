@@ -13,7 +13,7 @@ class Header extends GeneralComponent {
         </span>
 
         <span>
-          <Link to="/s/">Spaces</Link>
+          <Link to="/spaces/">Spaces</Link>
         </span>
 
         <span>

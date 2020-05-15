@@ -48,8 +48,8 @@ class MessageView(viewsets.ModelViewSet):
 	queryset = Message.objects.all()
 
 	@api_view(['GET',])
-	def getMessageInSpace(request, spaceID):
-		messages = Message.objects.filter(user__space=spaceID)
+	def getMessagesInSpace(request, spaceID):
+		messages = Message.objects.filter(user__space=spaceID).order_by('timestamp')
 		serializer = MessageSerializer(messages, many=True)
 		return Response(serializer.data)
 

@@ -31,6 +31,19 @@ class Space extends GeneralComponent {
       }));
   }
 
+  getUserInSpaceByName = () => {
+    server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
+      .then(
+        res => {
+          this.setState({
+            user: res.data,
+            toggle: true
+          });
+        },
+        error => console.log("NO SUCH USER")
+      );
+  }
+
   handleUserChange = (e) => {
     let { name, value } = e.target;
     const user = { ...this.state.user, [name]: value };
@@ -40,18 +53,9 @@ class Space extends GeneralComponent {
     });
   }
 
-  getUserInSpaceByName = () => {
-    server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
-      .then(
-        res => {
-          this.setState({
-            user: res.data,
-            toggle: true
-          });
-          console.log("OKOKOK");
-        },
-        error => console.log("NOPENOPE")
-      );
+  handleFormSubmit = (e) => {
+    e.preventDefault();
+    this.getUserInSpaceByName();
   }
 
   //TODO: maintain user (state/props) on refresh
@@ -64,15 +68,15 @@ class Space extends GeneralComponent {
 
     return (
       <div>
-        <form>
-          <input type="text" name="name" placeholder="User name"
+        <form onSubmit={this.handleFormSubmit}>
+          <input type="text" name="name" placeholder="Type a user name..."
             value={this.state.user.name}
             onChange={this.handleUserChange}
           />
         </form>
 
         <div>
-          <button onClick={() => this.getUserInSpaceByName()}>ENTER</button>
+          <button onClick={this.getUserInSpaceByName}>ENTER</button>
         </div>
       </div>
     );

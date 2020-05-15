@@ -17,8 +17,8 @@ const history = createBrowserHistory();
 const routing = (
   <Router history={history}>
     <Switch>
-      <Route path="/s/:id" component={Space} />
-      <Route path="/s/" component={Spaces} />
+      <Route path="/s/" component={Space} />
+      <Route path="/spaces/" component={Spaces} />
       <Route path="/" component={Home} />
     </Switch>
   </Router>

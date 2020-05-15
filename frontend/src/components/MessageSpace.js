@@ -10,7 +10,10 @@ class MessageSpace extends GeneralComponent {
 
     this.state = {
       messages: [],
-      user: {}
+      message: {
+        user: this.props.user.id,
+        content: ''
+      }
     };
   }
 
@@ -30,6 +33,19 @@ class MessageSpace extends GeneralComponent {
       }));
   }
 
+  handleMessageChange = (e) => {
+    let { name, value } = e.target;
+    const message = { ...this.state.message, [name]: value };
+
+    this.setState({
+      message: message
+    });
+  }
+
+  addMessage = () => {
+    server.post(api.messages, this.state.message);
+  }
+
   // TODO: make this into a component?
   renderMessages = () => {
     const messages = this.state.messages;
@@ -40,7 +56,7 @@ class MessageSpace extends GeneralComponent {
   }
 
   markOwnMessage = (message) => {
-    if(message.user.id === this.props.user.id) {
+    if(message.user === this.props.user.id) {
       return(
         <div key={message.id} className="message own">
           <span>
@@ -57,7 +73,7 @@ class MessageSpace extends GeneralComponent {
     return(
       <div key={message.id} className="message">
         <span className="sender">
-          {message.user.name}:
+          {message.user_name}:
         </span>
 
         <span className="body">
@@ -67,7 +83,6 @@ class MessageSpace extends GeneralComponent {
     )
   }
 
-  // TODO: add message input fields + eventhandlers
   render() {
     return(
       <div className="messageSpace">
@@ -79,6 +94,21 @@ class MessageSpace extends GeneralComponent {
 
         <div>
           {this.renderMessages()}
+        </div>
+
+        <br />
+
+        <div>
+          <form>
+            <input type="text" name="content" placeholder="Type a message... "
+              value={this.state.message.content}
+              onChange={this.handleMessageChange}
+            />
+          </form>
+
+          <div>
+            <button onClick={() => this.addMessage()}>SEND</button>
+          </div>
         </div>
       </div>
     )

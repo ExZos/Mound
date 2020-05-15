@@ -29,6 +29,6 @@ urlpatterns = [
     path('space/getByName/<name>/', views.SpaceView.getSpaceByName),
     path('user/getByName/<name>/', views.UserView.getUserByName),
     path('user/getInSpaceByName/<int:spaceID>/<name>/', views.UserView.getUserInSpaceByName),
-    path('message/getInSpace/<int:spaceID>/', views.MessageView.getMessageInSpace),
+    path('message/getInSpace/<int:spaceID>/', views.MessageView.getMessagesInSpace),
     path('test/', views.test)
 ]

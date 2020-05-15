@@ -26,8 +26,8 @@ class Home extends GeneralComponent {
     });
   }
 
-  // addSpace = (space) => {
-  //   server.post(api.spaces, space);
+  // addSpace = () => {
+  //   server.post(api.spaces, this.state.space);
   // }
 
   getSpaceByName = () => {
@@ -37,17 +37,23 @@ class Home extends GeneralComponent {
           this.setState({
             space: res.data
           });
-          console.log("OKOKOK");
+
           this.redirect();
         },
-        error => console.log("NOPENOPE")
+        error => console.log("NO SUCH SPACE")
       );
   }
 
+  handleFormSubmit = (e) => {
+    e.preventDefault();
+    this.getSpaceByName();
+  }
+
+  // TODO: prevent default form submit (enter key)
   render() {
     if(this.state.redirect) {
         return <Redirect push to={{
-          pathname: '/s/temp',
+          pathname: '/s/',
           state: {
             id: this.state.space.id}
         }} />
@@ -60,15 +66,15 @@ class Home extends GeneralComponent {
         <br />
 
         <div>
-          <form>
-            <input type="text" name="name" placeholder="Space Name"
+          <form onSubmit={this.handleFormSubmit}>
+            <input type="text" name="name" placeholder="Type a space name..."
               value={this.state.space.name}
               onChange={this.handleSpaceChange}
             />
           </form>
 
           <div>
-            <button onClick={() => this.getSpaceByName()}>ENTER</button>
+            <button onClick={this.getSpaceByName}>ENTER</button>
           </div>
         </div>
       </div>
