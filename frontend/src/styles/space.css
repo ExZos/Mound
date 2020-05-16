@@ -1,0 +1,11 @@
+div#space div#spaceName {
+  text-align: center;
+}
+
+div#space form#getUserInSpaceByName {
+  text-align: center;
+}
+
+div#space div#errorBlock {
+  text-align: center;
+}

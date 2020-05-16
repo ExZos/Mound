@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import '../styles/header.css';
@@ -7,23 +7,23 @@ import '../styles/header.css';
 class Header extends GeneralComponent {
   render() {
     return(
-      <div className="header">
-        <span>
-          <Link to="/">Home</Link>
-        </span>
+      <Nav id="header">
+        <NavItem>
+          <NavLink href="/">Home</NavLink>
+        </NavItem>
 
-        <span>
-          <Link to="/spaces/">Spaces</Link>
-        </span>
+        <NavItem>
+          <NavLink href="/spaces/">Spaces</NavLink>
+        </NavItem>
 
-        <span>
-          <Link to="/u/">Users</Link>
-        </span>
+        <NavItem>
+          <NavLink href="/u/">Users</NavLink>
+        </NavItem>
 
-        <span>
-          <Link to="/m/">Messages</Link>
-        </span>
-      </div>
+        <NavItem>
+          <NavLink href="/m/">Messages</NavLink>
+        </NavItem>
+      </Nav>
     )
   }
 }

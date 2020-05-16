@@ -1,3 +1,8 @@
-div.header span {
-  margin: 15px;
+ul#header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  /* background-color: rgba(0, 0, 0, 0.7); */
+}
+
+ul#header li.nav-item a {
+  /* color: white; */
 }

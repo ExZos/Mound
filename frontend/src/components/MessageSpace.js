@@ -44,6 +44,25 @@ class MessageSpace extends GeneralComponent {
 
   addMessage = () => {
     server.post(api.messages, this.state.message);
+    this.getMessages();
+
+    this.setState({
+      message: {
+        user: this.props.user.id,
+        content: ''
+      }
+    });
+  }
+
+  handleFormSubmit = (e) => {
+    e.preventDefault();
+  }
+
+  handleEnterSubmit = (e) => {
+    if(e.keyCode === 13 && e.shiftKey === false) {
+      e.preventDefault();
+      this.addMessage();
+    }
   }
 
   // TODO: make this into a component?
@@ -59,7 +78,7 @@ class MessageSpace extends GeneralComponent {
     if(message.user === this.props.user.id) {
       return(
         <div key={message.id} className="message own">
-          <span>
+          <span className="sender">
             You:
           </span>
 
@@ -85,30 +104,25 @@ class MessageSpace extends GeneralComponent {
 
   render() {
     return(
-      <div className="messageSpace">
+      <div id="messageSpace">
         <div>
           {this.props.user.name}
         </div>
 
         <br />
 
-        <div>
+        <div className="messages">
           {this.renderMessages()}
         </div>
 
-        <br />
-
         <div>
-          <form>
-            <input type="text" name="content" placeholder="Type a message... "
+          <form onSubmit={this.handleFormSubmit}>
+            <textarea name="content" placeholder="Type a message... " autoFocus
               value={this.state.message.content}
               onChange={this.handleMessageChange}
+              onKeyDown={this.handleEnterSubmit}
             />
           </form>
-
-          <div>
-            <button onClick={() => this.addMessage()}>SEND</button>
-          </div>
         </div>
       </div>
     )

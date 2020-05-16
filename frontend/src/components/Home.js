@@ -3,8 +3,9 @@ import { Redirect } from 'react-router-dom';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
+import ErrorBlock from './ErrorBlock';
 import { server, api } from '../server';
-// import '../styles/home.css';
+import '../styles/home.css';
 
 class Home extends GeneralComponent {
   constructor(props) {
@@ -24,6 +25,8 @@ class Home extends GeneralComponent {
     this.setState({
       space: space
     });
+
+    this.hideError();
   }
 
   // addSpace = () => {
@@ -33,23 +36,23 @@ class Home extends GeneralComponent {
   getSpaceByName = () => {
     server.get(api.getSpaceByName + this.state.space.name + '/')
       .then(
-        res => {
+        (res) => {
           this.setState({
             space: res.data
           });
 
-          this.redirect();
-        },
-        error => console.log("NO SUCH SPACE")
+          this.toggleRedirect();
+        }
+      )
+      .catch(
+        (err) => this.showError()
       );
   }
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    this.getSpaceByName();
   }
 
-  // TODO: prevent default form submit (enter key)
   render() {
     if(this.state.redirect) {
         return <Redirect push to={{
@@ -60,22 +63,22 @@ class Home extends GeneralComponent {
     }
 
     return (
-      <div>
+      <div id="home">
         <Header />
 
         <br />
 
         <div>
-          <form onSubmit={this.handleFormSubmit}>
-            <input type="text" name="name" placeholder="Type a space name..."
+          <form id="getSpaceByName" onSubmit={this.handleFormSubmit}>
+            <input type="text" name="name" placeholder="Type a space name..." autoFocus
               value={this.state.space.name}
               onChange={this.handleSpaceChange}
             />
+
+            <button onClick={this.getSpaceByName}>ENTER</button>
           </form>
 
-          <div>
-            <button onClick={this.getSpaceByName}>ENTER</button>
-          </div>
+          <ErrorBlock message="NO SUCH SPACE" show={this.state.showError} />
         </div>
       </div>
     )

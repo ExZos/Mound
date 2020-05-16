@@ -1,7 +1,30 @@
-div.messageSpace span {
+div#messageSpace {
   margin: 5px;
+  text-align: center;
 }
 
-div.messageSpace div.own {
+div#messageSpace div.messages {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 0;
+  margin: 0 2%;
+  padding: 20px 10px;
+}
+
+div#messageSpace div.message {
+  text-align: left;
+  white-space: pre-line;
+}
+
+div#messageSpace div.message.own {
   text-align: right;
+}
+
+div#messageSpace div.message span.sender {
+  margin-right: 5px;
+}
+
+div#messageSpace textarea {
+  resize: none;
+  width: 98%;
 }

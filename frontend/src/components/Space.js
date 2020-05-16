@@ -2,9 +2,10 @@ import React from 'react';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
+import ErrorBlock from './ErrorBlock';
 import MessageSpace from './MessageSpace';
 import { server, api } from '../server';
-// import '../styles/spaces.css';
+import '../styles/space.css';
 
 class Space extends GeneralComponent {
   constructor(props) {
@@ -34,13 +35,15 @@ class Space extends GeneralComponent {
   getUserInSpaceByName = () => {
     server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
       .then(
-        res => {
+        (res) => {
           this.setState({
             user: res.data,
             toggle: true
           });
-        },
-        error => console.log("NO SUCH USER")
+        }
+      )
+      .catch(
+        (err) => this.showError()
       );
   }
 
@@ -51,14 +54,15 @@ class Space extends GeneralComponent {
     this.setState({
       user: user
     });
+
+    this.hideError();
   }
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    this.getUserInSpaceByName();
   }
 
-  //TODO: maintain user (state/props) on refresh
+  //TODO: session to maintain state on refresh
   toggleMessages = () => {
     if(this.state.toggle) {
       return (
@@ -68,28 +72,28 @@ class Space extends GeneralComponent {
 
     return (
       <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <input type="text" name="name" placeholder="Type a user name..."
+        <form id="getUserInSpaceByName" onSubmit={this.handleFormSubmit}>
+          <input type="text" name="name" placeholder="Type a user name..." autoFocus
             value={this.state.user.name}
             onChange={this.handleUserChange}
           />
+
+          <button onClick={this.getUserInSpaceByName}>ENTER</button>
         </form>
 
-        <div>
-          <button onClick={this.getUserInSpaceByName}>ENTER</button>
-        </div>
+        <ErrorBlock message="NO SUCH USER" show={this.state.showError} />
       </div>
     );
   }
 
   render() {
     return(
-      <div>
+      <div id="space">
         <Header />
 
         <br />
 
-        <div>
+        <div id="spaceName">
           {this.state.space.name}
         </div>
 

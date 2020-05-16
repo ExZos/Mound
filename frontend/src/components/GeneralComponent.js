@@ -1,13 +1,21 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 class GeneralComponent extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
-  redirect() {
+  toggleRedirect() {
     this.setState({
       redirect: true
+    });
+  }
+
+  showError() {
+    this.setState({
+      showError: true
+    });
+  }
+
+  hideError() {
+    this.setState({
+      showError: false
     });
   }
 }
