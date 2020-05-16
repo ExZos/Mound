@@ -8,13 +8,19 @@ class MessageSpace extends GeneralComponent {
   constructor(props) {
     super(props);
 
+    const user = this.getSessionItem('users')[this.props.spaceID];
+
     this.state = {
       messages: [],
       message: {
-        user: this.props.user.id,
+        user: user.id,
         content: ''
-      }
+      },
+      user: user
     };
+
+    // TEMP
+    console.log(user.id + " : " + user.name + " : " + user.space);
   }
 
   componentDidMount() {
@@ -22,12 +28,13 @@ class MessageSpace extends GeneralComponent {
     this.interval = setInterval(this.getMessages, 1000);
   }
 
+  //TODO: clear session on unmount
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
   getMessages = () => {
-    server.get(api.getMessagesInSpace + this.props.space.id)
+    server.get(api.getMessagesInSpace + this.state.user.space)
       .then(res => this.setState({
         messages: res.data
       }));
@@ -48,7 +55,7 @@ class MessageSpace extends GeneralComponent {
 
     this.setState({
       message: {
-        user: this.props.user.id,
+        user: this.state.user.id,
         content: ''
       }
     });
@@ -75,7 +82,7 @@ class MessageSpace extends GeneralComponent {
   }
 
   markOwnMessage = (message) => {
-    if(message.user === this.props.user.id) {
+    if(message.user === this.state.user.id) {
       return(
         <div key={message.id} className="message own">
           <span className="sender">
@@ -106,7 +113,7 @@ class MessageSpace extends GeneralComponent {
     return(
       <div id="messageSpace">
         <div>
-          {this.props.user.name}
+          {this.state.user.name}
         </div>
 
         <br />

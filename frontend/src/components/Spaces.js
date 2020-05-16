@@ -12,6 +12,9 @@ class Spaces extends GeneralComponent {
     this.state = {
       spaces: []
     };
+
+    // TEMP
+    this.clearSession();
   }
 
   componentDidMount() {

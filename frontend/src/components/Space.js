@@ -13,6 +13,7 @@ class Space extends GeneralComponent {
 
     this.state = {
       space: {
+        id: this.props.location.state.spaceID,
         name: ''
       },
       user: {
@@ -26,7 +27,7 @@ class Space extends GeneralComponent {
   }
 
   getSpace = () => {
-    server.get(api.spaces + this.props.location.state.id)
+    server.get(api.spaces + this.props.location.state.spaceID)
       .then(res => this.setState({
         space: res.data
       }));
@@ -36,9 +37,11 @@ class Space extends GeneralComponent {
     server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
       .then(
         (res) => {
+          this.addToSessionArrayItem('users', res.data);
+          this.setSessionItem('toggleMessages', true);
+
           this.setState({
-            user: res.data,
-            toggle: true
+            user: res.data
           });
         }
       )
@@ -62,11 +65,12 @@ class Space extends GeneralComponent {
     e.preventDefault();
   }
 
-  //TODO: session to maintain state on refresh
   toggleMessages = () => {
-    if(this.state.toggle) {
+    const users = this.getSessionItem('users')
+
+    if(users && users[this.state.space.id]) {
       return (
-        <MessageSpace space={this.state.space} user={this.state.user} />
+        <MessageSpace spaceID={this.state.space.id} />
       )
     }
 

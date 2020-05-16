@@ -58,7 +58,7 @@ class Home extends GeneralComponent {
         return <Redirect push to={{
           pathname: '/s/',
           state: {
-            id: this.state.space.id}
+            spaceID: this.state.space.id}
         }} />
     }
 
