@@ -33,6 +33,7 @@ class Home extends GeneralComponent {
   //   server.post(api.spaces, this.state.space);
   // }
 
+  // TODO: create new tabs for each distinct space
   getSpaceByName = () => {
     server.get(api.getSpaceByName + this.state.space.name + '/')
       .then(

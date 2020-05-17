@@ -112,12 +112,6 @@ class MessageSpace extends GeneralComponent {
   render() {
     return(
       <div id="messageSpace">
-        <div>
-          {this.state.user.name}
-        </div>
-
-        <br />
-
         <div className="messages">
           {this.renderMessages()}
         </div>

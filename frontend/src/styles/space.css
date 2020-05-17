@@ -1,5 +1,9 @@
-div#space div#spaceName {
+div#space ul.header {
   text-align: center;
+}
+
+div#space ul.header button.close {
+  outline: none;
 }
 
 div#space form#getUserInSpaceByName {

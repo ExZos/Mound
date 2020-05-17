@@ -1,4 +1,5 @@
 import React from 'react';
+import { Nav, NavItem, NavLink, Button } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
@@ -65,8 +66,19 @@ class Space extends GeneralComponent {
     e.preventDefault();
   }
 
+  displayUser = () => {
+    const users = this.getSessionItem('users');
+
+    if(users && users[this.state.space.id]) {
+      return users[this.state.space.id].name;
+    }
+
+    return "Guest";
+
+  }
+
   toggleMessages = () => {
-    const users = this.getSessionItem('users')
+    const users = this.getSessionItem('users');
 
     if(users && users[this.state.space.id]) {
       return (
@@ -90,6 +102,8 @@ class Space extends GeneralComponent {
     );
   }
 
+  // TODO: center nav items
+  // TODO: remove SPECIFIC session item (using spaceID)
   render() {
     return(
       <div id="space">
@@ -97,9 +111,19 @@ class Space extends GeneralComponent {
 
         <br />
 
-        <div id="spaceName">
-          {this.state.space.name}
-        </div>
+        <Nav className="header">
+          <NavItem>
+            <NavLink>{this.displayUser()}</NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink>{this.state.space.name}</NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink href="/" onClick={this.clearSession}><Button close /></NavLink>
+          </NavItem>
+        </Nav>
 
         <br />
 

@@ -23,7 +23,6 @@ class GeneralComponent extends Component {
     sessionStorage.setItem(key, JSON.stringify(value));
   }
 
-  // TODO: search session array item by spaceID
   // TODO: remove session array item by spaceID
   addToSessionArrayItem(key, value) {
     let users = {};
