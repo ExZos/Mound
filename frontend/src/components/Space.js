@@ -1,5 +1,6 @@
 import React from 'react';
-import { Nav, NavItem, NavLink, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Nav, NavItem, Button } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
@@ -28,7 +29,7 @@ class Space extends GeneralComponent {
   }
 
   getSpace = () => {
-    server.get(api.spaces + this.props.location.state.spaceID)
+    server.get(api.spaces + this.state.space.id)
       .then(res => this.setState({
         space: res.data
       }));
@@ -94,7 +95,7 @@ class Space extends GeneralComponent {
             onChange={this.handleUserChange}
           />
 
-          <button onClick={this.getUserInSpaceByName}>ENTER</button>
+          <button tabIndex="-1" onClick={this.getUserInSpaceByName}>ENTER</button>
         </form>
 
         <ErrorBlock message="NO SUCH USER" show={this.state.showError} />
@@ -102,8 +103,6 @@ class Space extends GeneralComponent {
     );
   }
 
-  // TODO: center nav items
-  // TODO: remove SPECIFIC session item (using spaceID)
   render() {
     return(
       <div id="space">
@@ -113,15 +112,15 @@ class Space extends GeneralComponent {
 
         <Nav className="header">
           <NavItem>
-            <NavLink>{this.displayUser()}</NavLink>
+            {this.displayUser()}
+          </NavItem>
+
+          <NavItem className="space">
+            {this.state.space.name}
           </NavItem>
 
           <NavItem>
-            <NavLink>{this.state.space.name}</NavLink>
-          </NavItem>
-
-          <NavItem>
-            <NavLink href="/" onClick={this.clearSession}><Button close /></NavLink>
+            <Link tabIndex="-1" to="/" onClick={() => this.removeSessionArrayItem('users', this.state.space.id)}><Button tabIndex="-1" close /></Link>
           </NavItem>
         </Nav>
 

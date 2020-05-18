@@ -28,7 +28,6 @@ class MessageSpace extends GeneralComponent {
     this.interval = setInterval(this.getMessages, 1000);
   }
 
-  //TODO: clear session on unmount
   componentWillUnmount() {
     clearInterval(this.interval);
   }

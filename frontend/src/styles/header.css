@@ -5,4 +5,11 @@ ul#header {
 
 ul#header li.nav-item a {
   /* color: white; */
+  text-decoration: none;
+  display: block;
+  padding: .5rem 1rem;
+}
+
+ul#header li.nav-item a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }

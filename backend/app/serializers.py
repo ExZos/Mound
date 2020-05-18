@@ -10,9 +10,11 @@ class SpaceSerializer(serializers.ModelSerializer):
 		fields = ('id', 'name')
 
 class UserSerializer(serializers.ModelSerializer):
+	space_name = serializers.CharField(source='space.name', read_only=True)
+
 	class Meta:
 		model = User
-		fields = ('id', 'space', 'name')
+		fields = ('id', 'space', 'space_name', 'name')
 
 class MessageSerializer(serializers.ModelSerializer):
 	user_name = serializers.CharField(source='user.name', read_only=True)

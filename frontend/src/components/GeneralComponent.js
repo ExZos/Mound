@@ -23,7 +23,6 @@ class GeneralComponent extends Component {
     sessionStorage.setItem(key, JSON.stringify(value));
   }
 
-  // TODO: remove session array item by spaceID
   addToSessionArrayItem(key, value) {
     let users = {};
 
@@ -42,9 +41,17 @@ class GeneralComponent extends Component {
     return JSON.parse(sessionStorage.getItem(key));
   }
 
-  // TODO: clear session on MessageSpace component unmount
   clearSession() {
     sessionStorage.clear();
+  }
+
+  removeSessionArrayItem(key, spaceID) {
+    const users = this.getSessionItem(key);
+
+    if(users && users[spaceID]) {
+      delete users[spaceID];
+      sessionStorage.setItem(key, JSON.stringify(users));
+    }
   }
 }
 

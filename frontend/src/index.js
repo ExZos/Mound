@@ -8,8 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
 import Home from './components/Home';
-import Spaces from './components/Spaces';
 import Space from './components/Space';
+import WorkaroundRedirect from './components/WorkaroundRedirect';
 import * as serviceWorker from './serviceWorker';
 
 const history = createBrowserHistory();
@@ -17,8 +17,8 @@ const history = createBrowserHistory();
 const routing = (
   <Router history={history}>
     <Switch>
+      <Route path="/r/" component={WorkaroundRedirect} />
       <Route path="/s/" component={Space} />
-      <Route path="/spaces/" component={Spaces} />
       <Route path="/" component={Home} />
     </Switch>
   </Router>

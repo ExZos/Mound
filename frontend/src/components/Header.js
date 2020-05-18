@@ -1,27 +1,47 @@
 import React from 'react';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Nav, NavItem } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import '../styles/header.css';
 
 class Header extends GeneralComponent {
+  renderSpaces() {
+    const users = this.getSessionItem('users');
+
+    if(users) {
+      return Object.values(users).map(user => (
+        <NavItem key={user.space} onClick={this.reload}>
+          <Link tabIndex="-1" to={{
+            pathname: "/r/",
+            state: {
+              pathname: "/s/",
+              state: {
+                spaceID: user.space
+              }
+            }
+          }}>
+            {user.space_name}
+          </Link>
+        </NavItem>
+      ));
+    }
+  }
+
+  // TODO: collapse nav items when cluttered
   render() {
     return(
       <Nav id="header">
         <NavItem>
-          <NavLink href="/">Home</NavLink>
+          <Link to="/" tabIndex="-1">
+            Home
+          </Link>
         </NavItem>
 
-        <NavItem>
-          <NavLink href="/spaces/">Spaces</NavLink>
-        </NavItem>
+        {this.renderSpaces()}
 
         <NavItem>
-          <NavLink href="/u/">Users</NavLink>
-        </NavItem>
-
-        <NavItem>
-          <NavLink href="/m/">Messages</NavLink>
+          <Link to="/" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
         </NavItem>
       </Nav>
     )

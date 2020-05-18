@@ -16,6 +16,9 @@ class Home extends GeneralComponent {
         name: ''
       }
     };
+
+    // TEMP
+    console.log(this.getSessionItem('users'));
   }
 
   handleSpaceChange = (e) => {
@@ -33,7 +36,6 @@ class Home extends GeneralComponent {
   //   server.post(api.spaces, this.state.space);
   // }
 
-  // TODO: create new tabs for each distinct space
   getSpaceByName = () => {
     server.get(api.getSpaceByName + this.state.space.name + '/')
       .then(
@@ -59,8 +61,9 @@ class Home extends GeneralComponent {
         return <Redirect push to={{
           pathname: '/s/',
           state: {
-            spaceID: this.state.space.id}
-        }} />
+            spaceID: this.state.space.id
+          }
+        }}/>
     }
 
     return (
@@ -76,7 +79,7 @@ class Home extends GeneralComponent {
               onChange={this.handleSpaceChange}
             />
 
-            <button onClick={this.getSpaceByName}>ENTER</button>
+            <button tabIndex="-1" onClick={this.getSpaceByName}>ENTER</button>
           </form>
 
           <ErrorBlock message="NO SUCH SPACE" show={this.state.showError} />

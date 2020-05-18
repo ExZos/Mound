@@ -1,9 +1,19 @@
 div#space ul.header {
-  text-align: center;
+  justify-content: center;
 }
 
-div#space ul.header button.close {
+div#space ul.header li.nav-item {
+  display: block;
+  padding: .5rem 1rem;
+}
+
+div#space ul.header li.space {
+  font-weight: bold;
+}
+
+div#space ul.header li.nav-item button.close {
   outline: none;
+  color: rgb(200, 0, 0);
 }
 
 div#space form#getUserInSpaceByName {
