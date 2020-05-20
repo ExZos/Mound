@@ -21,17 +21,6 @@ class Home extends GeneralComponent {
     console.log(this.getSessionItem('users'));
   }
 
-  handleSpaceChange = (e) => {
-    let { name, value } = e.target;
-    const space = { ...this.state.space, [name]: value };
-
-    this.setState({
-      space: space
-    });
-
-    this.hideError();
-  }
-
   // addSpace = () => {
   //   server.post(api.spaces, this.state.space);
   // }
@@ -50,10 +39,6 @@ class Home extends GeneralComponent {
       .catch(
         (err) => this.showError()
       );
-  }
-
-  handleFormSubmit = (e) => {
-    e.preventDefault();
   }
 
   render() {
@@ -76,7 +61,7 @@ class Home extends GeneralComponent {
           <form id="getSpaceByName" onSubmit={this.handleFormSubmit}>
             <input type="text" name="name" placeholder="Type a space name..." autoFocus
               value={this.state.space.name}
-              onChange={this.handleSpaceChange}
+              onChange={(e) => this.handleInputChange(e, 'space')}
             />
 
             <button tabIndex="-1" onClick={this.getSpaceByName}>ENTER</button>

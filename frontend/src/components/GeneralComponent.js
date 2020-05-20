@@ -7,6 +7,21 @@ class GeneralComponent extends Component {
     });
   }
 
+  handleFormSubmit(e) {
+    e.preventDefault();
+  }
+
+  handleInputChange(e, key) {
+    let { name, value } = e.target;
+    const obj = { ...this.state[key], [name]: value };
+
+    this.setState({
+      [key]: obj
+    });
+
+    this.hideError();
+  }
+
   showError() {
     this.setState({
       showError: true

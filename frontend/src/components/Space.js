@@ -52,21 +52,6 @@ class Space extends GeneralComponent {
       );
   }
 
-  handleUserChange = (e) => {
-    let { name, value } = e.target;
-    const user = { ...this.state.user, [name]: value };
-
-    this.setState({
-      user: user
-    });
-
-    this.hideError();
-  }
-
-  handleFormSubmit = (e) => {
-    e.preventDefault();
-  }
-
   displayUser = () => {
     const users = this.getSessionItem('users');
 
@@ -92,7 +77,7 @@ class Space extends GeneralComponent {
         <form id="getUserInSpaceByName" onSubmit={this.handleFormSubmit}>
           <input type="text" name="name" placeholder="Type a user name..." autoFocus
             value={this.state.user.name}
-            onChange={this.handleUserChange}
+            onChange={(e) => this.handleInputChange(e, 'user')}
           />
 
           <button tabIndex="-1" onClick={this.getUserInSpaceByName}>ENTER</button>

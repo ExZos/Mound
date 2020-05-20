@@ -6,12 +6,12 @@ import GeneralComponent from './GeneralComponent';
 import '../styles/header.css';
 
 class Header extends GeneralComponent {
-  renderSpaces() {
+  renderSpaces = () => {
     const users = this.getSessionItem('users');
 
     if(users) {
       return Object.values(users).map(user => (
-        <NavItem key={user.space} onClick={this.reload}>
+        <NavItem key={user.space}>
           <Link tabIndex="-1" to={{
             pathname: "/r/",
             state: {

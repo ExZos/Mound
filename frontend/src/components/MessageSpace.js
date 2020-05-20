@@ -39,15 +39,6 @@ class MessageSpace extends GeneralComponent {
       }));
   }
 
-  handleMessageChange = (e) => {
-    let { name, value } = e.target;
-    const message = { ...this.state.message, [name]: value };
-
-    this.setState({
-      message: message
-    });
-  }
-
   addMessage = () => {
     server.post(api.messages, this.state.message);
     this.getMessages();
@@ -60,11 +51,7 @@ class MessageSpace extends GeneralComponent {
     });
   }
 
-  handleFormSubmit = (e) => {
-    e.preventDefault();
-  }
-
-  handleEnterSubmit = (e) => {
+  handleKeyFormSubmit = (e) => {
     if(e.keyCode === 13 && e.shiftKey === false) {
       e.preventDefault();
       this.addMessage();
@@ -119,8 +106,8 @@ class MessageSpace extends GeneralComponent {
           <form onSubmit={this.handleFormSubmit}>
             <textarea name="content" placeholder="Type a message... " autoFocus
               value={this.state.message.content}
-              onChange={this.handleMessageChange}
-              onKeyDown={this.handleEnterSubmit}
+              onChange={(e) => this.handleInputChange(e, 'message')}
+              onKeyDown={this.handleKeyFormSubmit}
             />
           </form>
         </div>
