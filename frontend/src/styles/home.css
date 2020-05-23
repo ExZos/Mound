@@ -3,7 +3,7 @@ div#home form#getSpaceByName {
 }
 
 div#home form#getSpaceByName input {
-
+  /* outline: none; */
 }
 
 div#home form#getSpaceByName button {

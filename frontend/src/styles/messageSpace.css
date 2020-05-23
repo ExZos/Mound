@@ -1,5 +1,5 @@
 div#messageSpace {
-  margin: 5px;
+  margin: 0 5px;
   text-align: center;
 }
 
@@ -8,23 +8,46 @@ div#messageSpace div.messages {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-bottom: 0;
   margin: 0 2%;
-  padding: 20px 10px;
+  padding: 1rem;
 }
 
 div#messageSpace div.message {
   text-align: left;
   white-space: pre-line;
+  padding-bottom: 1rem;
+}
+
+div#messageSpace div.message:last-child {
+  padding-bottom: 0;
 }
 
 div#messageSpace div.message.own {
   text-align: right;
 }
 
-div#messageSpace div.message span.sender {
-  margin-right: 5px;
+div#messageSpace div.message div.body {
+  display: inline-block;
+  background-color: rgb(250, 250, 250);
+  padding: 3px 11px;
+
+  border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  -webkit-border-radius: 1rem;
+}
+
+div#messageSpace div.message div.sender {
+  position: relative;
+  font-size: 0.7rem;
+  font-style: italic;
+  left: 10px;
+}
+
+div#messageSpace div.message.own div.sender {
+  left: -10px;
 }
 
 div#messageSpace textarea {
   resize: none;
   width: 98%;
+  /* outline: none; */
 }

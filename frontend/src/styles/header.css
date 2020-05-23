@@ -1,19 +1,54 @@
-ul#header {
+div#header div#menuNav {
+  line-height: 1,5;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  /* background-color: rgba(0, 0, 0, 0.7); */
+  padding: 0.3rem 0;
 }
 
-ul#header li.nav-item a {
-  /* color: white; */
+div#header div#menuNav span.menuItem a {
   text-decoration: none;
-  display: block;
-  padding: .5rem 1rem;
+  outline: none;
+  padding: 0.5rem 1rem;
+
+  transition: background-color 0.4s;
+  -moz-transition: background-color 0.4s;
+  -o-transition: background-color 0.4s;
+  -webkit-transition: background-color 0.4s;
 }
 
-ul#header li.nav-item a:hover {
+div#header div#menuNav span.menuItem a:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-ul#header li.nav-item a.active {
-  font-weight: bold;
+div#header div#spaceNav {
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0.4rem 0;
+  white-space: nowrap;
+}
+
+div#header div#spaceNav span.spaceNavItem a {
+  text-decoration: none;
+  outline: none;
+  border: 1px solid transparent;
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 1rem;
+
+  transition: background-color 0.4s;
+  -moz-transition: background-color 0.4s;
+  -o-transition: background-color 0.4s;
+  -webkit-transition: background-color 0.4s;
+}
+
+div#header div#spaceNav span.spaceNavItem a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+div#header div#spaceNav span.spaceNavItem a.active {
+    background-color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    border: 1px solid rgba(0, 0, 0.1);
+
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }

@@ -13,6 +13,9 @@ class WorkaroundRedirect extends GeneralComponent {
     };
   }
 
+  // TODO: hide /r/
+  // TODO: fix back browser functionality after
+  //       navigating from one space to another
   render() {
     return(
       <Redirect push to={{

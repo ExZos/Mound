@@ -30,7 +30,7 @@ class Space extends GeneralComponent {
 
   getSpace = () => {
     server.get(api.spaces + this.state.space.id)
-      .then(res => this.setState({
+      .then((res) => this.setState({
         space: res.data
       }));
   }
@@ -52,20 +52,27 @@ class Space extends GeneralComponent {
       );
   }
 
-  displayUser = () => {
-    const users = this.getSessionItem('users');
-
+  displayUser = (users) => {
     if(users && users[this.state.space.id]) {
-      return users[this.state.space.id].name;
+      return(
+        <NavItem className="user">
+          {users[this.state.space.id].name}
+        </NavItem>
+      );
     }
-
-    return "Guest";
-
   }
 
-  toggleMessages = () => {
-    const users = this.getSessionItem('users');
+  displayCloseButton = (users) => {
+    if(users && users[this.state.space.id]) {
+      return(
+        <NavItem className="close">
+          <Link tabIndex="-1" to="/" onClick={() => this.removeSessionArrayItem('users', this.state.space.id)}><Button tabIndex="-1" close /></Link>
+        </NavItem>
+      )
+    }
+  }
 
+  toggleMessages = (users) => {
     if(users && users[this.state.space.id]) {
       return (
         <MessageSpace spaceID={this.state.space.id} />
@@ -89,29 +96,27 @@ class Space extends GeneralComponent {
   }
 
   render() {
+    const users = this.getSessionItem('users');
+
     return(
       <div id="space">
-        <Header />
+        <Header spaceID={this.props.location.state.spaceID} />
 
         <br />
 
         <Nav className="header">
-          <NavItem>
-            {this.displayUser()}
-          </NavItem>
+          {this.displayUser(users)}
 
           <NavItem className="space">
             {this.state.space.name}
           </NavItem>
 
-          <NavItem>
-            <Link tabIndex="-1" to="/" onClick={() => this.removeSessionArrayItem('users', this.state.space.id)}><Button tabIndex="-1" close /></Link>
-          </NavItem>
+          {this.displayCloseButton(users)}
         </Nav>
 
         <br />
 
-        {this.toggleMessages()}
+        {this.toggleMessages(users)}
       </div>
     )
   }

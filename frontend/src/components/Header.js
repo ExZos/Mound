@@ -1,49 +1,69 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Nav, NavItem } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import '../styles/header.css';
 
 class Header extends GeneralComponent {
+  spaceNavItemTemplate = (spaceID, spaceName, className) => {
+    return(
+      <span key={spaceID} className="spaceNavItem ">
+        <Link className={className} tabIndex="-1" to={{
+          pathname: "/r/",
+          state: {
+            pathname: "/s/",
+            state: {
+              spaceID: spaceID
+            }
+          }
+        }}>
+          {spaceName}
+        </Link>
+      </span>
+    );
+  }
+
+  determineActiveSpace = (spaceID, spaceName) => {
+    if(spaceID === this.props.spaceID) {
+      return(
+        this.spaceNavItemTemplate(spaceID, spaceName, "active")
+      );
+    }
+
+    return(
+      this.spaceNavItemTemplate(spaceID, spaceName, "")
+    );
+  }
+
   renderSpaces = () => {
     const users = this.getSessionItem('users');
 
     if(users) {
       return Object.values(users).map(user => (
-        <NavItem key={user.space}>
-          <Link tabIndex="-1" to={{
-            pathname: "/r/",
-            state: {
-              pathname: "/s/",
-              state: {
-                spaceID: user.space
-              }
-            }
-          }}>
-            {user.space_name}
-          </Link>
-        </NavItem>
+        this.determineActiveSpace(user.space, user.space_name)
       ));
     }
   }
 
-  // TODO: collapse nav items when cluttered
   render() {
     return(
-      <Nav id="header">
-        <NavItem>
-          <Link to="/" tabIndex="-1">
-            Home
-          </Link>
-        </NavItem>
+      <div id="header">
+        <div id="menuNav">
+          <span className="menuItem">
+            <Link to="/" tabIndex="-1">
+              Home
+            </Link>
+          </span>
 
-        {this.renderSpaces()}
+          <span className="menuItem">
+            <Link to="/" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
+          </span>
+        </div>
 
-        <NavItem>
-          <Link to="/" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
-        </NavItem>
-      </Nav>
+        <div id="spaceNav">
+          {this.renderSpaces()}
+        </div>
+      </div>
     )
   }
 }

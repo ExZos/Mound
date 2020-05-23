@@ -34,7 +34,7 @@ class MessageSpace extends GeneralComponent {
 
   getMessages = () => {
     server.get(api.getMessagesInSpace + this.state.user.space)
-      .then(res => this.setState({
+      .then((res) => this.setState({
         messages: res.data
       }));
   }
@@ -71,26 +71,26 @@ class MessageSpace extends GeneralComponent {
     if(message.user === this.state.user.id) {
       return(
         <div key={message.id} className="message own">
-          <span className="sender">
-            You:
-          </span>
+          <div className="sender">
+            You
+          </div>
 
-          <span>
+          <div className="body">
             {message.content}
-          </span>
+          </div>
         </div>
       );
     }
 
     return(
       <div key={message.id} className="message">
-        <span className="sender">
-          {message.user_name}:
-        </span>
+        <div className="sender">
+          {message.user_name}
+        </div>
 
-        <span className="body">
+        <div className="body">
           {message.content}
-        </span>
+        </div>
       </div>
     )
   }

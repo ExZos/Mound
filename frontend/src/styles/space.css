@@ -4,20 +4,34 @@ div#space ul.header {
 
 div#space ul.header li.nav-item {
   display: block;
-  padding: .5rem 1rem;
+  padding: 0 1rem;
 }
 
-div#space ul.header li.space {
+div#space ul.header li.nav-item.user {
+  position: absolute;
+  left: 0;
+}
+
+div#space ul.header li.nav-item.space {
   font-weight: bold;
 }
 
-div#space ul.header li.nav-item button.close {
+div#space ul.header li.nav-item.close {
+  position: absolute;
+  right: 0;
+}
+
+div#space ul.header li.nav-item.close button {
   outline: none;
   color: rgb(200, 0, 0);
 }
 
 div#space form#getUserInSpaceByName {
   text-align: center;
+}
+
+div#space form#getUserInSpaceByName input {
+  /* outline: none; */
 }
 
 div#space div#errorBlock {
