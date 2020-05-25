@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
@@ -16,7 +15,9 @@ class Home extends GeneralComponent {
         name: ''
       }
     };
+  }
 
+  componentDidMount() {
     // TEMP
     console.log(this.getSessionItem('users'));
   }
@@ -33,7 +34,12 @@ class Home extends GeneralComponent {
             space: res.data
           });
 
-          this.toggleRedirect();
+          this.props.history.push({
+            pathname: '/s/',
+            state: {
+              space: this.state.space
+            }
+          });
         }
       )
       .catch(
@@ -42,15 +48,6 @@ class Home extends GeneralComponent {
   }
 
   render() {
-    if(this.state.redirect) {
-        return <Redirect push to={{
-          pathname: '/s/',
-          state: {
-            spaceID: this.state.space.id
-          }
-        }}/>
-    }
-
     return (
       <div id="home">
         <Header />

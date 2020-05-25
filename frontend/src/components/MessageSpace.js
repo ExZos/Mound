@@ -17,21 +17,30 @@ class MessageSpace extends GeneralComponent {
         content: ''
       },
       user: user
-    };
-
-    // TEMP
-    console.log(user.id + " : " + user.name + " : " + user.space);
+    }
   }
 
   componentDidMount() {
+    // TEMP
+    console.log(this.state.user.id + " : " + this.state.user.name + " : " + this.state.user.space);
+
     this.getMessages();
     this.interval = setInterval(this.getMessages, 1000);
+  }
+
+  // TODO: find better solution to fix default web navs
+  //       should avoid full page reloads
+  componentDidUpdate() {
+    window.onpopstate = (e) => {
+       window.location.reload(false);
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
+  // TODO: spinner while getting messages
   getMessages = () => {
     server.get(api.getMessagesInSpace + this.state.user.space)
       .then((res) => this.setState({
@@ -70,29 +79,31 @@ class MessageSpace extends GeneralComponent {
   markOwnMessage = (message) => {
     if(message.user === this.state.user.id) {
       return(
-        <div key={message.id} className="message own">
-          <div className="sender">
-            You
-          </div>
-
-          <div className="body">
-            {message.content}
-          </div>
-        </div>
+        this.messageTemplate(message, "own")
       );
     }
 
     return(
-      <div key={message.id} className="message">
+      this.messageTemplate(message, "")
+    );
+  }
+
+  messageTemplate = (message, className) => {
+    return(
+      <div key={message.id} className={"message " + className}>
         <div className="sender">
           {message.user_name}
         </div>
 
-        <div className="body">
+        <div className="content">
           {message.content}
         </div>
+
+        <div className="timestamp">
+          {this.convertTimestamp(message.timestamp)}
+        </div>
       </div>
-    )
+    );
   }
 
   render() {

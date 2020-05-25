@@ -13,7 +13,10 @@ class Header extends GeneralComponent {
           state: {
             pathname: "/s/",
             state: {
-              spaceID: spaceID
+              space: {
+                id: spaceID,
+                name: spaceName
+              }
             }
           }
         }}>

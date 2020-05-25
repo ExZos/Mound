@@ -1,12 +1,6 @@
 import { Component } from 'react';
 
 class GeneralComponent extends Component {
-  toggleRedirect() {
-    this.setState({
-      redirect: true
-    });
-  }
-
   handleFormSubmit(e) {
     e.preventDefault();
   }
@@ -67,6 +61,12 @@ class GeneralComponent extends Component {
       delete users[spaceID];
       sessionStorage.setItem(key, JSON.stringify(users));
     }
+  }
+
+  convertTimestamp(timestamp) {
+    const date = new Date(timestamp);
+
+    return date.toLocaleString();
   }
 }
 

@@ -15,7 +15,7 @@ class Space extends GeneralComponent {
 
     this.state = {
       space: {
-        id: this.props.location.state.spaceID,
+        id: '',
         name: ''
       },
       user: {
@@ -25,14 +25,12 @@ class Space extends GeneralComponent {
   }
 
   componentDidMount() {
-    this.getSpace();
-  }
-
-  getSpace = () => {
-    server.get(api.spaces + this.state.space.id)
-      .then((res) => this.setState({
-        space: res.data
-      }));
+    this.setState({
+      space: {
+        id: this.props.location.state.space.id,
+        name: this.props.location.state.space.name
+      }
+    });
   }
 
   getUserInSpaceByName = () => {
@@ -75,7 +73,7 @@ class Space extends GeneralComponent {
   toggleMessages = (users) => {
     if(users && users[this.state.space.id]) {
       return (
-        <MessageSpace spaceID={this.state.space.id} />
+        <MessageSpace spaceID={this.state.space.id} history={this.props.history} />
       )
     }
 
@@ -100,7 +98,7 @@ class Space extends GeneralComponent {
 
     return(
       <div id="space">
-        <Header spaceID={this.props.location.state.spaceID} />
+        <Header spaceID={this.props.location.state.space.id} />
 
         <br />
 
