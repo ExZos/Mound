@@ -28,14 +28,10 @@ class Header extends GeneralComponent {
 
   determineActiveSpace = (spaceID, spaceName) => {
     if(spaceID === this.props.spaceID) {
-      return(
-        this.spaceNavItemTemplate(spaceID, spaceName, "active")
-      );
+      return(this.spaceNavItemTemplate(spaceID, spaceName, "active"));
     }
 
-    return(
-      this.spaceNavItemTemplate(spaceID, spaceName, "")
-    );
+    return(this.spaceNavItemTemplate(spaceID, spaceName, ""));
   }
 
   renderSpaces = () => {

@@ -57,10 +57,6 @@ div#messageSpace div.message.own div.timestamp {
   left: -10px;
 }
 
-div#messageSpace div.message div.content:active + div.timestamp {
-  display: inherit;
-}
-
 div#messageSpace textarea {
   resize: none;
   width: 98%;

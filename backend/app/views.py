@@ -7,15 +7,21 @@ from rest_framework.decorators import api_view
 from .serializers import SpaceSerializer
 from .serializers import UserSerializer
 from .serializers import MessageSerializer
+from .serializers import SpaceRequestTypeSerializer
+from .serializers import SpaceRequestSerializer
+from .serializers import SpaceResponseSerializer
 
 from .models import Space
 from .models import User
 from .models import Message
+from .models import SpaceRequestType
+from .models import SpaceRequest
+from .models import SpaceResponse
 
 # Create your views here.
 
 class SpaceView(viewsets.ModelViewSet):
-	serializer_class = SpaceSerializer
+	seSpacerializer_class = SpaceSerializer
 	queryset = Space.objects.all()
 
 	@api_view(['GET',])
@@ -52,6 +58,18 @@ class MessageView(viewsets.ModelViewSet):
 		messages = Message.objects.filter(user__space=spaceID).order_by('timestamp')
 		serializer = MessageSerializer(messages, many=True)
 		return Response(serializer.data)
+
+class SpaceRequestTypeView(viewsets.ModelViewSet):
+	serializer_class = SpaceRequestTypeSerializer
+	queryset = SpaceRequestType.objects.all()
+
+class SpaceRequestView(viewsets.ModelViewSet):
+	serializer_class = SpaceRequestSerializer
+	queryset = SpaceRequest.objects.all()
+
+class SpaceResponseView(viewsets.ModelViewSet):
+	serializer_class = SpaceResponseSerializer
+	queryset = SpaceResponse.objects.all()
 
 @api_view(['GET',])
 def test(request):

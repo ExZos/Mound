@@ -8,21 +8,20 @@ class MessageSpace extends GeneralComponent {
   constructor(props) {
     super(props);
 
-    const user = this.getSessionItem('users')[this.props.spaceID];
+    this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
       messages: [],
       message: {
-        user: user.id,
+        user: this.user.id,
         content: ''
-      },
-      user: user
+      }
     }
   }
 
   componentDidMount() {
     // TEMP
-    console.log(this.state.user.id + " : " + this.state.user.name + " : " + this.state.user.space);
+    console.log(this.user.id + " : " + this.user.name + " : " + this.user.space);
 
     this.getMessages();
     this.interval = setInterval(this.getMessages, 1000);
@@ -42,10 +41,17 @@ class MessageSpace extends GeneralComponent {
 
   // TODO: spinner while getting messages
   getMessages = () => {
-    server.get(api.getMessagesInSpace + this.state.user.space)
+    server.get(api.getMessagesInSpace + this.user.space)
       .then((res) => this.setState({
         messages: res.data
       }));
+
+    this.updateUserLastActive();
+  }
+
+  updateUserLastActive= () => {
+    server.put(api.users + this.user.id + '/', this.user);
+      // .then((res) => this.addToSessionArrayItem('users', res.data));
   }
 
   addMessage = () => {
@@ -54,7 +60,7 @@ class MessageSpace extends GeneralComponent {
 
     this.setState({
       message: {
-        user: this.state.user.id,
+        user: this.user.id,
         content: ''
       }
     });
@@ -64,6 +70,17 @@ class MessageSpace extends GeneralComponent {
     if(e.keyCode === 13 && e.shiftKey === false) {
       e.preventDefault();
       this.addMessage();
+    }
+  }
+
+  toggleMessageTimestamp = (e) => {
+    const displayStyle = e.target.nextSibling.style.display;
+
+    if(displayStyle) {
+      e.target.nextSibling.style.display = "";
+    }
+    else {
+      e.target.nextSibling.style.display = "inherit";
     }
   }
 
@@ -77,15 +94,11 @@ class MessageSpace extends GeneralComponent {
   }
 
   markOwnMessage = (message) => {
-    if(message.user === this.state.user.id) {
-      return(
-        this.messageTemplate(message, "own")
-      );
+    if(message.user === this.user.id) {
+      return(this.messageTemplate(message, "own"));
     }
 
-    return(
-      this.messageTemplate(message, "")
-    );
+    return(this.messageTemplate(message, ""));
   }
 
   messageTemplate = (message, className) => {
@@ -95,7 +108,7 @@ class MessageSpace extends GeneralComponent {
           {message.user_name}
         </div>
 
-        <div className="content">
+        <div className="content" onClick={this.toggleMessageTimestamp}>
           {message.content}
         </div>
 
