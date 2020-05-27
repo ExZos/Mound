@@ -22,9 +22,8 @@ router = routers.DefaultRouter()
 router.register(r'spaces', views.SpaceView)
 router.register(r'users', views.UserView)
 router.register(r'messages', views.MessageView)
-router.register(r'pollTypes', views.PollTypeView)
-router.register(r'polls', views.PollView)
-router.register(r'votes', views.VoteView)
+router.register(r'createPolls', views.CreatePollView)
+router.register(r'createVotes', views.CreateVoteView)
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
@@ -33,5 +32,9 @@ urlpatterns = [
     path('user/getByName/<name>/', views.UserView.getUserByName),
     path('user/getInSpaceByName/<int:spaceID>/<name>/', views.UserView.getUserInSpaceByName),
     path('message/getInSpace/<int:spaceID>/', views.MessageView.getMessagesInSpace),
-    path('test/', views.VoteView.createVoteWithSpace)
+    path('createPoll/createWithVote/', views.CreatePollView.createPollWithVote),
+    path('createVote/getForPoll/<int:pollID>/', views.CreateVoteView.getVotesForPoll),
+    path('createVote/getPositivesForPoll/<int:pollID>/', views.CreateVoteView.getPositiveVotesForPoll),
+    path('createVote/createWithSpace/', views.CreateVoteView.createVoteWithSpace),
+    path('test/', views.test)
 ]

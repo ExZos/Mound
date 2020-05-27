@@ -41,32 +41,25 @@ class Message(models.Model):
 	def __str__(self):
 		return self.content
 
-class PollType(models.Model):
-	name = models.CharField(max_length=15, unique=True)
-
-	def __str__(self):
-		return self.name
-
-class Poll(models.Model):
-	space = models.ForeignKey(Space, on_delete=models.CASCADE, null=True)
-	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-	pollType = models.ForeignKey(PollType, on_delete=models.CASCADE)
+class CreatePoll(models.Model):
+	name = models.CharField(max_length=50, unique=True)
 	status = models.NullBooleanField()
-	name = models.CharField(max_length=50)
 	timestamp = models.DateTimeField(auto_now=True)
 
-class Vote(models.Model):
-	poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
-	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+class CreateVote(models.Model):
+	createPoll = models.ForeignKey(CreatePoll, on_delete=models.CASCADE)
 	name = models.CharField(max_length=50)
 	result = models.BooleanField()
 	timestamp = models.DateTimeField(auto_now=True)
 
+	class Meta:
+		unique_together = ('createPoll', 'name')
+
 	def asDictionary(self):
 		return {
 			'id': self.id,
-			'poll': self.poll.id,
-			'user': self.user.id,
+			'createPoll': self.createPoll.id,
+			'name': self.name,
 			'result': self.result,
 			'timestamp': self.timestamp
 		}
