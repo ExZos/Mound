@@ -3,9 +3,9 @@ from rest_framework import serializers
 from .models import Space
 from .models import User
 from .models import Message
-from .models import SpaceRequestType
-from .models import SpaceRequest
-from .models import SpaceResponse
+from .models import PollType
+from .models import Poll
+from .models import Vote
 
 class SpaceSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -26,17 +26,17 @@ class MessageSerializer(serializers.ModelSerializer):
 		model = Message
 		fields = ('id', 'user', 'user_name', 'content', 'timestamp')
 
-class SpaceRequestTypeSerializer(serializers.ModelSerializer):
+class PollTypeSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = SpaceRequestType
+		model = PollType
 		fields = ('id', 'name')
 
-class SpaceRequestSerializer(serializers.ModelSerializer):
+class PollSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = SpaceRequest
-		fields = ('id', 'space', 'user', 'type', 'status', 'timestamp')
+		model = Poll
+		fields = ('id', 'space', 'user', 'pollType', 'status', 'name', 'timestamp')
 
-class SpaceResponseSerializer(serializers.ModelSerializer):
+class VoteSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = SpaceResponse
-		fields = ('id', 'spaceRequest', 'user', 'result', 'timestamp')
+		model = Vote
+		fields = ('id', 'poll', 'user', 'name', 'result', 'timestamp')

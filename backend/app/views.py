@@ -7,21 +7,21 @@ from rest_framework.decorators import api_view
 from .serializers import SpaceSerializer
 from .serializers import UserSerializer
 from .serializers import MessageSerializer
-from .serializers import SpaceRequestTypeSerializer
-from .serializers import SpaceRequestSerializer
-from .serializers import SpaceResponseSerializer
+from .serializers import PollTypeSerializer
+from .serializers import PollSerializer
+from .serializers import VoteSerializer
 
 from .models import Space
 from .models import User
 from .models import Message
-from .models import SpaceRequestType
-from .models import SpaceRequest
-from .models import SpaceResponse
+from .models import PollType
+from .models import Poll
+from .models import Vote
 
 # Create your views here.
 
 class SpaceView(viewsets.ModelViewSet):
-	seSpacerializer_class = SpaceSerializer
+	serializer_class = SpaceSerializer
 	queryset = Space.objects.all()
 
 	@api_view(['GET',])
@@ -59,17 +59,96 @@ class MessageView(viewsets.ModelViewSet):
 		serializer = MessageSerializer(messages, many=True)
 		return Response(serializer.data)
 
-class SpaceRequestTypeView(viewsets.ModelViewSet):
-	serializer_class = SpaceRequestTypeSerializer
-	queryset = SpaceRequestType.objects.all()
+class PollTypeView(viewsets.ModelViewSet):
+	serializer_class = PollTypeSerializer
+	queryset = PollType.objects.all()
 
-class SpaceRequestView(viewsets.ModelViewSet):
-	serializer_class = SpaceRequestSerializer
-	queryset = SpaceRequest.objects.all()
+class PollView(viewsets.ModelViewSet):
+	serializer_class = PollSerializer
+	queryset = Poll.objects.all()
 
-class SpaceResponseView(viewsets.ModelViewSet):
-	serializer_class = SpaceResponseSerializer
-	queryset = SpaceResponse.objects.all()
+	@api_view(['POST',])
+	def createPollWithVote(request):
+		# Create poll
+		pollSerializer = PollSerializer(data=request.data)
+		if pollSerializer.is_valid():
+			poll = pollSerializer.save()
+
+			# Create vote
+			vote = Vote(
+				poll = poll,
+				user = poll.user,
+				result = True
+			)
+			voteSerializer = VoteSerializer(data=vote.asDictionary())
+			if voteSerializer.is_valid():
+				voteSerializer.save()
+
+				return Response({
+					'poll': pollSerializer.data,
+					'vote': voteSerializer.data
+				})
+			# Errors
+			return Response(voteSerializer.errors)
+		return Response(pollSerializer.errors)
+
+class VoteView(viewsets.ModelViewSet):
+	serializer_class = VoteSerializer
+	queryset = Vote.objects.all()
+
+	@api_view(['GET',])
+	def getPositiveVotesForPoll(request, pollID):
+		votes = Vote.objects.filter(poll=pollID, result=True).order_by('timestamp')
+		serializer = VoteSerializer(votes, many=True)
+		return Response(serializer.data)
+
+	# TODO: cleanup
+	@api_view(['POST',])
+	def createVoteWithSpace(request):
+		# Create vote
+		voteSerializer = VoteSerializer(data=request.data)
+		if voteSerializer.is_valid():
+			vote = voteSerializer.save()
+
+			# Get positive votes for space
+			positiveVotes = Vote.objects.filter(poll=vote.poll.id, result=True)
+			positiveVotesSerializer = VoteSerializer(positiveVotes, many=True)
+
+			if len(positiveVotesSerializer.data) > 2:
+				# Create space
+				space = Space(
+					name = vote.poll.name
+				)
+				spaceSerializer = SpaceSerializer(data=space.asDictionary())
+				if spaceSerializer.is_valid():
+					space = spaceSerializer.save()
+
+					# Create users
+					for positiveVote in positiveVotesSerializer.data:
+						user = User(
+							space = space,
+							name = positiveVote['name']
+						)
+						userSerializer = UserSerializer(data=user.asDictionary())
+						if userSerializer.is_valid():
+							userSerializer.save()
+
+					# Set poll status to True
+					queryset = Poll.objects.all()
+					poll = get_object_or_404(queryset, id=vote.poll.id)
+					poll.status = True
+					poll.save()
+
+					# Space created
+					return Response({
+						'vote': voteSerializer.data,
+						'space': spaceSerializer.data
+					})
+			# Space not created
+			return Response(voteSerializer.data)
+		# Errors
+		return Response(voteSerializer.errors)
+
 
 @api_view(['GET',])
 def test(request):
