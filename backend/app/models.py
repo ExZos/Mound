@@ -4,6 +4,7 @@ from django.db import models
 
 class Space(models.Model):
 	name = models.CharField(max_length=50, unique=True)
+	status = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.name
@@ -11,7 +12,8 @@ class Space(models.Model):
 	def asDictionary(self):
 		return {
 			'id': self.id,
-			'name': self.name
+			'name': self.name,
+			'status': self.status
 		}
 
 class User(models.Model):

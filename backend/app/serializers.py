@@ -9,7 +9,7 @@ from .models import CreateVote
 class SpaceSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Space
-		fields = ('id', 'name')
+		fields = ('id', 'name', 'status')
 
 class UserSerializer(serializers.ModelSerializer):
 	space_name = serializers.CharField(source='space.name', read_only=True)

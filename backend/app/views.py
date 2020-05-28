@@ -18,6 +18,8 @@ from .models import CreateVote
 
 # Create your views here.
 
+# TODO: if Space.status not True in a week --> delete
+# TODO: Space with 0 users deleted in a day
 class SpaceView(viewsets.ModelViewSet):
 	serializer_class = SpaceSerializer
 	queryset = Space.objects.all()
@@ -41,11 +43,37 @@ class UserView(viewsets.ModelViewSet):
 		return Response(serializer.data)
 
 	@api_view(['GET',])
+	def getUsersInSpace(request, spaceID):
+		users = User.objects.filter(space=spaceID)
+		serializer = UserSerializer(users, many=True)
+		return Response(serializer.data)
+
+	@api_view(['GET',])
 	def getUserInSpaceByName(request, spaceID, name):
 		queryset = User.objects.all()
 		user = get_object_or_404(queryset, space=spaceID, name=name)
 		serializer = UserSerializer(user)
 		return Response(serializer.data)
+
+	@api_view(['POST',])
+	def createUserNApproveSpace(request):
+		# Create user
+		userSerializer = UserSerializer(data=request.data)
+		if userSerializer.is_valid():
+			user = userSerializer.save()
+
+			if not user.space.status:
+				users = User.objects.filter(space=user.space.id)
+				if len(users) >= 3:
+					# Approve space
+					user.space.status = True
+					user.space.save()
+					return Response({
+						'user': userSerializer.data,
+						'space': user.space.asDictionary()
+					})
+			return Response(userSerializer.data)
+		return Response(userSerializer.errors)
 
 class MessageView(viewsets.ModelViewSet):
 	serializer_class = MessageSerializer

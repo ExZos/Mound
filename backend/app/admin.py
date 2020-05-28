@@ -9,7 +9,7 @@ from .models import CreateVote
 # Register your models here.
 
 class SpaceAdmin(admin.ModelAdmin):
-	list_display = ('name',)
+	list_display = ('name', 'status')
 
 class UserAdmin(admin.ModelAdmin):
 	list_diplay = ('space', 'name', 'lastActive')
