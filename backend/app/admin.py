@@ -3,8 +3,9 @@ from django.contrib import admin
 from .models import Space
 from .models import User
 from .models import Message
-from .models import CreatePoll
-from .models import CreateVote
+from .models import PollType
+from .models import Poll
+from .models import Vote
 
 # Register your models here.
 
@@ -17,14 +18,18 @@ class UserAdmin(admin.ModelAdmin):
 class MessageAdmin(admin.ModelAdmin):
 	list_display = ('user', 'content', 'timestamp')
 
-class CreatePollAdmin(admin.ModelAdmin):
-	list_display = ('name', 'status', 'timestamp')
+class PollTypeAdmin(admin.ModelAdmin):
+	list_display = ('name',)
 
-class CreateVoteAdmin(admin.ModelAdmin):
-	list_display = ('createPoll', 'name', 'result', 'timestamp')
+class PollAdmin(admin.ModelAdmin):
+	list_display = ('space', 'user', 'status', 'name', 'timestamp')
+
+class VoteAdmin(admin.ModelAdmin):
+	list_display = ('poll', 'user', 'result', 'timestamp')
 
 admin.site.register(Space, SpaceAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Message, MessageAdmin)
-admin.site.register(CreatePoll, CreatePollAdmin)
-admin.site.register(CreateVote, CreateVoteAdmin)
+admin.site.register(PollType, PollTypeAdmin)
+admin.site.register(Poll, PollAdmin)
+admin.site.register(Vote, VoteAdmin)

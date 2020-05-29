@@ -11,6 +11,11 @@ div#messageSpace div.messages {
   padding: 1rem;
 }
 
+div#messageSpace div.noMessages {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
 div#messageSpace div.message {
   text-align: left;
   white-space: pre-line;

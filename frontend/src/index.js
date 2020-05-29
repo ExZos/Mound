@@ -10,6 +10,7 @@ import './styles/index.css';
 import Home from './components/Home';
 import Space from './components/Space';
 import WorkaroundRedirect from './components/WorkaroundRedirect';
+import ConfirmModal from './components/ConfirmModal';
 import * as serviceWorker from './serviceWorker';
 
 const history = createBrowserHistory();
@@ -17,6 +18,7 @@ const history = createBrowserHistory();
 const routing = (
   <Router history={history}>
     <Switch>
+      <Route path="/t/" component={ConfirmModal} />
       <Route path="/r/" component={WorkaroundRedirect} />
       <Route path="/s/" component={Space} />
       <Route path="/" component={Home} />

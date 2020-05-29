@@ -2,7 +2,7 @@ import React from 'react';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
-import ErrorBlock from './ErrorBlock';
+import ConfirmModal from './ConfirmModal';
 import { server, api } from '../server';
 import '../styles/home.css';
 
@@ -28,8 +28,7 @@ class Home extends GeneralComponent {
 
   getSpaceByName = () => {
     server.get(api.getSpaceByName + this.state.space.name + '/')
-      .then(
-        (res) => {
+      .then((res) => {
           this.setState({
             space: res.data
           });
@@ -42,11 +41,10 @@ class Home extends GeneralComponent {
           });
         }
       )
-      .catch(
-        (err) => this.showError()
-      );
+      .catch((err) => this.toggleModal());
   }
 
+  // TODO: add create pending space to modal
   render() {
     return (
       <div id="home">
@@ -64,10 +62,14 @@ class Home extends GeneralComponent {
             <button tabIndex="-1" onClick={this.getSpaceByName}>ENTER</button>
           </form>
 
-          <ErrorBlock message="NO SUCH SPACE" show={this.state.showError} />
+          <ConfirmModal showModal={this.state.showModal}
+            toggleModal={this.toggleModal} confirm={this.toggleModal}
+            mHeader={"Space '" + this.state.space.name + "' does not exist"}
+            mBody="Do you want to request approval for this space?"
+          />
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -7,19 +7,22 @@ from rest_framework.decorators import api_view
 from .serializers import SpaceSerializer
 from .serializers import UserSerializer
 from .serializers import MessageSerializer
-from .serializers import CreatePollSerializer
-from .serializers import CreateVoteSerializer
+from .serializers import PollTypeSerializer
+from .serializers import PollSerializer
+from .serializers import VoteSerializer
 
 from .models import Space
 from .models import User
 from .models import Message
-from .models import CreatePoll
-from .models import CreateVote
+from .models import PollType
+from .models import Poll
+from .models import Vote
 
 # Create your views here.
 
 # TODO: if Space.status not True in a week --> delete
 # TODO: Space with 0 users deleted in a day
+# TODO: Space.status = False -> no message space
 class SpaceView(viewsets.ModelViewSet):
 	serializer_class = SpaceSerializer
 	queryset = Space.objects.all()
@@ -85,13 +88,15 @@ class MessageView(viewsets.ModelViewSet):
 		serializer = MessageSerializer(messages, many=True)
 		return Response(serializer.data)
 
-# TODO: implement as Space.status
-# TODO: Space.status changes after 3 users join
-# TODO: Space.status = False -> no message space
-class CreatePollView(viewsets.ModelViewSet):
-	serializer_class = CreatePollSerializer
-	queryset = CreatePoll.objects.all()
+class PollTypeView(viewsets.ModelViewSet):
+	serializer_class = PollTypeSerializer
+	queryset = PollType.objects.all()
 
+class PollView(viewsets.ModelViewSet):
+	serializer_class = PollSerializer
+	queryset = Poll.objects.all()
+
+	# TEMP
 	@api_view(['POST',])
 	def createPollWithVote(request):
 		# Create poll
@@ -117,22 +122,23 @@ class CreatePollView(viewsets.ModelViewSet):
 			return Response(voteSerializer.errors)
 		return Response(pollSerializer.errors)
 
-class CreateVoteView(viewsets.ModelViewSet):
-	serializer_class = CreateVoteSerializer
-	queryset = CreateVote.objects.all()
+class VoteView(viewsets.ModelViewSet):
+	serializer_class = VoteSerializer
+	queryset = Vote.objects.all()
 
 	@api_view(['GET',])
 	def getVotesForPoll(request, pollID):
-		votes = CreateVote.objects.filter(createPoll=pollID).order_by('timestamp')
-		serializer = CreateVoteSerializer(votes, many=True)
+		votes = Vote.objects.filter(poll=pollID).order_by('timestamp')
+		serializer = VoteSerializer(votes, many=True)
 		return Response(serializer.data)
 
 	@api_view(['GET',])
 	def getPositiveVotesForPoll(request, pollID):
-		votes = CreateVote.objects.filter(createPoll=pollID, result=True).order_by('timestamp')
-		serializer = CreateVoteSerializer(votes, many=True)
+		votes = Vote.objects.filter(poll=pollID, result=True).order_by('timestamp')
+		serializer = VoteSerializer(votes, many=True)
 		return Response(serializer.data)
 
+	# TEMP
 	@api_view(['POST',])
 	def createVoteWithSpace(request):
 		# Create vote

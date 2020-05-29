@@ -4,8 +4,9 @@ import { Nav, NavItem, Button } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import Header from './Header';
-import ErrorBlock from './ErrorBlock';
+import ConfirmModal from './ConfirmModal';
 import MessageSpace from './MessageSpace';
+import PendingSpace from './PendingSpace';
 import { server, api } from '../server';
 import '../styles/space.css';
 
@@ -28,15 +29,15 @@ class Space extends GeneralComponent {
     this.setState({
       space: {
         id: this.props.location.state.space.id,
-        name: this.props.location.state.space.name
+        name: this.props.location.state.space.name,
+        status: this.props.location.state.space.status
       }
     });
   }
 
   getUserInSpaceByName = () => {
     server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
-      .then(
-        (res) => {
+      .then((res) => {
           this.addToSessionArrayItem('users', res.data);
           this.setSessionItem('toggleMessages', true);
 
@@ -45,9 +46,7 @@ class Space extends GeneralComponent {
           });
         }
       )
-      .catch(
-        (err) => this.showError()
-      );
+      .catch((err) => this.toggleModal());
   }
 
   displayUser = (users) => {
@@ -66,15 +65,22 @@ class Space extends GeneralComponent {
         <NavItem className="close">
           <Link tabIndex="-1" to="/" onClick={() => this.removeSessionArrayItem('users', this.state.space.id)}><Button tabIndex="-1" close /></Link>
         </NavItem>
-      )
+      );
     }
   }
 
+  // TODO: add space join request to modal
   toggleMessages = (users) => {
     if(users && users[this.state.space.id]) {
+      if(this.state.space.status) {
+        return (
+          <MessageSpace spaceID={this.state.space.id} history={this.props.history} />
+        );
+      }
+
       return (
-        <MessageSpace spaceID={this.state.space.id} history={this.props.history} />
-      )
+        <PendingSpace spaceID={this.state.space.id} />
+      );
     }
 
     return (
@@ -88,7 +94,11 @@ class Space extends GeneralComponent {
           <button tabIndex="-1" onClick={this.getUserInSpaceByName}>ENTER</button>
         </form>
 
-        <ErrorBlock message="NO SUCH USER" show={this.state.showError} />
+        <ConfirmModal showModal={this.state.showModal}
+          toggleModal={this.toggleModal} confirm={this.toggleModal}
+          mHeader={"User '" + this.state.user.name + "' does not exist"}
+          mBody={"Do you want to request to join this space as '" + this.state.user.name + "'"}
+        />
       </div>
     );
   }
@@ -116,7 +126,7 @@ class Space extends GeneralComponent {
 
         {this.toggleMessages(users)}
       </div>
-    )
+    );
   }
 }
 

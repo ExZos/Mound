@@ -22,6 +22,9 @@ router = routers.DefaultRouter()
 router.register(r'spaces', views.SpaceView)
 router.register(r'users', views.UserView)
 router.register(r'messages', views.MessageView)
+router.register(r'pollTypes', views.PollTypeView)
+router.register(r'polls', views.PollView)
+router.register(r'votes', views.VoteView)
 
 urlpatterns = [
 	path('admin/', admin.site.urls),

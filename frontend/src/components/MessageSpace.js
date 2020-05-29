@@ -1,4 +1,5 @@
 import React from 'react';
+import { Spinner } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
@@ -15,8 +16,9 @@ class MessageSpace extends GeneralComponent {
       message: {
         user: this.user.id,
         content: ''
-      }
-    }
+      },
+      loaded: false
+    };
   }
 
   componentDidMount() {
@@ -39,11 +41,11 @@ class MessageSpace extends GeneralComponent {
     clearInterval(this.interval);
   }
 
-  // TODO: spinner while getting messages
   getMessages = () => {
     server.get(api.getMessagesInSpace + this.user.space)
       .then((res) => this.setState({
-        messages: res.data
+        messages: res.data,
+        loaded: true
       }));
 
     this.updateUserLastActive();
@@ -87,6 +89,19 @@ class MessageSpace extends GeneralComponent {
   // TODO: make this into a component?
   renderMessages = () => {
     const messages = this.state.messages;
+
+    if(!this.state.loaded) {
+      return (
+        <Spinner type="border" color="dark" />
+      );
+    }
+    else if(messages.length === 0) {
+      return (
+        <div className="noMessages">
+          Not much of a convo here huh?
+        </div>
+      );
+    }
 
     return messages.map(message => (
       this.markOwnMessage(message)
@@ -136,7 +151,7 @@ class MessageSpace extends GeneralComponent {
           </form>
         </div>
       </div>
-    )
+    );
   }
 }
 

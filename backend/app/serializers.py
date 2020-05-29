@@ -3,8 +3,9 @@ from rest_framework import serializers
 from .models import Space
 from .models import User
 from .models import Message
-from .models import CreatePoll
-from .models import CreateVote
+from .models import PollType
+from .models import Poll
+from .models import Vote
 
 class SpaceSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -13,10 +14,11 @@ class SpaceSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
 	space_name = serializers.CharField(source='space.name', read_only=True)
+	space_status = serializers.BooleanField(source='space.status', read_only=True)
 
 	class Meta:
 		model = User
-		fields = ('id', 'space', 'space_name', 'name', 'lastActive')
+		fields = ('id', 'space', 'space_name', 'space_status', 'name', 'lastActive')
 
 class MessageSerializer(serializers.ModelSerializer):
 	user_name = serializers.CharField(source='user.name', read_only=True)
@@ -25,12 +27,17 @@ class MessageSerializer(serializers.ModelSerializer):
 		model = Message
 		fields = ('id', 'user', 'user_name', 'content', 'timestamp')
 
-class CreatePollSerializer(serializers.ModelSerializer):
+class PollTypeSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = CreatePoll
-		fields = ('id', 'name', 'status', 'timestamp')
+		model = PollType
+		fields = ('id', 'name')
 
-class CreateVoteSerializer(serializers.ModelSerializer):
+class PollSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = CreateVote
-		fields = ('id', 'createPoll', 'name', 'result', 'timestamp')
+		model = Poll
+		fields = ('id', 'space', 'user', 'status', 'name', 'timestamp')
+
+class VoteSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Vote
+		fields = ('id', 'poll', 'user', 'result', 'timestamp')

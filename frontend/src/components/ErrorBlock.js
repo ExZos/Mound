@@ -10,14 +10,14 @@ class ErrorBlock extends GeneralComponent {
         <div id="errorBlock">
           {this.props.message}
         </div>
-      )
+      );
     }
 
     return(
       <div id="errorBlock">
         <br />
       </div>
-    )
+    );
   }
 }
 

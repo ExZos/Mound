@@ -1,6 +1,12 @@
 import { Component } from 'react';
 
 class GeneralComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.showModal = false;
+  }
+
   handleFormSubmit(e) {
     e.preventDefault();
   }
@@ -25,6 +31,12 @@ class GeneralComponent extends Component {
   hideError() {
     this.setState({
       showError: false
+    });
+  }
+
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
     });
   }
 

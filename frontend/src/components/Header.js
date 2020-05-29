@@ -5,7 +5,7 @@ import GeneralComponent from './GeneralComponent';
 import '../styles/header.css';
 
 class Header extends GeneralComponent {
-  spaceNavItemTemplate = (spaceID, spaceName, className) => {
+  spaceNavItemTemplate = (spaceID, spaceName, spaceStatus, className) => {
     return(
       <span key={spaceID} className="spaceNavItem ">
         <Link className={className} tabIndex="-1" to={{
@@ -15,7 +15,8 @@ class Header extends GeneralComponent {
             state: {
               space: {
                 id: spaceID,
-                name: spaceName
+                name: spaceName,
+                status: spaceStatus
               }
             }
           }
@@ -26,20 +27,20 @@ class Header extends GeneralComponent {
     );
   }
 
-  determineActiveSpace = (spaceID, spaceName) => {
+  determineActiveSpace = (spaceID, spaceName, spaceStatus) => {
     if(spaceID === this.props.spaceID) {
-      return(this.spaceNavItemTemplate(spaceID, spaceName, "active"));
+      return(this.spaceNavItemTemplate(spaceID, spaceName, spaceStatus, "active"));
     }
 
-    return(this.spaceNavItemTemplate(spaceID, spaceName, ""));
+    return(this.spaceNavItemTemplate(spaceID, spaceName, spaceStatus, ""));
   }
 
   renderSpaces = () => {
     const users = this.getSessionItem('users');
-
+    console.log(users);
     if(users) {
       return Object.values(users).map(user => (
-        this.determineActiveSpace(user.space, user.space_name)
+        this.determineActiveSpace(user.space, user.space_name, user.space_status)
       ));
     }
   }
@@ -63,7 +64,7 @@ class Header extends GeneralComponent {
           {this.renderSpaces()}
         </div>
       </div>
-    )
+    );
   }
 }
 

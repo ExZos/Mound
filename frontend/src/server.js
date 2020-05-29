@@ -14,6 +14,7 @@ export const api = {
   votes: '/api/createVotes/',
   getSpaceByName: '/space/getByName/',
   getUserByName: '/user/getByName/',
+  getUserInSpace: '/user/getInSpace/',
   getUserInSpaceByName: '/user/getInSpaceByName/',
   getMessagesInSpace: '/message/getInSpace/',
 }
