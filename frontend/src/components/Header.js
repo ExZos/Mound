@@ -37,7 +37,7 @@ class Header extends GeneralComponent {
 
   renderSpaces = () => {
     const users = this.getSessionItem('users');
-    console.log(users);
+    
     if(users) {
       return Object.values(users).map(user => (
         this.determineActiveSpace(user.space, user.space_name, user.space_status)

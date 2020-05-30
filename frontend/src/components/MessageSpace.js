@@ -108,6 +108,7 @@ class MessageSpace extends GeneralComponent {
     ));
   }
 
+  // TODO: change own username to 'You'
   markOwnMessage = (message) => {
     if(message.user === this.user.id) {
       return(this.messageTemplate(message, "own"));

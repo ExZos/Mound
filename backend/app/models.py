@@ -48,7 +48,7 @@ class PollType(models.Model):
 
 class Poll(models.Model):
 	space = models.ForeignKey(Space, on_delete=models.CASCADE)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	status = models.NullBooleanField()
 	name = models.CharField(max_length=50)
 	timestamp = models.DateTimeField(auto_now=True)

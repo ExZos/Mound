@@ -10,11 +10,14 @@ export const api = {
   messages: '/api/messages/',
   spaces: '/api/spaces/',
   users: '/api/users/',
-  poll: '/api/createPolls/',
-  votes: '/api/createVotes/',
+  poll: '/api/polls/',
+  votes: '/api/votes/',
   getSpaceByName: '/space/getByName/',
   getUserByName: '/user/getByName/',
   getUserInSpace: '/user/getInSpace/',
   getUserInSpaceByName: '/user/getInSpaceByName/',
+  createUserNApproveSpace: 'user/createNApproveSpace/',
   getMessagesInSpace: '/message/getInSpace/',
+  getPendingJoinPollInSpaceByName: 'poll/getPendingJoinInSpaceByName/',
+  createJoinPoll: '/poll/createJoin/'
 }

@@ -5,10 +5,14 @@ import { server, api } from '../server';
 import '../styles/pendingSpace.css';
 
 class PendingSpace extends GeneralComponent {
-  state = {
-    requiredUsers: 3,
-    userCount: '',
-    remainingUsers: ''
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      requiredUsers: 3,
+      userCount: '',
+      remainingUsers: ''
+    };
   }
 
   componentDidMount() {

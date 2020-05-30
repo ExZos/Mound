@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -34,6 +34,7 @@ class SpaceView(viewsets.ModelViewSet):
 		serializer = SpaceSerializer(space)
 		return Response(serializer.data)
 
+# TODO: move create join poll logic here
 class UserView(viewsets.ModelViewSet):
 	serializer_class = UserSerializer
 	queryset = User.objects.all()
@@ -71,11 +72,10 @@ class UserView(viewsets.ModelViewSet):
 					# Approve space
 					user.space.status = True
 					user.space.save()
-					return Response({
-						'user': userSerializer.data,
-						'space': user.space.asDictionary()
-					})
-			return Response(userSerializer.data)
+			return Response({
+				'user': userSerializer.data,
+				'space': user.space.asDictionary()
+			})
 		return Response(userSerializer.errors)
 
 class MessageView(viewsets.ModelViewSet):
@@ -96,31 +96,47 @@ class PollView(viewsets.ModelViewSet):
 	serializer_class = PollSerializer
 	queryset = Poll.objects.all()
 
-	# TEMP
+	@api_view(['GET',])
+	def getPendingPollsInSpace(request, spaceID):
+		polls = Poll.objects.filter(status=None, space=spaceID)
+		serializer = PollSerializer(polls, many=True)
+		return Response(serializer.data)
+
+	@api_view(['GET',])
+	def getPendingPollsByUser(request, userID):
+		polls = Poll.objects.filter(status=None, user=userID)
+		serializer = PollSerializer(polls, many=True)
+		return Response(serializer.data)
+
+	@api_view(['GET',])
+	def getPendingJoinPollInSpaceByName(request, spaceID, userName):
+		queryset = Poll.objects.all();
+		poll = get_object_or_404(queryset, status=None, user=None, space=spaceID, name=userName)
+		serializer = PollSerializer(poll)
+		return Response(serializer.data)
+
+	# TODO: prevent same name of existing polls
 	@api_view(['POST',])
-	def createPollWithVote(request):
-		# Create poll
-		pollSerializer = CreatePollSerializer(data=request.data)
+	def createJoinPoll(request):
+		pollSerializer = PollSerializer(data=request.data)
 		if pollSerializer.is_valid():
-			poll = pollSerializer.save()
+			# Check if existing pending join poll in space with name
+			polls = Poll.objects.filter(status=None, user=None, space=pollSerializer.validated_data['space'], name=pollSerializer.validated_data['name'])
+			pollsSerializer = PollSerializer(polls, many=True)
+			if len(pollsSerializer.data) > 0:
+				return Response("User '" + pollSerializer.validated_data['name'] + "' has already requested to join.", status=status.HTTP_404_NOT_FOUND)
 
-			# Create vote
-			vote = CreateVote(
-				createPoll = poll,
-				name = 'Temp',
-				result = True
-			)
-			voteSerializer = CreateVoteSerializer(data=vote.asDictionary())
-			if voteSerializer.is_valid():
-				voteSerializer.save()
+			# Check if exiting user in space with name
+			users = User.objects.filter(space=pollSerializer.validated_data['space'], name=pollSerializer.validated_data['name'])
+			userSerializer = UserSerializer(users, many=True)
+			if len(userSerializer.data) > 0:
+				return Response("User '" + pollSerializer.validated_data['name'] + "' already exists.", status=status.HTTP_404_NOT_FOUND)
 
-				return Response({
-					'createPoll': pollSerializer.data,
-					'createVote': voteSerializer.data
-				})
-			# Errors
-			return Response(voteSerializer.errors)
-		return Response(pollSerializer.errors)
+			# Create poll
+			pollSerializer.save()
+
+			return Response(pollSerializer.data)
+		return Reponse(pollSerializer.errors)
 
 class VoteView(viewsets.ModelViewSet):
 	serializer_class = VoteSerializer
@@ -136,6 +152,13 @@ class VoteView(viewsets.ModelViewSet):
 	def getPositiveVotesForPoll(request, pollID):
 		votes = Vote.objects.filter(poll=pollID, result=True).order_by('timestamp')
 		serializer = VoteSerializer(votes, many=True)
+		return Response(serializer.data)
+
+	@api_view(['GET',])
+	def getVoteForPollByUser(request, pollID, userID):
+		queryset = Vote.objects.all()
+		vote = get_object_or_404(queryset, poll=pollID, user=userID)
+		serializer = VoteSerializer(vote)
 		return Response(serializer.data)
 
 	# TEMP

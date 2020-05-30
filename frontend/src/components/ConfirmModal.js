@@ -6,7 +6,6 @@ import GeneralComponent from './GeneralComponent';
 import '../styles/confirmModal.css';
 
 class ConfirmModal extends GeneralComponent {
-  // TODO: add onClick function to yes
   render() {
     return (
       <div>

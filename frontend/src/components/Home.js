@@ -22,10 +22,6 @@ class Home extends GeneralComponent {
     console.log(this.getSessionItem('users'));
   }
 
-  // addSpace = () => {
-  //   server.post(api.spaces, this.state.space);
-  // }
-
   getSpaceByName = () => {
     server.get(api.getSpaceByName + this.state.space.name + '/')
       .then((res) => {
@@ -44,7 +40,24 @@ class Home extends GeneralComponent {
       .catch((err) => this.toggleModal());
   }
 
-  // TODO: add create pending space to modal
+  addSpace = () => {
+    this.toggleModal()
+
+    server.post(api.spaces, this.state.space)
+      .then((res) => {
+        this.setState({
+          space: res.data
+        });
+
+        this.props.history.push({
+          pathname: '/s/',
+          state: {
+            space: this.state.space
+          }
+        });
+      });
+  }
+
   render() {
     return (
       <div id="home">
@@ -63,7 +76,7 @@ class Home extends GeneralComponent {
           </form>
 
           <ConfirmModal showModal={this.state.showModal}
-            toggleModal={this.toggleModal} confirm={this.toggleModal}
+            toggleModal={this.toggleModal} confirm={this.addSpace}
             mHeader={"Space '" + this.state.space.name + "' does not exist"}
             mBody="Do you want to request approval for this space?"
           />
