@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from rest_framework import viewsets, status
@@ -57,6 +58,14 @@ class UserView(viewsets.ModelViewSet):
 		queryset = User.objects.all()
 		user = get_object_or_404(queryset, space=spaceID, name=name)
 		serializer = UserSerializer(user)
+		return Response(serializer.data)
+
+	@api_view(['GET',])
+	def getUsersInSpaceExceptName(request, spaceID, name):
+		eqSpaceID = Q(space=spaceID)
+		eqName = Q(name=name)
+		users = User.objects.filter(eqSpaceID&~eqName)
+		serializer = UserSerializer(users, many=True)
 		return Response(serializer.data)
 
 	@api_view(['POST',])

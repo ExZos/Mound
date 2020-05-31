@@ -4,7 +4,9 @@ class GeneralComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.showModal = false;
+    this.state = {
+      showModal: false
+    };
   }
 
   handleFormSubmit(e) {

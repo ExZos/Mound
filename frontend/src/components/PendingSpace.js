@@ -5,8 +5,11 @@ import { server, api } from '../server';
 import '../styles/pendingSpace.css';
 
 class PendingSpace extends GeneralComponent {
+  // TODO: update component when Space.status is set to True
   constructor(props) {
     super(props);
+
+    this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
       requiredUsers: 3,
@@ -16,8 +19,8 @@ class PendingSpace extends GeneralComponent {
   }
 
   componentDidMount() {
-    this.getUserCountofSpace();
-    this.interval = setInterval(this.getUserCountofSpace, 1000);
+    this.getUserCountOfSpace();
+    this.interval = setInterval(this.getUserCountOfSpace, 1000);
   }
 
   // TODO: find better solution to fix default web navs
@@ -32,32 +35,46 @@ class PendingSpace extends GeneralComponent {
     clearInterval(this.interval);
   }
 
-  getUserCountofSpace = (spaceID) => {
-    server.get(api.getUserInSpace + this.props.spaceID + '/')
-      .then((res) => this.setState({
-        userCount: res.data.length,
-        remainingUsers: this.state.requiredUsers - res.data.length
-      }));
+  getUserCountOfSpace = () => {
+    server.get(api.getUsersInSpace + this.props.spaceID + '/')
+      .then((res) => {
+        const userCount = res.data.length;
+
+        this.setState({
+          userCount: userCount,
+          remainingUsers: this.state.requiredUsers - res.data.length
+        });
+
+        // Update user session item
+        if(userCount >= this.state.requiredUsers) {
+          server.get(api.users + this.user.id)
+            .then((res) => {
+              this.addToSessionArrayItem('users', res.data);
+
+              this.props.updateState();
+            });
+        }
+      });
   }
 
   displayResultingStatement = () => {
     if(this.state.remainingUsers > 1) {
       return (
-        <div className="resultingStatement">
+        <div>
           {this.state.remainingUsers} more users are required to approve this space.
         </div>
       );
     }
     else if(this.state.remainingUsers === 1) {
       return (
-        <div className="resultingStatement">
+        <div>
           {this.state.remainingUsers} more user is required to approve this space.
         </div>
       );
     }
 
     return (
-      <div className="resultingStatement">
+      <div>
         Congrats!<br />
         The required user count has been met.<br />
         This space will be approved shortly.
@@ -78,7 +95,9 @@ class PendingSpace extends GeneralComponent {
 
         <br />
 
-        {this.displayResultingStatement()}
+        <div className="resultingStatement">
+          {this.displayResultingStatement()}
+        </div>
       </div>
     );
   }

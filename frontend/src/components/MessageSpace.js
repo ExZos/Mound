@@ -52,8 +52,15 @@ class MessageSpace extends GeneralComponent {
   }
 
   updateUserLastActive= () => {
-    server.put(api.users + this.user.id + '/', this.user);
-      // .then((res) => this.addToSessionArrayItem('users', res.data));
+    server.put(api.users + this.user.id + '/', this.user)
+      .then((res) => this.addToSessionArrayItem('users', res.data))
+      .catch((err) => {
+        this.removeSessionArrayItem('users', this.user.space);
+
+        this.props.history.push({
+          pathname: '/'
+        });
+      });
   }
 
   addMessage = () => {
@@ -76,9 +83,7 @@ class MessageSpace extends GeneralComponent {
   }
 
   toggleMessageTimestamp = (e) => {
-    const displayStyle = e.target.nextSibling.style.display;
-
-    if(displayStyle) {
+    if(e.target.nextSibling.style.display) {
       e.target.nextSibling.style.display = "";
     }
     else {
@@ -86,15 +91,16 @@ class MessageSpace extends GeneralComponent {
     }
   }
 
-  // TODO: make this into a component?
   renderMessages = () => {
     const messages = this.state.messages;
 
+    // Getting messages
     if(!this.state.loaded) {
       return (
         <Spinner type="border" color="dark" />
       );
     }
+    // No messages
     else if(messages.length === 0) {
       return (
         <div className="noMessages">
@@ -104,24 +110,11 @@ class MessageSpace extends GeneralComponent {
     }
 
     return messages.map(message => (
-      this.markOwnMessage(message)
-    ));
-  }
-
-  // TODO: change own username to 'You'
-  markOwnMessage = (message) => {
-    if(message.user === this.user.id) {
-      return(this.messageTemplate(message, "own"));
-    }
-
-    return(this.messageTemplate(message, ""));
-  }
-
-  messageTemplate = (message, className) => {
-    return(
-      <div key={message.id} className={"message " + className}>
+      <div key={message.id}
+        className={(message.user === this.user.id) ? "message own" : "message"}
+      >
         <div className="sender">
-          {message.user_name}
+          {(message.user === this.user.id) ? "You" : message.user_name}
         </div>
 
         <div className="content" onClick={this.toggleMessageTimestamp}>
@@ -132,7 +125,7 @@ class MessageSpace extends GeneralComponent {
           {this.convertTimestamp(message.timestamp)}
         </div>
       </div>
-    );
+    ));
   }
 
   render() {

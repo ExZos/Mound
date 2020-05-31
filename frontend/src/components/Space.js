@@ -34,6 +34,7 @@ class Space extends GeneralComponent {
   getUserInSpaceByName = () => {
     server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
       .then((res) => {
+          // Existing user
           this.addToSessionArrayItem('users', res.data);
 
           this.setState({
@@ -44,13 +45,18 @@ class Space extends GeneralComponent {
       .catch((err) => {
         server.get(api.getPendingJoinPollInSpaceByName + this.state.space.id + '/' + this.state.user.name)
           .then((res) => {
-            this.addToSessionArrayItem('users', this.state.user);
+            // Existing join poll
+            let user = this.state.user;
+            user.poll = res.data.id;
+
+            this.addToSessionArrayItem('users', user);
 
             this.setState({
               poll: res.data
             });
           })
-          .catch((err) => this.toggleModal())
+          // Create user or poll
+          .catch((err) => this.toggleModal());
       });
   }
 
@@ -67,7 +73,10 @@ class Space extends GeneralComponent {
 
       server.post(api.createJoinPoll, poll)
         .then((res) => {
-          this.addToSessionArrayItem('users', this.state.user);
+          let user = this.state.user;
+          user.poll = res.data.id;
+
+          this.addToSessionArrayItem('users', user);
 
           this.setState({
             poll: res.data
@@ -86,6 +95,12 @@ class Space extends GeneralComponent {
           });
         });
     }
+  }
+
+  updateState = () => {
+    this.setState({
+      reRender: !this.state.reRender
+    });
   }
 
   displayUser = (users) => {
@@ -110,7 +125,7 @@ class Space extends GeneralComponent {
 
   toggleMessages = (users) => {
     if(users && users[this.state.space.id]) {
-      if(this.state.space.status) {
+      if(users[this.state.space.id].space_status) {
         // Approved space and user
         if(users[this.state.space.id].id) {
           return (
@@ -120,13 +135,13 @@ class Space extends GeneralComponent {
 
         // Approved space but pending user
         return (
-          <PendingUser spaceID={this.state.space.id} />
+          <PendingUser spaceID={this.state.space.id} updateState={this.updateState} />
         );
       }
 
       // Pending space
       return (
-        <PendingSpace spaceID={this.state.space.id} />
+        <PendingSpace spaceID={this.state.space.id} updateState={this.updateState} />
       );
     }
 

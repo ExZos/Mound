@@ -5,42 +5,29 @@ import GeneralComponent from './GeneralComponent';
 import '../styles/header.css';
 
 class Header extends GeneralComponent {
-  spaceNavItemTemplate = (spaceID, spaceName, spaceStatus, className) => {
-    return(
-      <span key={spaceID} className="spaceNavItem ">
-        <Link className={className} tabIndex="-1" to={{
-          pathname: "/r/",
-          state: {
-            pathname: "/s/",
-            state: {
-              space: {
-                id: spaceID,
-                name: spaceName,
-                status: spaceStatus
-              }
-            }
-          }
-        }}>
-          {spaceName}
-        </Link>
-      </span>
-    );
-  }
-
-  determineActiveSpace = (spaceID, spaceName, spaceStatus) => {
-    if(spaceID === this.props.spaceID) {
-      return(this.spaceNavItemTemplate(spaceID, spaceName, spaceStatus, "active"));
-    }
-
-    return(this.spaceNavItemTemplate(spaceID, spaceName, spaceStatus, ""));
-  }
-
+  // TODO: new message indicators
   renderSpaces = () => {
     const users = this.getSessionItem('users');
-    
+
     if(users) {
       return Object.values(users).map(user => (
-        this.determineActiveSpace(user.space, user.space_name, user.space_status)
+        <span key={user.space} className="spaceNavItem ">
+          <Link className={(user.space === this.props.spaceID) ? "active" : ""} tabIndex="-1" to={{
+            pathname: "/r/",
+            state: {
+              pathname: "/s/",
+              state: {
+                space: {
+                  id: user.space,
+                  name: user.space_name,
+                  status: user.space_status
+                }
+              }
+            }
+          }}>
+            {user.space_name}
+          </Link>
+        </span>
       ));
     }
   }
