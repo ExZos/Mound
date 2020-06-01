@@ -6,18 +6,17 @@ import '../styles/pendingUser.css';
 
 class PendingUser extends GeneralComponent {
   // TODO: create user from join poll either during vote creation or here
-  // TODO: update component when Space.status is set to True
   constructor(props) {
     super(props);
 
     this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
+      userCount: '',
+      requiredVoteCount: '',
       positiveVoteCount: '',
       negativeVoteCount: '',
-      userCount: '',
-      remainingVoteCount: '',
-      requiredVoteCount: '',
+      remainingVoteCount: ''
     };
   }
 
@@ -40,73 +39,54 @@ class PendingUser extends GeneralComponent {
 
   getPollResults = () => {
     // Get user count of space
-    server.get(api.getUsersInSpaceExceptName + this.user.space + '/' + this.user.name)
+    server.get(api.getJoinPollResults + this.user.poll + '/' + this.user.name)
       .then((res) => {
         this.setState({
-          userCount: res.data.length,
-          requiredVoteCount: res.data.length
+          userCount: res.data['userCount'],
+          requiredVoteCount: res.data['userCount'],
+          positiveVoteCount: res.data['positiveVoteCount'],
+          negativeVoteCount: res.data['negativeVoteCount']
         });
 
-        // Get votes of space
-        server.get(api.getVotesForPoll + this.user.poll)
-          .then((res) => {
-            let positives = 0;
-            let negatives = 0;
+        // Update user session item
+        if(res.data['positiveVoteCount'] >= this.state.requiredVoteCount) {
+          server.get(api.getUserInSpaceByName + this.user.space + '/' + this.user.name)
+            .then((res) => {
+              this.addToSessionArrayItem('users', res.data);
 
-            // Get positive and negative vote counts
-            res.data.forEach((vote) => {
-              if(vote.result === true) {
-                positives++;
-              }
-              else {
-                negatives++;
-              }
+              this.props.updateState();
             });
-
-            this.setState({
-              positiveVoteCount: positives,
-              negativeVoteCount: negatives,
-              remainingVoteCount: this.state.userCount - (positives + negatives)
-            });
-
-            // Update user session item
-            if(positives >= this.state.requiredVoteCount) {
-              server.get(api.getUserInSpaceByName + this.user.space + '/' + this.user.name)
-                .then((res) => {
-                  this.addToSessionArrayItem('users', res.data);
-
-                  this.props.updateState();
-                });
-            }
-          });
+        }
       });
 
   }
 
   displayResultingStatement = () => {
-    if(this.state.remainingVoteCount === 0) {
-      if(this.state.positiveVoteCount < this.state.requiredVoteCount) {
+    if(this.state.positiveVoteCount < this.state.requiredVoteCount) {
+      // Quota not met but still more users left to vote
+      if(this.state.remainingVoteCount > 0) {
         return (
           <div>
-            All users have voted.<br />
-            The required votes has not been met.<br />
-            Your request has been rejected.
+            Some users have not yet voted.
           </div>
         );
       }
 
+      // Join request rejected
       return (
         <div>
           All users have voted.<br />
-          The required votes has been met.<br />
-          Your request will be approved shortly.
+          The required votes has not been met.<br />
+          Your request has been rejected.
         </div>
       );
     }
 
+    // Join request to be approved
     return (
       <div>
-        {this.state.remainingVoteCount} user has yet to vote.
+        The required votes has been met.<br />
+        Your request will be approved shortly.
       </div>
     );
   }
@@ -119,7 +99,7 @@ class PendingUser extends GeneralComponent {
         </div>
 
         <div className="progressStatement">
-          Progress: {this.state.positiveVoteCount}/{this.state.userCount}
+          Progress: {this.state.positiveVoteCount}/{this.state.requiredVoteCount}
         </div>
 
         <br />

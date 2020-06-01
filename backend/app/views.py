@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from rest_framework import viewsets, status
@@ -124,7 +124,31 @@ class PollView(viewsets.ModelViewSet):
 		serializer = PollSerializer(poll)
 		return Response(serializer.data)
 
-	# TODO: prevent same name of existing polls
+	@api_view(['GET',])
+	def getJoinPollResults(request, pollID, userName):
+		# Get poll
+		queryset = Poll.objects.all()
+		poll = get_object_or_404(queryset, id=pollID)
+
+		# Get users in space of poll
+		eqSpaceID = Q(space=poll.space.id)
+		eqName = Q(name=userName)
+		users = User.objects.filter(eqSpaceID&~eqName)
+		userSerializer = UserSerializer(users, many=True)
+
+		# Get positive/negative votes for poll
+		votes = Vote.objects.filter(poll=poll.id)
+		positiveVotes = votes.filter(result=True)
+		negativeVotes = votes.filter(result=False)
+		positiveVoteSerializer = VoteSerializer(positiveVotes, many=True)
+		negativeVoteSerializer = VoteSerializer(negativeVotes, many=True)
+
+		return Response({
+			'userCount': len(userSerializer.data),
+			'positiveVoteCount': len(positiveVoteSerializer.data),
+			'negativeVoteCount': len(negativeVoteSerializer.data)
+		})
+
 	@api_view(['POST',])
 	def createJoinPoll(request):
 		pollSerializer = PollSerializer(data=request.data)

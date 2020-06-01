@@ -51,10 +51,13 @@ class MessageSpace extends GeneralComponent {
     this.updateUserLastActive();
   }
 
+  // TODO: force logout on Space.status = false
   updateUserLastActive= () => {
     server.put(api.users + this.user.id + '/', this.user)
       .then((res) => this.addToSessionArrayItem('users', res.data))
       .catch((err) => {
+        // User deleted: force logout
+        // TODO: implement bans (User.banned)
         this.removeSessionArrayItem('users', this.user.space);
 
         this.props.history.push({

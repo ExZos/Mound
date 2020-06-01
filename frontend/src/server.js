@@ -20,6 +20,7 @@ export const api = {
   createUserNApproveSpace: 'user/createNApproveSpace/',
   getMessagesInSpace: '/message/getInSpace/',
   getPendingJoinPollInSpaceByName: 'poll/getPendingJoinInSpaceByName/',
+  getJoinPollResults: '/poll/getJoinResults/',
   createJoinPoll: '/poll/createJoin/',
   getVotesForPoll: 'vote/getForPoll/',
   getPositiveVotesForPoll: 'vote/getPositivesForPoll/'

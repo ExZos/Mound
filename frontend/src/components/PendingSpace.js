@@ -6,6 +6,7 @@ import '../styles/pendingSpace.css';
 
 class PendingSpace extends GeneralComponent {
   // TODO: update component when Space.status is set to True
+  // TODO: cleanup check (like with PendingUser)
   constructor(props) {
     super(props);
 
