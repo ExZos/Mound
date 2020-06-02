@@ -194,49 +194,63 @@ class VoteView(viewsets.ModelViewSet):
 		serializer = VoteSerializer(vote)
 		return Response(serializer.data)
 
-	# TEMP
 	@api_view(['POST',])
-	def createVoteWithSpace(request):
+	def createVoteNUpdatePoll(request):
 		# Create vote
-		voteSerializer = CreateVoteSerializer(data=request.data)
+		voteSerializer = VoteSerializer(data=request.data)
 		if voteSerializer.is_valid():
-			vote = voteSerializer.save()
+			voteSerializer.save()
 
-			# Get positive votes for space
-			positiveVotes = CreateVote.objects.filter(createPoll=vote.createPoll.id, result=True)
-			if len(positiveVotes) > 2:
-				# Create space
-				space = Space(
-					name = vote.createPoll.name
-				)
-				spaceSerializer = SpaceSerializer(data=space.asDictionary())
-				if spaceSerializer.is_valid():
-					space = spaceSerializer.save()
+			# Get poll
+			polls = Poll.objects.all()
+			poll = get_object_or_404(polls, id=voteSerializer.data['poll'])
 
-					# Create users
-					for positiveVote in positiveVotes:
+			# Get users in space
+			users = User.objects.filter(space=poll.space.id)
+
+			# Get votes
+			votes = Vote.objects.filter(poll=poll.id)
+			positiveVotes = votes.filter(result=True)
+
+			voteCount = len(votes)
+			requiredVoteCount = voteCount
+			positiveVoteCount = len(positiveVotes)
+
+			if voteCount >= len(users):
+				# Update poll.status
+				if positiveVoteCount >= requiredVoteCount:
+					poll.status = True
+
+					# TODO: implement other poll types
+					if not poll.user:
+						# Join poll: Create user
 						user = User(
-							space = space,
-							name = positiveVote.name
+							space = poll.space,
+							name = poll.name
 						)
 						user.save()
+					elif not poll.name:
+						# TEMP
+						print('BAN POLL')
+					else:
+						# TEMP
+						print('NAME POLL')
+				else:
+					poll.status = False
+				poll.save()
+				pollSerializer = PollSerializer(poll)
 
-					# Set poll status to True
-					queryset = CreatePoll.objects.all()
-					poll = get_object_or_404(queryset, id=vote.createPoll.id)
-					poll.status = True
-					poll.save()
 
-					# Space created
-					return Response({
-						'createVote': voteSerializer.data,
-						'space': spaceSerializer.data
-					})
-			# Space not created
-			return Response(voteSerializer.data)
-		# Errors
+				return Response({
+					'vote': voteSerializer.data,
+					'poll': pollSerializer.data
+				})
+
+			return Response({
+				'vote': voteSerializer.data
+			})
+
 		return Response(voteSerializer.errors)
-
 
 @api_view(['GET',])
 def test(request):

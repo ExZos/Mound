@@ -91,6 +91,7 @@ class PendingUser extends GeneralComponent {
     );
   }
 
+  // TODO: display status rejected when applicable
   render() {
     return (
       <div id="pendingUser">

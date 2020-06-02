@@ -1,0 +1,42 @@
+div#pollSpace {
+
+}
+
+div#pollSpace div.polls {
+
+}
+
+div#pollSpace div.poll {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 7px;
+  display: inline-block;
+}
+
+div#pollSpace div.poll div.pollStatement span.userName {
+  font-style: italic;
+}
+
+div#pollSpace div.poll div.pollAnswers {
+  margin-top: 5px;
+}
+
+div#pollSpace div.poll div.pollAnswers button {
+  font-size: 0.9rem;
+}
+
+div#pollSpace div.poll div.pollAnswers button.accept {
+  border-right: 2px solid rgba(0, 0, 0, 0.1);
+
+  border-radius: 0.25rem 0 0 0.25rem;
+  -moz-border-radius: 0.25rem 0 0 0.25rem;
+  -webkit-border-radius: 0.25rem 0 0 0.25rem;
+}
+
+div#pollSpace div.poll div.pollAnswers button.decline {
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+
+  border-radius: 0 0.25rem 0.25rem 0;
+  -moz-border-radius: 0 0.25rem 0.25rem 0;
+  -webkit-border-radius: 0 0.25rem 0.25rem 0;
+}

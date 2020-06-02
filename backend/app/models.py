@@ -53,6 +53,16 @@ class Poll(models.Model):
 	name = models.CharField(max_length=50)
 	timestamp = models.DateTimeField(auto_now=True)
 
+	def asDictionary(self):
+		return {
+			'id': self.id,
+			'space': self.space.id,
+			'user': self.user.id,
+			'status': self.status,
+			'name': self.name,
+			'timestamp': self.timestamp
+		}
+
 class Vote(models.Model):
 	poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)

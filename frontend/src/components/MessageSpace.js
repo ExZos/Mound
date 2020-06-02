@@ -2,6 +2,7 @@ import React from 'react';
 import { Spinner } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
+import PollSpace from './PollSpace';
 import { server, api } from '../server';
 import '../styles/messageSpace.css';
 
@@ -51,10 +52,13 @@ class MessageSpace extends GeneralComponent {
     this.updateUserLastActive();
   }
 
-  // TODO: force logout on Space.status = false
   updateUserLastActive= () => {
     server.put(api.users + this.user.id + '/', this.user)
-      .then((res) => this.addToSessionArrayItem('users', res.data))
+      .then((res) => {
+        this.addToSessionArrayItem('users', res.data);
+
+        this.props.updateState();
+      })
       .catch((err) => {
         // User deleted: force logout
         // TODO: implement bans (User.banned)
@@ -147,6 +151,10 @@ class MessageSpace extends GeneralComponent {
             />
           </form>
         </div>
+
+        <br />
+
+        <PollSpace spaceID={this.user.space} />
       </div>
     );
   }

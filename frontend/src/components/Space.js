@@ -12,7 +12,6 @@ import { server, api } from '../server';
 import '../styles/space.css';
 
 class Space extends GeneralComponent {
-  // TODO: cleanup props passed to children
   constructor(props) {
     super(props);
 
@@ -129,7 +128,9 @@ class Space extends GeneralComponent {
         // Approved space and user
         if(users[this.state.space.id].id) {
           return (
-            <MessageSpace spaceID={this.state.space.id} history={this.props.history} />
+            <MessageSpace spaceID={this.state.space.id} updateState={this.updateState}
+              history={this.props.history}
+            />
           );
         }
 

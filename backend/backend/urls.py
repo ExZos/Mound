@@ -44,5 +44,6 @@ urlpatterns = [
     path('vote/getForPoll/<int:pollID>/', views.VoteView.getVotesForPoll),
     path('vote/getPositivesForPoll/<int:pollID>/', views.VoteView.getPositiveVotesForPoll),
     path('vote/getForPollByUser/<int:pollID>/<int:userID>/', views.VoteView.getVoteForPollByUser),
+    path('vote/createNUpdatePoll/', views.VoteView.createVoteNUpdatePoll),
     path('test/', views.test)
 ]
