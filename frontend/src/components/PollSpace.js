@@ -10,7 +10,8 @@ class PollSpace extends GeneralComponent {
     super(props);
 
     this.state = {
-      polls: []
+      polls: [],
+      vote: {}
     };
   }
 
@@ -24,28 +25,28 @@ class PollSpace extends GeneralComponent {
   }
 
   getPolls = () => {
-    server.get(api.getPendingPollsInSpace + this.props.spaceID)
+    server.get(api.getPendingUnvotedPollsForUser + this.props.userID)
       .then((res) => this.setState({
         polls: res.data
       }));
   }
 
-  addVote = () => {
-    
+  addVote = (e, result) => {
+    const vote = {
+      poll: e.target.id,
+      user: this.props.userID,
+      result: result
+    };
+
+    server.post(api.createVoteNUpdatePoll, vote)
+      .then((res) => this.getPolls());
   }
 
-  determinePollType = (poll) => {
+  determinePollStatement = (poll) => {
     if(!poll.user) {
       return (
         <div>
-          <div className="pollStatement">
-            <span className="userName">{poll.name}</span> wants to join this space.
-          </div>
-
-          <div className="pollAnswers">
-            <Button color="success" className="accept" id={poll.id}>Accept</Button>
-            <Button color="danger" className="decline" id={poll.id}>Decline</Button>
-          </div>
+          <span className="userName">{poll.name}</span> wants to join this space.
         </div>
       );
     }
@@ -56,11 +57,17 @@ class PollSpace extends GeneralComponent {
     return "Ban Poll";
   }
 
-  // TODO: add inputs and event handlers
   renderPolls = () => {
     return this.state.polls.map(poll => (
       <div key={poll.id} className="poll">
-        {this.determinePollType(poll)}
+        <div className="pollStatement">
+          {this.determinePollStatement(poll)}
+        </div>
+
+        <div className="pollAnswers">
+          <Button color="success" className="accept" id={poll.id} onClick={(e) => this.addVote(e, true)}>Accept</Button>
+          <Button color="danger" className="decline" id={poll.id} onClick={(e) => this.addVote(e, false)}>Decline</Button>
+        </div>
       </div>
     ));
   }
@@ -68,13 +75,7 @@ class PollSpace extends GeneralComponent {
   render() {
     return (
       <div id="pollSpace">
-        <div>
-          Requests
-        </div>
-
-        <div className="polls">
-          {this.renderPolls()}
-        </div>
+        {this.renderPolls()}
       </div>
     );
   }

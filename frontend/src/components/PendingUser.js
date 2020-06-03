@@ -41,11 +41,16 @@ class PendingUser extends GeneralComponent {
     // Get user count of space
     server.get(api.getJoinPollResults + this.user.poll + '/' + this.user.name)
       .then((res) => {
+        const userCount = res.data['userCount'];
+        const positiveVoteCount = res.data['positiveVoteCount'];
+        const negativeVoteCount = res.data['negativeVoteCount'];
+
         this.setState({
-          userCount: res.data['userCount'],
-          requiredVoteCount: res.data['userCount'],
-          positiveVoteCount: res.data['positiveVoteCount'],
-          negativeVoteCount: res.data['negativeVoteCount']
+          userCount: userCount,
+          requiredVoteCount: userCount,
+          positiveVoteCount: positiveVoteCount,
+          negativeVoteCount: negativeVoteCount,
+          remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount)
         });
 
         // Update user session item

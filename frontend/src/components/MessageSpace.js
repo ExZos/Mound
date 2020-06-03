@@ -154,7 +154,7 @@ class MessageSpace extends GeneralComponent {
 
         <br />
 
-        <PollSpace spaceID={this.user.space} />
+        <PollSpace spaceID={this.user.space} userID={this.user.id} />
       </div>
     );
   }

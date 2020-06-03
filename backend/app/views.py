@@ -117,6 +117,29 @@ class PollView(viewsets.ModelViewSet):
 		serializer = PollSerializer(polls, many=True)
 		return Response(serializer.data)
 
+	# TODO: finish
+	@api_view(['GET',])
+	def getPendingUnvotedPollsForUser(request, userID):
+		# Get user
+		users = User.objects.all()
+		user = get_object_or_404(users, id=userID)
+
+		# Get votes
+		votes = Vote.objects.filter(user=userID).only("poll")
+
+		# Get polls
+		statusNone = Q(status=None)
+		eqSpaceID = Q(space=user.space.id)
+		eqUserID = Q(user=userID)
+		polls = Poll.objects.filter(statusNone&eqSpaceID&~eqUserID)
+
+		# Exclude voted polls
+		for vote in votes:
+			polls = polls.exclude(id=vote.poll.id)
+		pollSerializer = PollSerializer(polls, many=True)
+
+		return Response(pollSerializer.data)
+
 	@api_view(['GET',])
 	def getPendingJoinPollInSpaceByName(request, spaceID, userName):
 		queryset = Poll.objects.all();
