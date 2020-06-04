@@ -24,6 +24,7 @@ from .models import Vote
 # TODO: if Space.status not True in a week --> delete
 # TODO: Space with 0 users deleted in a day
 # TODO: Space.status = False -> no message space
+# TODO: add response.status = HTTP_404_NOT_FOUND to post methods
 class SpaceView(viewsets.ModelViewSet):
 	serializer_class = SpaceSerializer
 	queryset = Space.objects.all()
@@ -85,7 +86,7 @@ class UserView(viewsets.ModelViewSet):
 				'user': userSerializer.data,
 				'space': user.space.asDictionary()
 			})
-		return Response(userSerializer.errors)
+		return Response(userSerializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 class MessageView(viewsets.ModelViewSet):
 	serializer_class = MessageSerializer
