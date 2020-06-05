@@ -85,8 +85,8 @@ class UserView(viewsets.ModelViewSet):
 			return Response({
 				'user': userSerializer.data,
 				'space': user.space.asDictionary()
-			})
-		return Response(userSerializer.errors, status=status.HTTP_404_NOT_FOUND)
+			}, status=status.HTTP_201_CREATED)
+		return Response(userSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MessageView(viewsets.ModelViewSet):
 	serializer_class = MessageSerializer

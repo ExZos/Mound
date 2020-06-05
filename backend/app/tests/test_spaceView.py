@@ -5,30 +5,26 @@ from rest_framework.test import APIClient
 class getSpaceByNameTests(TestCase):
     client = APIClient()
 
-    def setupTempDB(self):
+    @classmethod
+    def setUpTestData(self):
         self.client.post('/api/spaces/', {'name': 'Home'}, format='json')
 
-    def test_matching_name(self):
-        self.setupTempDB()
+    def test_get_matching_name(self):
         response = self.client.get('/space/getByName/Home/')
-        self.assertIs(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_non_existent_name(self):
-        self.setupTempDB()
+    def test_fail_get_missing_name(self):
         response = self.client.get('/space/getByName/Work/')
-        self.assertIs(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_matching_name_with_blank(self):
-        self.setupTempDB()
+    def test_fail_get_matching_name_w_blank(self):
         response = self.client.get('/space/getByName/Home /')
-        self.assertIs(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_case_sensitive_name(self):
-        self.setupTempDB()
+    def test_fail_get_case_sensitive_name(self):
         response = self.client.get('/space/getByName/HOme/')
-        self.assertIs(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_containing_name(self):
-        self.setupTempDB()
+    def test_fail_get_containing_name(self):
         response = self.client.get('/space/getByName/Homestay/')
-        self.assertIs(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
