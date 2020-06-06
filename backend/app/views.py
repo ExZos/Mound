@@ -181,19 +181,19 @@ class PollView(viewsets.ModelViewSet):
 			polls = Poll.objects.filter(status=None, user=None, space=pollSerializer.validated_data['space'], name=pollSerializer.validated_data['name'])
 			pollsSerializer = PollSerializer(polls, many=True)
 			if len(pollsSerializer.data) > 0:
-				return Response("User '" + pollSerializer.validated_data['name'] + "' has already requested to join.", status=status.HTTP_404_NOT_FOUND)
+				return Response("Unique poll name conflict: User '" + pollSerializer.validated_data['name'] + "' has already requested to join.", status=status.HTTP_400_BAD_REQUEST)
 
 			# Check if exiting user in space with name
 			users = User.objects.filter(space=pollSerializer.validated_data['space'], name=pollSerializer.validated_data['name'])
 			userSerializer = UserSerializer(users, many=True)
 			if len(userSerializer.data) > 0:
-				return Response("User '" + pollSerializer.validated_data['name'] + "' already exists.", status=status.HTTP_404_NOT_FOUND)
+				return Response("Unique user name conflict: User '" + pollSerializer.validated_data['name'] + "' already exists.", status=status.HTTP_400_BAD_REQUEST)
 
 			# Create poll
 			pollSerializer.save()
 
-			return Response(pollSerializer.data)
-		return Reponse(pollSerializer.errors)
+			return Response(pollSerializer.data, status=status.HTTP_201_CREATED)
+		return Response(pollSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class VoteView(viewsets.ModelViewSet):
 	serializer_class = VoteSerializer
@@ -228,6 +228,7 @@ class VoteView(viewsets.ModelViewSet):
 			# Get poll
 			polls = Poll.objects.all()
 			poll = get_object_or_404(polls, id=voteSerializer.data['poll'])
+			pollSerializer = PollSerializer(poll)
 
 			# Get users in space
 			users = User.objects.filter(space=poll.space.id)
@@ -244,6 +245,7 @@ class VoteView(viewsets.ModelViewSet):
 				# Update poll.status
 				if positiveVoteCount >= requiredVoteCount:
 					poll.status = True
+					poll.save()
 
 					# TODO: implement other poll types
 					if not poll.user:
@@ -253,28 +255,40 @@ class VoteView(viewsets.ModelViewSet):
 							name = poll.name
 						)
 						user.save()
+
+						return Response({
+							'vote': voteSerializer.data,
+							'poll': pollSerializer.data,
+							'userID': user.id
+						}, status=status.HTTP_201_CREATED)
 					elif not poll.name:
 						# TEMP
 						print('BAN POLL')
 					else:
-						# TEMP
-						print('NAME POLL')
+						# Name poll: Change user name
+						user = poll.user
+						user.name = poll.name
+						user.save()
+						return Response({
+							'vote': voteSerializer.data,
+							'poll': pollSerializer.data,
+							'userName': user.name
+						}, status=status.HTTP_201_CREATED)
+
 				else:
 					poll.status = False
-				poll.save()
-				pollSerializer = PollSerializer(poll)
-
+					poll.save()
 
 				return Response({
 					'vote': voteSerializer.data,
 					'poll': pollSerializer.data
-				})
+				}, status=status.HTTP_201_CREATED)
 
 			return Response({
 				'vote': voteSerializer.data
-			})
+			}, status=status.HTTP_201_CREATED)
 
-		return Response(voteSerializer.errors)
+		return Response(voteSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET',])
 def test(request):

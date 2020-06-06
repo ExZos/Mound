@@ -2,8 +2,6 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient#, RequestsClient, APIRequestFactory
 
-# Create your tests here.
-
 class getUserByNameTests(TestCase):
     client = APIClient()
 
@@ -70,27 +68,33 @@ class getUserInSpaceByNameTests(TestCase):
     def setUpTestData(self):
         self.client.post('/api/spaces/', {'name': 'Home'}, format='json')
         self.client.post('/api/spaces/', {'name': 'Work'}, format='json')
-        self.client.post('/api/spaces/', {'name': 'School'}, format='json')
         self.client.post('/api/users/', {'name': 'Alex', 'space': 1}, format='json')
         self.client.post('/api/users/', {'name': 'Bob', 'space': 1}, format='json')
         self.client.post('/api/users/', {'name': 'Celine', 'space': 1}, format='json')
         self.client.post('/api/users/', {'name': 'Alex', 'space': 2}, format='json')
-        self.client.post('/api/users/', {'name': 'Alex', 'space': 3}, format='json')
-        self.client.post('/api/users/', {'name': 'Bob', 'space': 3}, format='json')
+        self.client.post('/api/users/', {'name': 'Bob', 'space': 2}, format='json')
 
-    def test_get_unique_name(self):
+    def test_get_unique_name_from_space(self):
         response = self.client.get('/user/getInSpaceByName/1/Celine/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_fail_get_missing_but_recurring_name(self):
-        response = self.client.get('/user/getInSpaceByName/2/Celine/')
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-    def test_get_recurring_name(self):
+    def test_get_recurring_name_from_space(self):
         response = self.client.get('/user/getInSpaceByName/1/Alex/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, 'space')
         self.assertEqual(response.data['space'], 1)
+
+    def test_fail_get_missing_name_from_space(self):
+        response = self.client.get('/user/getInSpaceByName/1/Dwayne/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_fail_get_missing_but_recurring_name_from_space(self):
+        response = self.client.get('/user/getInSpaceByName/2/Celine/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_fail_get_from_missing_space(self):
+        response = self.client.get('/user/getInSpaceByName/3/Alex/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 class getUsersInSpaceExceptNameTests(TestCase):
     client = APIClient()
@@ -99,25 +103,31 @@ class getUsersInSpaceExceptNameTests(TestCase):
     def setUpTestData(self):
         self.client.post('/api/spaces/', {'name': 'Home'}, format='json')
         self.client.post('/api/spaces/', {'name': 'Work'}, format='json')
-        self.client.post('/api/spaces/', {'name': 'School'}, format='json')
         self.client.post('/api/users/', {'name': 'Alex', 'space': 1}, format='json')
         self.client.post('/api/users/', {'name': 'Bob', 'space': 1}, format='json')
         self.client.post('/api/users/', {'name': 'Celine', 'space': 1}, format='json')
         self.client.post('/api/users/', {'name': 'Alex', 'space': 2}, format='json')
-        self.client.post('/api/users/', {'name': 'Alex', 'space': 3}, format='json')
-        self.client.post('/api/users/', {'name': 'Bob', 'space': 3}, format='json')
+        self.client.post('/api/users/', {'name': 'Bob', 'space': 2}, format='json')
 
     def test_get_from_space_w_3_users_except_unique_name(self):
         response = self.client.get('/user/getInSpaceExceptName/1/Celine/')
         self.assertEqual(len(response.data), 2)
 
     def test_get_from_space_w_2_users_except_recurring_name(self):
-        response = self.client.get('/user/getInSpaceExceptName/3/Alex/')
+        response = self.client.get('/user/getInSpaceExceptName/2/Alex/')
         self.assertEqual(len(response.data), 1)
 
     def test_get_from_space_w_3_users_except_missing_name(self):
         response = self.client.get('/user/getInSpaceExceptName/1/Dwayne/')
         self.assertEqual(len(response.data), 3)
+
+    def test_get_from_space_w_2_users_except_missing_but_recurring_name(self):
+        response = self.client.get('/user/getInSpaceExceptName/2/Celine/')
+        self.assertEqual(len(response.data), 2)
+
+    def test_get_from_missing_space(self):
+        response = self.client.get('/user/getInSpaceExceptName/3/Alex/')
+        self.assertEqual(len(response.data), 0)
 
 class createUserNApproveSpaceTests(TestCase):
     client = APIClient()
@@ -156,3 +166,8 @@ class createUserNApproveSpaceTests(TestCase):
         response = self.client.post('/user/createNApproveSpace/', {'name': 'Alex', 'space': 1}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertContains(response, "unique", status_code=status.HTTP_400_BAD_REQUEST)
+
+    def test_fail_create_user_in_missing_space(self):
+        response = self.client.post('/user/createNApproveSpace/', {'name': 'Alex', 'space': 4}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertContains(response, "Invalid", status_code=status.HTTP_400_BAD_REQUEST)
