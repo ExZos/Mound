@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home should create a state entry equal to the input value 1`] = `
+<div
+  id="home"
+>
+  <Header />
+  <br />
+  <div>
+    <form
+      id="getSpaceByName"
+      onSubmit={[Function]}
+    >
+      <input
+        autoFocus={true}
+        name="name"
+        onChange={[Function]}
+        placeholder="Type a space name..."
+        type="text"
+        value="test"
+      />
+      <button
+        onClick={[Function]}
+        tabIndex="-1"
+      >
+        ENTER
+      </button>
+    </form>
+    <ConfirmModal
+      confirm={[Function]}
+      mBody="Do you want to request approval for this space?"
+      mHeader="Space 'test' does not exist"
+      toggleModal={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`Home should render correctly with no props 1`] = `
+<div
+  id="home"
+>
+  <Header />
+  <br />
+  <div>
+    <form
+      id="getSpaceByName"
+      onSubmit={[Function]}
+    >
+      <input
+        autoFocus={true}
+        name="name"
+        onChange={[Function]}
+        placeholder="Type a space name..."
+        type="text"
+        value=""
+      />
+      <button
+        onClick={[Function]}
+        tabIndex="-1"
+      >
+        ENTER
+      </button>
+    </form>
+    <ConfirmModal
+      confirm={[Function]}
+      mBody="Do you want to request approval for this space?"
+      mHeader="Space '' does not exist"
+      toggleModal={[Function]}
+    />
+  </div>
+</div>
+`;

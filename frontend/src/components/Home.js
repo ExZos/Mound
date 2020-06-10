@@ -29,12 +29,12 @@ class Home extends GeneralComponent {
             space: res.data
           });
 
-          this.props.history.push({
-            pathname: '/s/',
-            state: {
-              space: this.state.space
-            }
-          });
+          // this.props.history.push({
+          //   pathname: '/s/',
+          //   state: {
+          //     space: this.state.space
+          //   }
+          // });
         }
       )
       .catch((err) => this.toggleModal());
