@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { endpoints } from './endpoints';
 
 export const server = axios.create({
   baseURL: 'http://localhost:8000',
@@ -6,25 +7,4 @@ export const server = axios.create({
   withCredentials: false,
 });
 
-export const api = {
-  messages: '/api/messages/',
-  spaces: '/api/spaces/',
-  users: '/api/users/',
-  poll: '/api/polls/',
-  votes: '/api/votes/',
-  getSpaceByName: '/space/getByName/',
-  getUserByName: '/user/getByName/',
-  getUsersInSpace: '/user/getInSpace/',
-  getUserInSpaceByName: '/user/getInSpaceByName/',
-  getUsersInSpaceExceptName: '/user/getInSpaceExceptName/',
-  createUserNApproveSpace: 'user/createNApproveSpace/',
-  getMessagesInSpace: '/message/getInSpace/',
-  getPendingPollsInSpace: '/poll/getPendingInSpace/',
-  getPendingUnvotedPollsForUser: '/poll/getPendingUnvotedForUser/',
-  getPendingJoinPollInSpaceByName: 'poll/getPendingJoinInSpaceByName/',
-  getJoinPollResults: '/poll/getJoinResults/',
-  createJoinPoll: '/poll/createJoin/',
-  getVotesForPoll: 'vote/getForPoll/',
-  getPositiveVotesForPoll: 'vote/getPositivesForPoll/',
-  createVoteNUpdatePoll: 'vote/createNUpdatePoll/',
-}
+export const api = endpoints;

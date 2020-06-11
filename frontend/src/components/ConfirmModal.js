@@ -2,7 +2,6 @@ import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
 import GeneralComponent from './GeneralComponent';
-// import { server, api } from '../server';
 import '../styles/confirmModal.css';
 
 class ConfirmModal extends GeneralComponent {
