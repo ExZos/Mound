@@ -43,7 +43,7 @@ class Header extends GeneralComponent {
           </span>
 
           <span className="menuItem">
-            <Link to="/" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
+            <Link to="/" className="clearSesh" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
           </span>
         </div>
 
