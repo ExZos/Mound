@@ -44,8 +44,6 @@ class Home extends GeneralComponent {
   }
 
   addSpace = () => {
-    this.toggleModal()
-
     server.post(api.spaces, this.state.space)
       .then((res) => {
         this.setState({

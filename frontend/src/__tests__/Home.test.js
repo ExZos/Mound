@@ -25,7 +25,6 @@ describe('Home', () => {
       }
     });
 
-    expect(component).toMatchSnapshot();
     expect(component.state('space')).toBeDefined();
     expect(component.state('space').name).toBeDefined();
     expect(component.state('space').name).toEqual('test');
@@ -43,7 +42,6 @@ describe('Home', () => {
     });
     await button.props().onClick();
 
-    expect(component).toMatchSnapshot();
     expect(spy).toHaveBeenCalled();
     expect(component.state('space')).toBeDefined();
     expect(component.state('space').id).toBeDefined();
@@ -61,7 +59,6 @@ describe('Home', () => {
     });
     await await button.props().onClick();
 
-    expect(component).toMatchSnapshot();
     expect(spy).toHaveBeenCalled();
     expect(component.state('space')).toBeDefined();
     expect(component.state('space').id).not.toBeDefined();
@@ -81,7 +78,6 @@ describe('Home', () => {
     });
     await button.props().onClick();
 
-    expect(component).toMatchSnapshot();
     expect(spy).toHaveBeenCalled();
     expect(component.state('space')).toBeDefined();
     expect(component.state('space').id).not.toBeDefined();

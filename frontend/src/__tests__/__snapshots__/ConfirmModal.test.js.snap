@@ -1,64 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ConfirmModal should render correctly with props 1`] = `
-<div>
-  <Modal
-    autoFocus={true}
-    backdrop={true}
-    backdropTransition={
-      Object {
-        "mountOnEnter": true,
-        "timeout": 150,
-      }
+<Modal
+  autoFocus={true}
+  backdrop={true}
+  backdropTransition={
+    Object {
+      "mountOnEnter": true,
+      "timeout": 150,
     }
-    centered={false}
-    fade={true}
-    isOpen={true}
-    keyboard={true}
-    modalTransition={
-      Object {
-        "timeout": 300,
-      }
+  }
+  centered={false}
+  fade={true}
+  isOpen={true}
+  keyboard={true}
+  modalTransition={
+    Object {
+      "timeout": 300,
     }
-    onClosed={[Function]}
-    onOpened={[Function]}
-    returnFocusAfterClose={true}
-    role="dialog"
-    scrollable={false}
-    unmountOnClose={true}
-    zIndex={1050}
+  }
+  onClosed={[Function]}
+  onOpened={[Function]}
+  returnFocusAfterClose={true}
+  role="dialog"
+  scrollable={false}
+  unmountOnClose={true}
+  zIndex={1050}
+>
+  <ModalHeader
+    charCode={215}
+    closeAriaLabel="Close"
+    tag="h5"
+    wrapTag="div"
   >
-    <ModalHeader
-      charCode={215}
-      closeAriaLabel="Close"
-      tag="h5"
-      wrapTag="div"
+    Some header
+  </ModalHeader>
+  <ModalBody
+    tag="div"
+  >
+    Some body
+  </ModalBody>
+  <ModalFooter
+    tag="div"
+  >
+    <Button
+      className="modalConfirm"
+      color="primary"
+      onClick={[Function]}
+      tag="button"
     >
-      Some header
-    </ModalHeader>
-    <ModalBody
-      tag="div"
+      Confirm
+    </Button>
+    <Button
+      className="modalCancel"
+      color="secondary"
+      onClick={[MockFunction]}
+      tag="button"
     >
-      Some body
-    </ModalBody>
-    <ModalFooter
-      tag="div"
-    >
-      <Button
-        color="primary"
-        onClick={[MockFunction]}
-        tag="button"
-      >
-        Confirm
-      </Button>
-      <Button
-        color="secondary"
-        onClick={[MockFunction]}
-        tag="button"
-      >
-        Cancel
-      </Button>
-    </ModalFooter>
-  </Modal>
-</div>
+      Cancel
+    </Button>
+  </ModalFooter>
+</Modal>
 `;

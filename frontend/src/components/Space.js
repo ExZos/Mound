@@ -60,8 +60,6 @@ class Space extends GeneralComponent {
   }
 
   addUser = () => {
-    this.toggleModal();
-
     // Approved space: create join request
     if(this.state.space.status) {
 
