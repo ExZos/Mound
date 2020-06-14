@@ -63,7 +63,14 @@ class PendingUser extends GeneralComponent {
             });
         }
       });
+  }
 
+  displayStatusStatement = () => {
+    if(this.state.positiveVoteCount < this.state.requiredVoteCount && this.state.remainingVoteCount === 0) {
+      return 'rejected';
+    }
+
+    return 'pending';
   }
 
   displayResultingStatement = () => {
@@ -101,7 +108,7 @@ class PendingUser extends GeneralComponent {
     return (
       <div id="pendingUser">
         <div className="statusStatement">
-          Status: pending
+          Status: {this.displayStatusStatement()}
         </div>
 
         <div className="progressStatement">

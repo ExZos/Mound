@@ -8,14 +8,17 @@ import Home from '../components/Home';
 const history = createBrowserHistory();
 
 describe('Home', () => {
-  it('should render correctly with no props', () => {
-    const component = shallow(<Home />);
+  let component;
 
+  beforeEach(() => {
+    component = shallow(<Home />);
+  });
+
+  it('should render correctly with no props', () => {
     expect(component).toMatchSnapshot();
   });
 
   it('should create a state entry equal to the input value', () => {
-    const component = shallow(<Home />);
     const input = component.find('input');
 
     input.props().onChange({
@@ -26,12 +29,13 @@ describe('Home', () => {
     });
 
     expect(component.state('space')).toBeDefined();
-    expect(component.state('space').name).toBeDefined();
-    expect(component.state('space').name).toEqual('test');
+    expect(component.state('space')).toHaveProperty('name', 'test');
   });
 
   it('should create a state entry on valid submit', async () => {
-    const component = shallow(<Home history={history} />);
+    component.setProps({
+      history: history
+    });
     const button = component.find('button');
     const spy = jest.spyOn(axios, 'get');
 
@@ -44,11 +48,13 @@ describe('Home', () => {
 
     expect(spy).toHaveBeenCalled();
     expect(component.state('space')).toBeDefined();
-    expect(component.state('space').id).toBeDefined();
+    expect(component.state('space')).toHaveProperty('id');
   });
 
   it('should not create a state entry on invalid submit and should trigger modal', async () => {
-    const component = shallow(<Home history={history} />);
+    component.setProps({
+      history: history
+    });
     const button = component.find('button');
     const spy = jest.spyOn(axios, 'get');
 
@@ -61,13 +67,15 @@ describe('Home', () => {
 
     expect(spy).toHaveBeenCalled();
     expect(component.state('space')).toBeDefined();
-    expect(component.state('space').id).not.toBeDefined();
+    expect(component.state('space')).not.toHaveProperty('id');
     expect(component.state('showModal')).toBeDefined();
-    expect(component.state('showModal')).toEqual(true);
+    expect(component.state('showModal')).toBeTruthy();
   });
 
   it('should not create a state entry nor trigger modal on empty submit', async () => {
-    const component = shallow(<Home history={history} />);
+    component.setProps({
+      history: history
+    });
     const button = component.find('button');
     const spy = jest.spyOn(axios, 'get');
 
@@ -80,7 +88,7 @@ describe('Home', () => {
 
     expect(spy).toHaveBeenCalled();
     expect(component.state('space')).toBeDefined();
-    expect(component.state('space').id).not.toBeDefined();
-    expect(component.state('showModal')).not.toBeDefined();
+    expect(component.state('space')).not.toHaveProperty('id');
+    expect(component.state('showModal')).toBeUndefined();
   });
 });

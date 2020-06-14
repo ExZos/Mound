@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PendingUser should render approved correctly with props and session 1`] = `
+<div
+  id="pendingUser"
+>
+  <div
+    className="statusStatement"
+  >
+    Status: 
+    pending
+  </div>
+  <div
+    className="progressStatement"
+  >
+    Progress: 
+    3
+    /
+    3
+  </div>
+  <br />
+  <div
+    className="resultingStatement"
+  >
+    <div>
+      The required votes has been met.
+      <br />
+      Your request will be approved shortly.
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PendingUser should render pending correctly with props and session 1`] = `
+<div
+  id="pendingUser"
+>
+  <div
+    className="statusStatement"
+  >
+    Status: 
+    pending
+  </div>
+  <div
+    className="progressStatement"
+  >
+    Progress: 
+    5
+    /
+    10
+  </div>
+  <br />
+  <div
+    className="resultingStatement"
+  >
+    <div>
+      Some users have not yet voted.
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PendingUser should render rejected correctly with props and session 1`] = `
+<div
+  id="pendingUser"
+>
+  <div
+    className="statusStatement"
+  >
+    Status: 
+    rejected
+  </div>
+  <div
+    className="progressStatement"
+  >
+    Progress: 
+    2
+    /
+    7
+  </div>
+  <br />
+  <div
+    className="resultingStatement"
+  >
+    <div>
+      All users have voted.
+      <br />
+      The required votes has not been met.
+      <br />
+      Your request has been rejected.
+    </div>
+  </div>
+</div>
+`;

@@ -8,14 +8,20 @@ import ConfirmModal from '../components/ConfirmModal';
 const history = createBrowserHistory();
 
 describe('ConfirmModal', () => {
+  let component;
+
+  beforeEach(() => {
+    component = shallow(<ConfirmModal />);
+  });
+
   it('should render correctly with props', () => {
-    const component = shallow(<ConfirmModal
-      showModal={true}
-      toggleModal={jest.fn()}
-      confirm={jest.fn()}
-      mHeader="Some header"
-      mBody="Some body"
-    />);
+    component.setProps({
+      showModal: true,
+      toggleModal: jest.fn(),
+      confirm: jest.fn(),
+      mHeader: 'Some header',
+      mBody: 'Some body'
+    });
     const modalHeader = component.find('ModalHeader');
     const modalBody = component.find('ModalBody');
 
@@ -28,13 +34,13 @@ describe('ConfirmModal', () => {
     const mockCancel = jest.fn();
     const mockConfirm = jest.fn();
 
-    const component = shallow(<ConfirmModal
-      showModal={true}
-      toggleModal={mockCancel}
-      confirm={mockConfirm}
-      mHeader="Some header"
-      mBody="Some body"
-    />);
+    component.setProps({
+      showModal: true,
+      toggleModal: mockCancel,
+      confirm: mockConfirm,
+      mHeader: 'Some header',
+      mBody: 'Some body'
+    });
     const button = component.find('Button.modalCancel');
 
     button.props().onClick();
@@ -47,13 +53,13 @@ describe('ConfirmModal', () => {
     const mockCancel = jest.fn();
     const mockConfirm = jest.fn();
 
-    const component = shallow(<ConfirmModal
-      showModal={true}
-      toggleModal={mockCancel}
-      confirm={mockConfirm}
-      mHeader="Some header"
-      mBody="Some body"
-    />);
+    component.setProps({
+      showModal: true,
+      toggleModal: mockCancel,
+      confirm: mockConfirm,
+      mHeader: 'Some header',
+      mBody: 'Some body'
+    });
     const button = component.find('Button.modalConfirm');
 
     button.props().onClick();
@@ -63,26 +69,26 @@ describe('ConfirmModal', () => {
   });
 
   it('should show the modal', () => {
-    const component = shallow(<ConfirmModal
-      showModal={true}
-      toggleModal={jest.fn()}
-      confirm={jest.fn()}
-      mHeader="Some header"
-      mBody="Some body"
-    />);
+    component.setProps({
+      showModal: true,
+      toggleModal: jest.fn(),
+      confirm: jest.fn(),
+      mHeader: 'Some header',
+      mBody: 'Some body'
+    });
 
-    expect(component.props().isOpen).toEqual(true);
+    expect(component.props()).toHaveProperty('isOpen', true);
   });
 
   it('should hide the modal', () => {
-    const component = shallow(<ConfirmModal
-      showModal={false}
-      toggleModal={jest.fn()}
-      confirm={jest.fn()}
-      mHeader="Some header"
-      mBody="Some body"
-    />);
+    component.setProps({
+      showModal: false,
+      toggleModal: jest.fn(),
+      confirm: jest.fn(),
+      mHeader: 'Some header',
+      mBody: 'Some body'
+    });
 
-    expect(component.props().isOpen).toEqual(false);
+    expect(component.props()).toHaveProperty('isOpen', false);
   });
 });
