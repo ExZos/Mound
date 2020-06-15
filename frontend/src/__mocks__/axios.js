@@ -4,45 +4,116 @@ const axios = {
   create: () => axios,
   get: (url) => {
     switch(url) {
-      case api.getSpaceByName + "Headon's Floor/":
+      case api.getSpaceByName + 'space1/':
         return Promise.resolve({
           data: {
             id: 1,
-            name: "Headon's Floor",
+            name: 'space1',
             status: true
           }
         });
 
-      case api.getJoinPollResults + "1/" + "name1":
+      case api.getUserCountInSpaceForUser + '1/1':
         return Promise.resolve({
           data: {
-            'userCount': 10,
-      			'positiveVoteCount': 5,
-      			'negativeVoteCount': 3
+            userCount: 3,
+            user: {
+              id: 1,
+              name: 'user1',
+              space: 1,
+              space_name: 'space1',
+              space_status: false
+            }
           }
         });
 
-      case api.getJoinPollResults + "2/" + "name2":
+      case api.getUserCountInSpaceForUser + '2/2':
         return Promise.resolve({
           data: {
-            'userCount': 3,
-      			'positiveVoteCount': 3,
-      			'negativeVoteCount': 0
+            userCount: 1
           }
         });
 
-      case api.getJoinPollResults + "3/" + "name3":
+      case api.getUserCountInSpaceForUser + '3/3':
         return Promise.resolve({
           data: {
-            'userCount': 7,
-      			'positiveVoteCount': 2,
-      			'negativeVoteCount': 5
+            userCount: 2
           }
+        });
+
+      case api.getJoinPollResults + '1/user1':
+        return Promise.resolve({
+          data: {
+            userCount: 10,
+      			positiveVoteCount: 5,
+      			negativeVoteCount: 3
+          }
+        });
+
+      case api.getJoinPollResults + '2/' + 'user2':
+        return Promise.resolve({
+          data: {
+            userCount: 3,
+      			positiveVoteCount: 3,
+      			negativeVoteCount: 0,
+            user: {
+              id: 2,
+              name: 'user2',
+              space: 2,
+              space_name: 'space2',
+              space_status: true
+            }
+          }
+        });
+
+      case api.getJoinPollResults + '3/' + 'user3':
+        return Promise.resolve({
+          data: {
+            userCount: 7,
+      			positiveVoteCount: 2,
+      			negativeVoteCount: 5
+          }
+        });
+
+      case api.getPendingUnvotedPollsForUser + '1':
+        return Promise.resolve({
+          data: []
+        });
+
+      case api.getPendingUnvotedPollsForUser + '2':
+        return Promise.resolve({
+          data: [
+            {
+              id: 1,
+              space: 1,
+              name: 'user1'
+            }, {
+              id: 2,
+              space: 1,
+              user: 2,
+              name: 'user2'
+            }, {
+              id: 3,
+              space: 1,
+              user: 3
+            }
+          ]
         });
 
       default:
         return Promise.reject();
-    }
+    };
+  },
+  post: (url, obj) => {
+    switch(url) {
+      case api.createVoteNUpdatePoll:
+        return Promise.resolve({
+          data: obj
+        });
+
+      default:
+        return Promise.reject();
+    };
   }
 };
 

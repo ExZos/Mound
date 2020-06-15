@@ -5,6 +5,7 @@ export const endpoints = {
   poll: '/api/polls/',
   votes: '/api/votes/',
   getSpaceByName: '/space/getByName/',
+  getUserCountInSpaceForUser: '/space/getUserCountForUser/',
   getUserByName: '/user/getByName/',
   getUsersInSpace: '/user/getInSpace/',
   getUserInSpaceByName: '/user/getInSpaceByName/',

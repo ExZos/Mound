@@ -38,12 +38,13 @@ class PendingUser extends GeneralComponent {
   }
 
   getPollResults = () => {
-    // Get user count of space
+    // Get poll results
     server.get(api.getJoinPollResults + this.user.poll + '/' + this.user.name)
       .then((res) => {
         const userCount = res.data['userCount'];
         const positiveVoteCount = res.data['positiveVoteCount'];
         const negativeVoteCount = res.data['negativeVoteCount'];
+        const user = res.data['user'];
 
         this.setState({
           userCount: userCount,
@@ -54,13 +55,9 @@ class PendingUser extends GeneralComponent {
         });
 
         // Update user session item
-        if(res.data['positiveVoteCount'] >= this.state.requiredVoteCount) {
-          server.get(api.getUserInSpaceByName + this.user.space + '/' + this.user.name)
-            .then((res) => {
-              this.addToSessionArrayItem('users', res.data);
-
-              this.props.updateState();
-            });
+        if(user) {
+          this.addToSessionArrayItem('users', user);
+          this.props.updateState();
         }
       });
   }

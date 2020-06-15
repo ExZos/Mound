@@ -4,6 +4,7 @@ import axios from 'axios';
 import { createBrowserHistory } from 'history';
 
 import Home from '../components/Home';
+import { endpoints as api } from '../endpoints';
 
 const history = createBrowserHistory();
 
@@ -24,12 +25,12 @@ describe('Home', () => {
     input.props().onChange({
       target: {
         name: 'name',
-        value: 'test'
+        value: 'space1'
       }
     });
 
     expect(component.state('space')).toBeDefined();
-    expect(component.state('space')).toHaveProperty('name', 'test');
+    expect(component.state('space')).toHaveProperty('name', 'space1');
   });
 
   it('should create a state entry on valid submit', async () => {
@@ -41,12 +42,13 @@ describe('Home', () => {
 
     component.setState({
       space: {
-        name: "Headon's Floor"
+        name: 'space1'
       }
     });
     await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + 'space1/');
     expect(component.state('space')).toBeDefined();
     expect(component.state('space')).toHaveProperty('id');
   });
@@ -60,12 +62,13 @@ describe('Home', () => {
 
     component.setState({
       space: {
-        name: 'Missing Floor'
+        name: 'Missing Space'
       }
     });
     await await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + 'Missing Space/');
     expect(component.state('space')).toBeDefined();
     expect(component.state('space')).not.toHaveProperty('id');
     expect(component.state('showModal')).toBeDefined();
@@ -87,6 +90,7 @@ describe('Home', () => {
     await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + '/');
     expect(component.state('space')).toBeDefined();
     expect(component.state('space')).not.toHaveProperty('id');
     expect(component.state('showModal')).toBeUndefined();

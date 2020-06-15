@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PollSpace should render no polls correctly with props 1`] = `
+<div
+  id="pollSpace"
+/>
+`;
+
+exports[`PollSpace should render poll correctly with props 1`] = `
+<div
+  id="pollSpace"
+>
+  <div
+    className="poll"
+    key="1"
+  >
+    <div
+      className="pollStatement"
+    >
+      <div>
+        <span
+          className="userName"
+        >
+          user1
+        </span>
+         wants to join this space.
+      </div>
+    </div>
+    <div
+      className="pollAnswers"
+    >
+      <Button
+        className="accept"
+        color="success"
+        id={1}
+        onClick={[Function]}
+        tag="button"
+      >
+        Accept
+      </Button>
+      <Button
+        className="decline"
+        color="danger"
+        id={1}
+        onClick={[Function]}
+        tag="button"
+      >
+        Decline
+      </Button>
+    </div>
+  </div>
+  <div
+    className="poll"
+    key="2"
+  >
+    <div
+      className="pollStatement"
+    >
+      Name Poll
+    </div>
+    <div
+      className="pollAnswers"
+    >
+      <Button
+        className="accept"
+        color="success"
+        id={2}
+        onClick={[Function]}
+        tag="button"
+      >
+        Accept
+      </Button>
+      <Button
+        className="decline"
+        color="danger"
+        id={2}
+        onClick={[Function]}
+        tag="button"
+      >
+        Decline
+      </Button>
+    </div>
+  </div>
+  <div
+    className="poll"
+    key="3"
+  >
+    <div
+      className="pollStatement"
+    >
+      Ban Poll
+    </div>
+    <div
+      className="pollAnswers"
+    >
+      <Button
+        className="accept"
+        color="success"
+        id={3}
+        onClick={[Function]}
+        tag="button"
+      >
+        Accept
+      </Button>
+      <Button
+        className="decline"
+        color="danger"
+        id={3}
+        onClick={[Function]}
+        tag="button"
+      >
+        Decline
+      </Button>
+    </div>
+  </div>
+</div>
+`;

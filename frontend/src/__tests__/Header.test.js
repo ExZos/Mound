@@ -34,6 +34,9 @@ describe('Header', () => {
 
     expect(component).toMatchSnapshot();
     expect(tabs).toHaveLength(3);
+    expect(tabs.at(0).text()).toEqual('space1');
+    expect(tabs.at(1).text()).toEqual('space2');
+    expect(tabs.at(2).text()).toEqual('space3');
   });
 
   it('should highlight a tab with props and session', () => {
