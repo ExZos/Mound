@@ -30,6 +30,7 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('api/', include(router.urls)),
     path('space/getByName/<name>/', views.SpaceView.getSpaceByName),
+    path('space/getUserCountForUser/<int:spaceID>/<int:userID>/', views.SpaceView.getUserCountInSpaceForUser),
     path('user/getByName/<name>/', views.UserView.getUserByName),
     path('user/getInSpace/<int:spaceID>/', views.UserView.getUsersInSpace),
     path('user/getInSpaceByName/<int:spaceID>/<name>/', views.UserView.getUserInSpaceByName),

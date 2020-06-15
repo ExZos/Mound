@@ -81,7 +81,7 @@ class getUserInSpaceByNameTests(TestCase):
     def test_get_recurring_name_from_space(self):
         response = self.client.get('/user/getInSpaceByName/1/Alex/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, 'space')
+        self.assertIn('space', response.data)
         self.assertEqual(response.data['space'], 1)
 
     def test_fail_get_missing_name_from_space(self):
@@ -147,19 +147,22 @@ class createUserNApproveSpaceTests(TestCase):
     def test_create_user_and_approve_space(self):
         response = self.client.post('/user/createNApproveSpace/', {'name': 'Celine', 'space': 3}, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response, 'space', status_code=status.HTTP_201_CREATED)
+        self.assertIn('space', response.data)
+        self.assertIn('status', response.data['space'])
         self.assertTrue(response.data['space']['status'])
 
     def test_create_user_without_approving_space(self):
         response = self.client.post('/user/createNApproveSpace/', {'name': 'Bob', 'space': 2}, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response, 'space', status_code=status.HTTP_201_CREATED)
+        self.assertIn('space', response.data)
+        self.assertIn('status', response.data['space'])
         self.assertFalse(response.data['space']['status'])
 
     def test_create_user_in_approved_space(self):
         response = self.client.post('/user/createNApproveSpace/', {'name': 'Dwayne', 'space': 1}, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response, 'space', status_code=status.HTTP_201_CREATED)
+        self.assertIn('space', response.data)
+        self.assertIn('status', response.data['space'])
         self.assertTrue(response.data['space']['status'])
 
     def test_fail_create_already_existing_user(self):

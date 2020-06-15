@@ -36,6 +36,25 @@ class SpaceView(viewsets.ModelViewSet):
 		serializer = SpaceSerializer(space)
 		return Response(serializer.data)
 
+	@api_view(['GET'])
+	def getUserCountInSpaceForUser(request, spaceID, userID):
+		users = User.objects.filter(space=spaceID)
+		usersSerializer = UserSerializer(users, many=True)
+		userCount = len(usersSerializer.data)
+
+		if userCount >= 3:
+			user = get_object_or_404(users, id=userID)
+			userSerializer = UserSerializer(user)
+
+			return Response({
+				'userCount': userCount,
+				'user': userSerializer.data
+			})
+
+		return Response({
+			'userCount': userCount
+		})
+
 # TODO: move create join poll logic here
 class UserView(viewsets.ModelViewSet):
 	serializer_class = UserSerializer
@@ -68,6 +87,7 @@ class UserView(viewsets.ModelViewSet):
 		users = User.objects.filter(eqSpaceID&~eqName)
 		serializer = UserSerializer(users, many=True)
 		return Response(serializer.data)
+
 
 	@api_view(['POST',])
 	def createUserNApproveSpace(request):
@@ -118,7 +138,6 @@ class PollView(viewsets.ModelViewSet):
 		serializer = PollSerializer(polls, many=True)
 		return Response(serializer.data)
 
-	# TODO: finish
 	@api_view(['GET',])
 	def getPendingUnvotedPollsForUser(request, userID):
 		# Get user
@@ -158,7 +177,7 @@ class PollView(viewsets.ModelViewSet):
 		eqSpaceID = Q(space=poll.space.id)
 		eqName = Q(name=userName)
 		users = User.objects.filter(eqSpaceID&~eqName)
-		userSerializer = UserSerializer(users, many=True)
+		usersSerializer = UserSerializer(users, many=True)
 
 		# Get positive/negative votes for poll
 		votes = Vote.objects.filter(poll=poll.id)
@@ -167,9 +186,27 @@ class PollView(viewsets.ModelViewSet):
 		positiveVoteSerializer = VoteSerializer(positiveVotes, many=True)
 		negativeVoteSerializer = VoteSerializer(negativeVotes, many=True)
 
+		# Get reused counts
+		userCount = len(usersSerializer.data)
+		positiveVoteCount = len(positiveVoteSerializer.data)
+
+		# Join poll to be approved
+		if not poll.user and positiveVoteCount >= userCount:
+			# Get user
+			allUsers = User.objects.all()
+			user = get_object_or_404(allUsers, space=poll.space.id, name=userName)
+			userSerializer = UserSerializer(user)
+
+			return Response({
+				'userCount': userCount,
+				'positiveVoteCount': positiveVoteCount,
+				'negativeVoteCount': len(negativeVoteSerializer.data),
+				'user': userSerializer.data
+			})
+
 		return Response({
-			'userCount': len(userSerializer.data),
-			'positiveVoteCount': len(positiveVoteSerializer.data),
+			'userCount': userCount,
+			'positiveVoteCount': positiveVoteCount,
 			'negativeVoteCount': len(negativeVoteSerializer.data)
 		})
 

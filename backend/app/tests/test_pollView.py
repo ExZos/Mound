@@ -136,7 +136,7 @@ class getPendingJoinPollInSpaceByNameTests(TestCase):
     def test_get_recurring_name(self):
         response = self.client.get('/poll/getPendingJoinInSpaceByName/1/Zaray/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, 'space')
+        self.assertIn('space', response.data)
         self.assertEqual(response.data['space'], 1)
 
     def test_fail_get_missing_but_recurring_name(self):
@@ -186,24 +186,30 @@ class getJoinPollResultsTests(TestCase):
         self.assertEqual(response.data['userCount'], 3)
         self.assertEqual(response.data['positiveVoteCount'], 2)
         self.assertEqual(response.data['negativeVoteCount'], 1)
+        self.assertNotIn('user', response.data)
 
     def test_get_results_2u_1p_1n_for_user(self):
         response = self.client.get('/poll/getJoinResults/2/Alex/')
         self.assertEqual(response.data['userCount'], 2)
         self.assertEqual(response.data['positiveVoteCount'], 1)
         self.assertEqual(response.data['negativeVoteCount'], 1)
+        self.assertNotIn('user', response.data)
 
-    def test_get_results_3u_2p_0n_for_user(self):
+    def test_get_results_2u_2p_0n_for_user(self):
         response = self.client.get('/poll/getJoinResults/3/Celine/')
         self.assertEqual(response.data['userCount'], 2)
         self.assertEqual(response.data['positiveVoteCount'], 2)
         self.assertEqual(response.data['negativeVoteCount'], 0)
+        self.assertIn('user', response.data)
+        self.assertIn('id', response.data['user'])
+        self.assertEqual(response.data['user']['id'], 3)
 
     def test_get_results_3u_0p_0n_for_user(self):
         response = self.client.get('/poll/getJoinResults/4/Bob/')
         self.assertEqual(response.data['userCount'], 3)
         self.assertEqual(response.data['positiveVoteCount'], 0)
         self.assertEqual(response.data['negativeVoteCount'], 0)
+        self.assertNotIn('user', response.data)
 
     def test_fail_get_results_for_missing_poll(self):
         response = self.client.get('/poll/getJoinResults/5/Alex/')

@@ -88,14 +88,14 @@ class getVoteForPollByUserTests(TestCase):
     def test_get_for_poll_by_user(self):
         response = self.client.get('/vote/getForPollByUser/1/2/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, 'result')
-        self.assertEqual(response.data['result'], True)
+        self.assertIn('result', response.data)
+        self.assertTrue(response.data['result'])
 
     def test_get_for_poll_by_other_user(self):
         response = self.client.get('/vote/getForPollByUser/2/1/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, 'result')
-        self.assertEqual(response.data['result'], False)
+        self.assertIn('result', response.data)
+        self.assertFalse(response.data['result'])
 
     def test_fail_get_for_unvoted_poll_by_user(self):
         response = self.client.get('/vote/getForPollByUser/1/1/')
@@ -129,47 +129,49 @@ class createVoteNUpdatePollTests(TestCase):
         self.client.post('/api/votes/', {'poll': 4, 'user': 1, 'result': True}, format='json')
         self.client.post('/api/votes/', {'poll': 4, 'user': 2, 'result': True}, format='json')
 
-    def test(self):
-        self.assertTrue(True)
-
     def test_create_vote_without_updating_poll(self):
         response = self.client.post('/vote/createNUpdatePoll/', {'poll': 1, 'user': 2, 'result': True})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response, 'vote', status_code=status.HTTP_201_CREATED)
-        self.assertEqual(len(response.data), 1)
+        self.assertIn('vote', response.data)
+        self.assertNotIn('poll', response.data)
 
     def test_create_vote_and_reject_poll(self):
         response = self.client.post('/vote/createNUpdatePoll/', {'poll': 2, 'user': 3, 'result': False})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response, 'vote', status_code=status.HTTP_201_CREATED)
-        self.assertContains(response, 'poll', status_code=status.HTTP_201_CREATED)
-        self.assertEqual(response.data['poll']['status'], False)
+        self.assertIn('vote', response.data)
+        self.assertIn('poll', response.data)
+        self.assertIn('status', response.data['poll'])
+        self.assertIn('status', response.data['poll'])
+        self.assertFalse(response.data['poll']['status'])
 
     def test_create_vote_and_approve_join_poll(self):
         response = self.client.post('/vote/createNUpdatePoll/', {'poll': 2, 'user': 3, 'result': True})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response, 'vote', status_code=status.HTTP_201_CREATED)
-        self.assertContains(response, 'poll', status_code=status.HTTP_201_CREATED)
-        self.assertEqual(response.data['poll']['status'], True)
-        self.assertContains(response, 'userID', status_code=status.HTTP_201_CREATED)
+        self.assertIn('vote', response.data)
+        self.assertIn('poll', response.data)
+        self.assertIn('status', response.data['poll'])
+        self.assertTrue(response.data['poll']['status'])
+        self.assertIn( 'userID', response.data)
 
     def test_create_vote_and_approve_name_poll(self):
         response = self.client.post('/vote/createNUpdatePoll/', {'poll': 3, 'user': 3, 'result': True})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response, 'vote', status_code=status.HTTP_201_CREATED)
-        self.assertContains(response, 'poll', status_code=status.HTTP_201_CREATED)
-        self.assertEqual(response.data['poll']['status'], True)
-        self.assertContains(response, 'userName', status_code=status.HTTP_201_CREATED)
+        self.assertIn('vote', response.data)
+        self.assertIn('poll', response.data)
+        self.assertIn('status', response.data['poll'])
+        self.assertTrue(response.data['poll']['status'])
+        self.assertIn('userName', response.data)
 
     # TODO: implement backend support for user bans
     # def test_create_vote_and_approve_name_poll(self):
     #     response = self.client.post('/vote/createNUpdatePoll/', {'poll': 4, 'user': 3, 'result': True})
     #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-    #     self.assertContains(response, 'vote', status_code=status.HTTP_201_CREATED)
-    #     self.assertContains(response, 'poll', status_code=status.HTTP_201_CREATED)
-    #     self.assertEqual(response.data['poll']['status'], True)
-    #     self.assertContains(response, 'userStatus', status_code=status.HTTP_201_CREATED)
-    #     self.assertEqual(response.data['userBanned'], True)
+    #     self.assertIn('vote', response.data)
+    #     self.assertIn('poll', response.data)
+    #     self.assertIn('status', response.data['poll'])
+    #     self.assertTrue(response.data['poll']['status'])
+    #     self.assertIn('userBanned', response.data)
+    #     self.assertTrue(response.data['userBanned'])
 
     def test_fail_create_vote_for_already_voted_poll_by_user(self):
         response = self.client.post('/vote/createNUpdatePoll/', {'poll': 1, 'user': 1, 'result': False})
