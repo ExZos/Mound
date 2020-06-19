@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageSpace should render messages correctly with props and session 1`] = `
+<div
+  id="messageSpace"
+>
+  <div
+    className="messages"
+  >
+    <div
+      className="message"
+      key="1"
+    >
+      <div
+        className="sender"
+      />
+      <div
+        className="content"
+        onClick={[Function]}
+      >
+        First!
+      </div>
+      <div
+        className="timestamp"
+      >
+        1969-12-31, 7:00:00 p.m.
+      </div>
+    </div>
+    <div
+      className="message own"
+      key="2"
+    >
+      <div
+        className="sender"
+      >
+        You
+      </div>
+      <div
+        className="content"
+        onClick={[Function]}
+      >
+        Second!
+      </div>
+      <div
+        className="timestamp"
+      >
+        1969-12-31, 7:00:00 p.m.
+      </div>
+    </div>
+    <div
+      className="message"
+      key="3"
+    >
+      <div
+        className="sender"
+      />
+      <div
+        className="content"
+        onClick={[Function]}
+      >
+        Third!
+      </div>
+      <div
+        className="timestamp"
+      >
+        1969-12-31, 7:00:00 p.m.
+      </div>
+    </div>
+    <div
+      className="message own"
+      key="4"
+    >
+      <div
+        className="sender"
+      >
+        You
+      </div>
+      <div
+        className="content"
+        onClick={[Function]}
+      >
+        Fourth!
+      </div>
+      <div
+        className="timestamp"
+      >
+        1969-12-31, 7:00:00 p.m.
+      </div>
+    </div>
+    <div
+      className="message"
+      key="5"
+    >
+      <div
+        className="sender"
+      />
+      <div
+        className="content"
+        onClick={[Function]}
+      >
+        Fifth!
+      </div>
+      <div
+        className="timestamp"
+      >
+        1969-12-31, 7:00:00 p.m.
+      </div>
+    </div>
+  </div>
+  <div>
+    <form
+      onSubmit={[Function]}
+    >
+      <textarea
+        autoFocus={true}
+        name="content"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Type a message... "
+        value=""
+      />
+    </form>
+  </div>
+  <br />
+  <PollSpace
+    spaceID={2}
+    userID={2}
+  />
+</div>
+`;
+
+exports[`MessageSpace should render no messages correctly with props and session 1`] = `
+<div
+  id="messageSpace"
+>
+  <div
+    className="messages"
+  >
+    <div
+      className="noMessages"
+    >
+      Not much of a convo here huh?
+    </div>
+  </div>
+  <div>
+    <form
+      onSubmit={[Function]}
+    >
+      <textarea
+        autoFocus={true}
+        name="content"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Type a message... "
+        value=""
+      />
+    </form>
+  </div>
+  <br />
+  <PollSpace
+    spaceID={1}
+    userID={1}
+  />
+</div>
+`;
+
+exports[`MessageSpace should render spinner while loading messages with props and session 1`] = `
+<div
+  id="messageSpace"
+>
+  <div
+    className="messages"
+  >
+    <Spinner
+      color="dark"
+      tag="div"
+      type="border"
+    >
+      Loading...
+    </Spinner>
+  </div>
+  <div>
+    <form
+      onSubmit={[Function]}
+    >
+      <textarea
+        autoFocus={true}
+        name="content"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Type a message... "
+        value=""
+      />
+    </form>
+  </div>
+  <br />
+  <PollSpace
+    spaceID={1}
+    userID={1}
+  />
+</div>
+`;

@@ -41,6 +41,43 @@ const axios = {
           }
         });
 
+      case api.getMessagesInSpace + '1':
+        return Promise.resolve({
+          data: []
+        });
+
+      case api.getMessagesInSpace + '2':
+        return Promise.resolve({
+          data: [
+            {
+              id: 1,
+              user: 1,
+              content: 'First!',
+              timestamp: null
+            }, {
+              id: 2,
+              user: 2,
+              content: 'Second!',
+              timestamp: null
+            }, {
+              id: 3,
+              user: 1,
+              content: 'Third!',
+              timestamp: null
+            }, {
+              id: 4,
+              user: 2,
+              content: 'Fourth!',
+              timestamp: null
+            }, {
+              id: 5,
+              user: 3,
+              content: 'Fifth!',
+              timestamp: null
+            }
+          ]
+        });
+
       case api.getJoinPollResults + '1/user1':
         return Promise.resolve({
           data: {
@@ -106,6 +143,11 @@ const axios = {
   },
   post: (url, obj) => {
     switch(url) {
+      case api.messages:
+        return Promise.resolve({
+          data: obj
+        });
+
       case api.createVoteNUpdatePoll:
         return Promise.resolve({
           data: obj
@@ -114,6 +156,17 @@ const axios = {
       default:
         return Promise.reject();
     };
+  },
+  put: (url, obj) => {
+    switch(url) {
+      case api.users + obj.id + '/':
+        return Promise.resolve({
+          data: obj
+        });
+
+      default:
+        return Promise.reject();
+    }
   }
 };
 
