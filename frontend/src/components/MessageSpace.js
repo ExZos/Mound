@@ -6,6 +6,7 @@ import PollSpace from './PollSpace';
 import { server, api } from '../server';
 import '../styles/messageSpace.css';
 
+// TODO: fix updateUserLastActive cancelling 'x' close button
 class MessageSpace extends GeneralComponent {
   constructor(props) {
     super(props);
@@ -30,11 +31,15 @@ class MessageSpace extends GeneralComponent {
     this.interval = setInterval(this.getMessages, 1000);
   }
 
-  // TODO: find better solution to fix default web navs
-  //       should avoid full page reloads
   componentDidUpdate() {
     window.onpopstate = (e) => {
-       window.location.reload(false);
+      this.setState({
+        loaded: false
+      });
+
+      this.props.updateState();
+      this.user = this.getSessionItem('users')[this.props.spaceID];
+      this.getMessages();
     }
   }
 

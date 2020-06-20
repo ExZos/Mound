@@ -1,11 +1,11 @@
 import React from 'react';
+import { Spinner } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
 import '../styles/pendingUser.css';
 
 class PendingUser extends GeneralComponent {
-  // TODO: create user from join poll either during vote creation or here
   constructor(props) {
     super(props);
 
@@ -16,7 +16,8 @@ class PendingUser extends GeneralComponent {
       requiredVoteCount: '',
       positiveVoteCount: '',
       negativeVoteCount: '',
-      remainingVoteCount: ''
+      remainingVoteCount: '',
+      loaded: false
     };
   }
 
@@ -25,11 +26,11 @@ class PendingUser extends GeneralComponent {
     this.interval = setInterval(this.getPollResults, 1000);
   }
 
-  // TODO: find better solution to fix default web navs
-  //       should avoid full page reloads
   componentDidUpdate() {
     window.onpopstate = (e) => {
-       window.location.reload(false);
+      this.props.updateState();
+      this.user =  this.getSessionItem('users')[this.props.spaceID];
+      this.getPollResults();
     }
   }
 
@@ -51,7 +52,8 @@ class PendingUser extends GeneralComponent {
           requiredVoteCount: userCount,
           positiveVoteCount: positiveVoteCount,
           negativeVoteCount: negativeVoteCount,
-          remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount)
+          remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount),
+          loaded: true
         });
 
         // Update user session item
@@ -100,8 +102,15 @@ class PendingUser extends GeneralComponent {
     );
   }
 
-  // TODO: display status rejected when applicable
   render() {
+    if(!this.state.loaded) {
+      return (
+        <div id="pendingSpace">
+          <Spinner type="border" color="dark" />
+        </div>
+      );
+    }
+
     return (
       <div id="pendingUser">
         <div className="statusStatement">

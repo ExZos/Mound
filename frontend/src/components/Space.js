@@ -33,14 +33,13 @@ class Space extends GeneralComponent {
   getUserInSpaceByName = () => {
     server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
       .then((res) => {
-          // Existing user
-          this.addToSessionArrayItem('users', res.data);
+        // Existing user
+        this.addToSessionArrayItem('users', res.data);
 
-          this.setState({
-            user: res.data
-          });
-        }
-      )
+        this.setState({
+          user: res.data
+        });
+      })
       .catch((err) => {
         server.get(api.getPendingJoinPollInSpaceByName + this.state.space.id + '/' + this.state.user.name)
           .then((res) => {
@@ -48,13 +47,13 @@ class Space extends GeneralComponent {
             let user = this.state.user;
             user.poll = res.data.id;
 
-            this.addToSessionArrayItem('users', user);
+            this.addToSessionArrayItem('users', this.state.user);
 
             this.setState({
               poll: res.data
             });
           })
-          // Create user or poll
+          // Create user or join poll
           .catch((err) => this.toggleModal());
       });
   }
@@ -62,7 +61,6 @@ class Space extends GeneralComponent {
   addUser = () => {
     // Approved space: create join request
     if(this.state.space.status) {
-
       const poll = {
         space: this.state.space.id,
         name: this.state.user.name
@@ -96,7 +94,17 @@ class Space extends GeneralComponent {
 
   updateState = () => {
     this.setState({
-      reRender: !this.state.reRender
+      space: {
+        id: this.props.location.state.space.id,
+        name: this.props.location.state.space.name,
+        status: this.props.location.state.space.status
+      },
+      user: {
+        name: this.state.user.name,
+        space: this.props.location.state.space.id,
+        space_name: this.props.location.state.space.name,
+        space_status: this.props.location.state.space.status
+      }
     });
   }
 
@@ -169,7 +177,7 @@ class Space extends GeneralComponent {
 
     return(
       <div id="space">
-        <Header spaceID={this.props.location.state.space.id} />
+        <Header spaceID={this.state.space.id} />
 
         <br />
 

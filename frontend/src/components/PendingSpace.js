@@ -1,4 +1,5 @@
 import React from 'react';
+import { Spinner } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
@@ -13,7 +14,8 @@ class PendingSpace extends GeneralComponent {
     this.state = {
       requiredUsers: 3,
       userCount: '',
-      remainingUsers: ''
+      remainingUsers: '',
+      loaded: false
     };
   }
 
@@ -22,11 +24,11 @@ class PendingSpace extends GeneralComponent {
     this.interval = setInterval(this.getUserCountOfSpace, 1000);
   }
 
-  // TODO: find better solution to fix default web navs
-  //       should avoid full page reloads
   componentDidUpdate() {
     window.onpopstate = (e) => {
-       window.location.reload(false);
+      this.props.updateState();
+      this.user =  this.getSessionItem('users')[this.props.spaceID];
+      this.getUserCountOfSpace();
     }
   }
 
@@ -42,7 +44,8 @@ class PendingSpace extends GeneralComponent {
 
         this.setState({
           userCount: userCount,
-          remainingUsers: this.state.requiredUsers - userCount
+          remainingUsers: this.state.requiredUsers - userCount,
+          loaded: true
         });
 
         // Update user session item
@@ -79,6 +82,14 @@ class PendingSpace extends GeneralComponent {
   }
 
   render() {
+    if(!this.state.loaded) {
+      return (
+        <div id="pendingSpace">
+          <Spinner type="border" color="dark" />
+        </div>
+      );
+    }
+
     return(
       <div id="pendingSpace">
         <div className="statusStatement">
