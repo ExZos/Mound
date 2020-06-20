@@ -168,35 +168,12 @@ exports[`MessageSpace should render spinner while loading messages with props an
 <div
   id="messageSpace"
 >
-  <div
-    className="messages"
+  <Spinner
+    color="dark"
+    tag="div"
+    type="border"
   >
-    <Spinner
-      color="dark"
-      tag="div"
-      type="border"
-    >
-      Loading...
-    </Spinner>
-  </div>
-  <div>
-    <form
-      onSubmit={[Function]}
-    >
-      <textarea
-        autoFocus={true}
-        name="content"
-        onChange={[Function]}
-        onKeyDown={[Function]}
-        placeholder="Type a message... "
-        value=""
-      />
-    </form>
-  </div>
-  <br />
-  <PollSpace
-    spaceID={1}
-    userID={1}
-  />
+    Loading...
+  </Spinner>
 </div>
 `;

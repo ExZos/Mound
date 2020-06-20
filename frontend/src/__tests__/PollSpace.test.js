@@ -71,8 +71,4 @@ describe('PollSpace', () => {
     });
     expect(await spyGet).toHaveBeenCalled();
   });
-
-  it('should ', () => {
-
-  });
 });

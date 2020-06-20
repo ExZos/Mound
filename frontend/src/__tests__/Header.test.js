@@ -65,8 +65,4 @@ describe('Header', () => {
 
     expect(sessionStorage.getItem('users')).toBeNull();
   });
-
-  it('should ', () => {
-
-  });
 });

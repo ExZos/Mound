@@ -6,7 +6,6 @@ import PollSpace from './PollSpace';
 import { server, api } from '../server';
 import '../styles/messageSpace.css';
 
-// TODO: fix updateUserLastActive cancelling 'x' close button
 class MessageSpace extends GeneralComponent {
   constructor(props) {
     super(props);
@@ -60,9 +59,11 @@ class MessageSpace extends GeneralComponent {
   updateUserLastActive= () => {
     server.put(api.users + this.user.id + '/', this.user)
       .then((res) => {
-        this.addToSessionArrayItem('users', res.data);
+        if(this.state.loaded) {
+          this.addToSessionArrayItem('users', res.data);
 
-        this.props.updateState();
+          this.props.updateState();
+        }
       })
       .catch((err) => {
         // User deleted: force logout
@@ -95,6 +96,7 @@ class MessageSpace extends GeneralComponent {
   }
 
   toggleMessageTimestamp = (e) => {
+    console.log(e.target.className);
     if(e.target.nextSibling.style.display) {
       e.target.nextSibling.style.display = "";
     }
@@ -106,14 +108,8 @@ class MessageSpace extends GeneralComponent {
   renderMessages = () => {
     const messages = this.state.messages;
 
-    // Getting messages
-    if(!this.state.loaded) {
-      return (
-        <Spinner type="border" color="dark" />
-      );
-    }
     // No messages
-    else if(messages.length === 0) {
+    if(messages.length === 0) {
       return (
         <div className="noMessages">
           Not much of a convo here huh?
@@ -141,6 +137,14 @@ class MessageSpace extends GeneralComponent {
   }
 
   render() {
+    if(!this.state.loaded) {
+      return (
+        <div id="messageSpace">
+          <Spinner type="border" color="dark" />
+        </div>
+      );
+    }
+
     return(
       <div id="messageSpace">
         <div className="messages">

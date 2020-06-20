@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
+import styled from 'styled-components';
+import 'jest-styled-components';
 
 import MessageSpace from '../components/MessageSpace';
 import TestingUtilities from '../TestingUtilities';
@@ -35,6 +37,7 @@ describe('MessageSpace', () => {
 
     expect(component).toMatchSnapshot();
     expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.getMessagesInSpace + 1);
     expect(messages).toHaveLength(0);
     expect(noMessages).toHaveLength(1);
   });
@@ -46,6 +49,7 @@ describe('MessageSpace', () => {
 
     expect(component).toMatchSnapshot();
     expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.getMessagesInSpace + 2);
     expect(messages).toHaveLength(5);
   });
 
@@ -55,6 +59,7 @@ describe('MessageSpace', () => {
     const messages = component.find('div.message.own div.sender');
 
     expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.getMessagesInSpace + 2);
     expect(messages).toHaveLength(2);
     expect(messages.at(0).text()).toEqual('You');
     expect(messages.at(1).text()).toEqual('You');
@@ -103,20 +108,10 @@ describe('MessageSpace', () => {
 
   // TODO: finish this
   it('should show message timestamp on message content click', async () => {
-    const component = await shallow(<MessageSpace spaceID={2} updateState={jest.fn()} history={history} />);
-    const messageContents = component.find('div.content');
-    const messageTimestamps = component.find('div.timestamp');
+    // const component = await shallow(<MessageSpace spaceID={2} updateState={jest.fn()} history={history} />);
+    // const messageContents = component.find('div.content');
+    // const messageTimestamps = component.find('div.timestamp');
 
-    // messageContents.at(0).props().onClick({
-    //   target: {
-    //     nextSibling: {
-    //       style: {
-    //         display: ''
-    //       }
-    //     }
-    //   }
-    // });
-
-    // console.log(messageTimestamps.get(0).props.style);
+    // expect(messageTimestamps.at(0)).toHaveStyleRule('display', 'inherit');
   });
 });

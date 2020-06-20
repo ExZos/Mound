@@ -73,12 +73,4 @@ describe('PendingUser', () => {
     expect(resultingStatement.text()).toContain('rejected');
     expect(mockUpdateState).not.toHaveBeenCalled();
   });
-
-  it('should ', () => {
-
-  });
-
-  it('should ', () => {
-
-  });
 });

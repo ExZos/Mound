@@ -65,12 +65,4 @@ describe('PendingSpace', () => {
     expect(resultingStatement.text()).toContain('more user');
     expect(mockUpdateState).not.toHaveBeenCalled();
   });
-
-  it('should ', () => {
-
-  });
-
-  it('should ', () => {
-
-  });
 });
