@@ -87,7 +87,7 @@ describe('Home', () => {
         name: ''
       }
     });
-    await button.props().onClick();
+    await await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + '/');

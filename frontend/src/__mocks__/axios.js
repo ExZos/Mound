@@ -13,6 +13,35 @@ const axios = {
           }
         });
 
+      case api.getUserInSpaceByName + '1/user1':
+        return Promise.resolve({
+          data: {
+            id: 1,
+            name: 'user1',
+            space: 1,
+            space_name: 'space1',
+            space_status: true
+          }
+        });
+
+      case api.getPendingJoinPollInSpaceByName + '2/user2':
+        return Promise.resolve({
+          data: {
+            id: 2,
+            space: 2,
+            name: 'user2'
+          }
+        });
+
+      case api.getPendingJoinPollInSpaceByName + '3/user3':
+        return Promise.resolve({
+          data: {
+            id: 3,
+            space: 3,
+            name: 'user3'
+          }
+        });
+
       case api.getUserCountInSpaceForUser + '1/1':
         return Promise.resolve({
           data: {

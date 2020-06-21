@@ -12,9 +12,9 @@ const tutils = new TestingUtilities();
 
 describe('PendingSpace', () => {
   beforeEach(() => {
-    tutils.addUserSessionItem(1, 1);
-    tutils.addUserSessionItem(2, 2);
-    tutils.addUserSessionItem(3, 3);
+    tutils.addUserSessionItem(1, 1, undefined);
+    tutils.addUserSessionItem(2, 2, undefined);
+    tutils.addUserSessionItem(3, 3, undefined);
   });
 
   it('should render approved correctly with props and session', async () => {

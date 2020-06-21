@@ -14,9 +14,9 @@ const tutils = new TestingUtilities();
 
 describe('MessageSpace', () => {
   beforeEach(() => {
-    tutils.addUserSessionItem(1, 1);
-    tutils.addUserSessionItem(2, 2);
-    tutils.addUserSessionItem(3, 3);
+    tutils.addUserSessionItem(1, 1, undefined);
+    tutils.addUserSessionItem(2, 2, undefined);
+    tutils.addUserSessionItem(3, 3, undefined);
   });
 
   it('should render spinner while loading messages with props and session', () => {

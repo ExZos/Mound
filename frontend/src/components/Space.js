@@ -54,7 +54,11 @@ class Space extends GeneralComponent {
             });
           })
           // Create user or join poll
-          .catch((err) => this.toggleModal());
+          .catch((err) => {
+            if(this.state.user.name) {
+              this.toggleModal();
+            }
+          });
       });
   }
 

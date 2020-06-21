@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Space should render MessageSpace with props and session 1`] = `
+<div
+  id="space"
+>
+  <Header
+    spaceID={2}
+  />
+  <br />
+  <Nav
+    className="header"
+    tag="ul"
+    vertical={false}
+  >
+    <NavItem
+      className="user"
+      tag="li"
+    >
+      user2
+    </NavItem>
+    <NavItem
+      className="space"
+      tag="li"
+    >
+      space2
+    </NavItem>
+    <NavItem
+      className="close"
+      tag="li"
+    >
+      <Link
+        onClick={[Function]}
+        tabIndex="-1"
+        to="/"
+      >
+        <Button
+          close={true}
+          color="secondary"
+          tabIndex="-1"
+          tag="button"
+        />
+      </Link>
+    </NavItem>
+  </Nav>
+  <br />
+  <MessageSpace
+    spaceID={2}
+    updateState={[Function]}
+  />
+</div>
+`;
+
+exports[`Space should render PendingSpace with props and session 1`] = `
+<div
+  id="space"
+>
+  <Header
+    spaceID={3}
+  />
+  <br />
+  <Nav
+    className="header"
+    tag="ul"
+    vertical={false}
+  >
+    <NavItem
+      className="user"
+      tag="li"
+    >
+      userundefined
+    </NavItem>
+    <NavItem
+      className="space"
+      tag="li"
+    >
+      space3
+    </NavItem>
+    <NavItem
+      className="close"
+      tag="li"
+    >
+      <Link
+        onClick={[Function]}
+        tabIndex="-1"
+        to="/"
+      >
+        <Button
+          close={true}
+          color="secondary"
+          tabIndex="-1"
+          tag="button"
+        />
+      </Link>
+    </NavItem>
+  </Nav>
+  <br />
+  <PendingSpace
+    spaceID={3}
+    updateState={[Function]}
+  />
+</div>
+`;
+
+exports[`Space should render PendingUser with props and session  1`] = `
+<div
+  id="space"
+>
+  <Header
+    spaceID={3}
+  />
+  <br />
+  <Nav
+    className="header"
+    tag="ul"
+    vertical={false}
+  >
+    <NavItem
+      className="user"
+      tag="li"
+    >
+      userundefined
+    </NavItem>
+    <NavItem
+      className="space"
+      tag="li"
+    >
+      space3
+    </NavItem>
+    <NavItem
+      className="close"
+      tag="li"
+    >
+      <Link
+        onClick={[Function]}
+        tabIndex="-1"
+        to="/"
+      >
+        <Button
+          close={true}
+          color="secondary"
+          tabIndex="-1"
+          tag="button"
+        />
+      </Link>
+    </NavItem>
+  </Nav>
+  <br />
+  <PendingUser
+    spaceID={3}
+    updateState={[Function]}
+  />
+</div>
+`;
+
+exports[`Space should render correctly with props but no session 1`] = `
+<div
+  id="space"
+>
+  <Header
+    spaceID={1}
+  />
+  <br />
+  <Nav
+    className="header"
+    tag="ul"
+    vertical={false}
+  >
+    <NavItem
+      className="space"
+      tag="li"
+    >
+      space1
+    </NavItem>
+  </Nav>
+  <br />
+  <div>
+    <form
+      id="getUserInSpaceByName"
+      onSubmit={[Function]}
+    >
+      <input
+        autoFocus={true}
+        name="name"
+        onChange={[Function]}
+        placeholder="Type a user name..."
+        type="text"
+        value=""
+      />
+      <button
+        onClick={[Function]}
+        tabIndex="-1"
+      >
+        ENTER
+      </button>
+    </form>
+    <ConfirmModal
+      confirm={[Function]}
+      mBody="Do you want to request to join this space as ''"
+      mHeader="User '' does not exist"
+      toggleModal={[Function]}
+    />
+  </div>
+</div>
+`;

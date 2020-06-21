@@ -25,9 +25,9 @@ describe('Header', () => {
   });
 
   it('should render tabs with session storage', () => {
-    tutils.addUserSessionItem(1, 1);
-    tutils.addUserSessionItem(2, 2);
-    tutils.addUserSessionItem(3, 3);
+    tutils.addUserSessionItem(1, 1, undefined);
+    tutils.addUserSessionItem(2, 2, undefined);
+    tutils.addUserSessionItem(3, 3, undefined);
 
     component.setProps();
     const tabs = component.find('span.spaceNavItem');
@@ -40,9 +40,9 @@ describe('Header', () => {
   });
 
   it('should highlight a tab with props and session', () => {
-    tutils.addUserSessionItem(1, 1);
-    tutils.addUserSessionItem(2, 2);
-    tutils.addUserSessionItem(3, 3);
+    tutils.addUserSessionItem(1, 1, undefined);
+    tutils.addUserSessionItem(2, 2, undefined);
+    tutils.addUserSessionItem(3, 3, undefined);
 
     component.setProps({
       spaceID: 2
@@ -54,9 +54,9 @@ describe('Header', () => {
   });
 
   it('should clear session on clear click', () => {
-    tutils.addUserSessionItem(1, 1);
-    tutils.addUserSessionItem(2, 2);
-    tutils.addUserSessionItem(3, 3);
+    tutils.addUserSessionItem(1, 1, undefined);
+    tutils.addUserSessionItem(2, 2, undefined);
+    tutils.addUserSessionItem(3, 3, undefined);
 
     component.setProps();
     const clear = component.find('Link.clearSesh');
