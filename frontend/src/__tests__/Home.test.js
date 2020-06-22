@@ -9,17 +9,14 @@ import { endpoints as api } from '../endpoints';
 const history = createBrowserHistory();
 
 describe('Home', () => {
-  let component;
-
-  beforeEach(() => {
-    component = shallow(<Home />);
-  });
-
   it('should render correctly with no props', () => {
+    const component = shallow(<Home />);
+
     expect(component).toMatchSnapshot();
   });
 
   it('should create a state entry equal to the input value', () => {
+    const component = shallow(<Home />);
     const input = component.find('input');
 
     input.props().onChange({
@@ -34,9 +31,7 @@ describe('Home', () => {
   });
 
   it('should create a state entry on valid submit', async () => {
-    component.setProps({
-      history: history
-    });
+    const component = shallow(<Home history={history} />);
     const button = component.find('button');
     const spy = jest.spyOn(axios, 'get');
 
@@ -54,9 +49,7 @@ describe('Home', () => {
   });
 
   it('should not create a state entry on invalid submit and should trigger modal', async () => {
-    component.setProps({
-      history: history
-    });
+    const component = shallow(<Home history={history} />);
     const button = component.find('button');
     const spy = jest.spyOn(axios, 'get');
 
@@ -76,9 +69,7 @@ describe('Home', () => {
   });
 
   it('should not create a state entry nor trigger modal on empty submit', async () => {
-    component.setProps({
-      history: history
-    });
+    const component = shallow(<Home history={history} />);
     const button = component.find('button');
     const spy = jest.spyOn(axios, 'get');
 
@@ -94,5 +85,23 @@ describe('Home', () => {
     expect(component.state('space')).toBeDefined();
     expect(component.state('space')).not.toHaveProperty('id');
     expect(component.state('showModal')).toBeUndefined();
+  });
+
+  it('should call post api on modal confirm', () => {
+    const component = shallow(<Home history={history} />);
+    const confirmModal = component.find('ConfirmModal');
+    const spy = jest.spyOn(axios, 'post');
+
+    component.setState({
+      space: {
+        name: 'space1'
+      }
+    });
+    confirmModal.props().confirm();
+
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.spaces, {
+      name: 'space1'
+    });
   });
 });

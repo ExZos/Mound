@@ -172,6 +172,16 @@ const axios = {
   },
   post: (url, obj) => {
     switch(url) {
+      case api.spaces:
+        return Promise.resolve({
+          data: obj
+        });
+
+      case api.createNameRelatedPoll:
+        return Promise.resolve({
+          data: obj
+        });
+
       case api.messages:
         return Promise.resolve({
           data: obj

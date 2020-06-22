@@ -10,6 +10,7 @@ class MessageSpace extends GeneralComponent {
   constructor(props) {
     super(props);
 
+    this.loaded = false;
     this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
@@ -17,8 +18,7 @@ class MessageSpace extends GeneralComponent {
       message: {
         user: this.user.id,
         content: ''
-      },
-      loaded: false
+      }
     };
   }
 
@@ -32,9 +32,7 @@ class MessageSpace extends GeneralComponent {
 
   componentDidUpdate() {
     window.onpopstate = (e) => {
-      this.setState({
-        loaded: false
-      });
+      this.loaded = false;
 
       this.props.updateState();
       this.user = this.getSessionItem('users')[this.props.spaceID];
@@ -43,15 +41,20 @@ class MessageSpace extends GeneralComponent {
   }
 
   componentWillUnmount() {
+    this.loaded = false;
+
     clearInterval(this.interval);
   }
 
   getMessages = () => {
     server.get(api.getMessagesInSpace + this.user.space)
-      .then((res) => this.setState({
-        messages: res.data,
-        loaded: true
-      }));
+      .then((res) => {
+        this.loaded = true;
+
+        this.setState({
+          messages: res.data
+        });
+      });
 
     this.updateUserLastActive();
   }
@@ -59,7 +62,7 @@ class MessageSpace extends GeneralComponent {
   updateUserLastActive= () => {
     server.put(api.users + this.user.id + '/', this.user)
       .then((res) => {
-        if(this.state.loaded) {
+        if(this.loaded) {
           this.addToSessionArrayItem('users', res.data);
 
           this.props.updateState();
@@ -137,7 +140,7 @@ class MessageSpace extends GeneralComponent {
   }
 
   render() {
-    if(!this.state.loaded) {
+    if(!this.loaded) {
       return (
         <div id="messageSpace">
           <Spinner type="border" color="dark" />

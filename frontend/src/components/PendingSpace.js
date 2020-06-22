@@ -9,13 +9,13 @@ class PendingSpace extends GeneralComponent {
   constructor(props) {
     super(props);
 
+    this.loaded = false;
     this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
       requiredUsers: 3,
       userCount: '',
-      remainingUsers: '',
-      loaded: false
+      remainingUsers: ''
     };
   }
 
@@ -26,6 +26,8 @@ class PendingSpace extends GeneralComponent {
 
   componentDidUpdate() {
     window.onpopstate = (e) => {
+      this.loaded = false;
+
       this.props.updateState();
       this.user =  this.getSessionItem('users')[this.props.spaceID];
       this.getUserCountOfSpace();
@@ -39,6 +41,8 @@ class PendingSpace extends GeneralComponent {
   getUserCountOfSpace = () => {
     server.get(api.getUserCountInSpaceForUser + this.props.spaceID + '/' + this.user.id)
       .then((res) => {
+        this.loaded = true;
+
         const userCount = res.data['userCount'];
         const user = res.data['user'];
 
@@ -82,7 +86,7 @@ class PendingSpace extends GeneralComponent {
   }
 
   render() {
-    if(!this.state.loaded) {
+    if(!this.loaded) {
       return (
         <div id="pendingSpace">
           <Spinner type="border" color="dark" />

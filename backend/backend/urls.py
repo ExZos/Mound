@@ -42,7 +42,7 @@ urlpatterns = [
     path('poll/getPendingUnvotedForUser/<int:userID>/', views.PollView.getPendingUnvotedPollsForUser),
     path('poll/getPendingJoinInSpaceByName/<int:spaceID>/<userName>/', views.PollView.getPendingJoinPollInSpaceByName),
     path('poll/getJoinResults/<int:pollID>/<userName>/', views.PollView.getJoinPollResults),
-    path('poll/createJoin/', views.PollView.createJoinPoll),
+    path('poll/createNameRelated/', views.PollView.createNameRelatedPoll),
     path('vote/getForPoll/<int:pollID>/', views.VoteView.getVotesForPoll),
     path('vote/getPositivesForPoll/<int:pollID>/', views.VoteView.getPositiveVotesForPoll),
     path('vote/getForPollByUser/<int:pollID>/<int:userID>/', views.VoteView.getVoteForPollByUser),

@@ -9,6 +9,7 @@ class PendingUser extends GeneralComponent {
   constructor(props) {
     super(props);
 
+    this.loaded = false;
     this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
@@ -16,8 +17,7 @@ class PendingUser extends GeneralComponent {
       requiredVoteCount: '',
       positiveVoteCount: '',
       negativeVoteCount: '',
-      remainingVoteCount: '',
-      loaded: false
+      remainingVoteCount: ''
     };
   }
 
@@ -28,6 +28,8 @@ class PendingUser extends GeneralComponent {
 
   componentDidUpdate() {
     window.onpopstate = (e) => {
+      this.loaded = false;
+
       this.props.updateState();
       this.user =  this.getSessionItem('users')[this.props.spaceID];
       this.getPollResults();
@@ -42,6 +44,8 @@ class PendingUser extends GeneralComponent {
     // Get poll results
     server.get(api.getJoinPollResults + this.user.poll + '/' + this.user.name)
       .then((res) => {
+        this.loaded = true;
+
         const userCount = res.data['userCount'];
         const positiveVoteCount = res.data['positiveVoteCount'];
         const negativeVoteCount = res.data['negativeVoteCount'];
@@ -52,8 +56,7 @@ class PendingUser extends GeneralComponent {
           requiredVoteCount: userCount,
           positiveVoteCount: positiveVoteCount,
           negativeVoteCount: negativeVoteCount,
-          remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount),
-          loaded: true
+          remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount)
         });
 
         // Update user session item
@@ -103,7 +106,7 @@ class PendingUser extends GeneralComponent {
   }
 
   render() {
-    if(!this.state.loaded) {
+    if(!this.loaded) {
       return (
         <div id="pendingSpace">
           <Spinner type="border" color="dark" />

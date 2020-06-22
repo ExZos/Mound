@@ -10,14 +10,12 @@ const history = createBrowserHistory();
 const tutils = new TestingUtilities();
 
 describe('Header', () => {
-  let component;
-
   beforeEach(() => {
-    component = shallow(<Header />);
     sessionStorage.clear();
   });
 
   it('should render correctly without props nor session', () => {
+    const component = shallow(<Header />);
     const tabs = component.find('span.spaceNavItem');
 
     expect(component).toMatchSnapshot();
@@ -29,7 +27,7 @@ describe('Header', () => {
     tutils.addUserSessionItem(2, 2, undefined);
     tutils.addUserSessionItem(3, 3, undefined);
 
-    component.setProps();
+    const component = shallow(<Header />);
     const tabs = component.find('span.spaceNavItem');
 
     expect(component).toMatchSnapshot();
@@ -44,9 +42,7 @@ describe('Header', () => {
     tutils.addUserSessionItem(2, 2, undefined);
     tutils.addUserSessionItem(3, 3, undefined);
 
-    component.setProps({
-      spaceID: 2
-    });
+    const component = shallow(<Header spaceID={2} />);
     const tab = component.find('Link.active');
 
     expect(tab).toHaveLength(1);
@@ -58,7 +54,7 @@ describe('Header', () => {
     tutils.addUserSessionItem(2, 2, undefined);
     tutils.addUserSessionItem(3, 3, undefined);
 
-    component.setProps();
+    const component = shallow(<Header />);
     const clear = component.find('Link.clearSesh');
 
     clear.props().onClick();

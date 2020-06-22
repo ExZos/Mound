@@ -69,8 +69,8 @@ class Space extends GeneralComponent {
         space: this.state.space.id,
         name: this.state.user.name
       }
-
-      server.post(api.createJoinPoll, poll)
+      
+      server.post(api.createNameRelatedPoll, poll)
         .then((res) => {
           let user = this.state.user;
           user.poll = res.data.id;

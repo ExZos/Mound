@@ -275,4 +275,34 @@ describe('Space', () => {
     expect(tutils.getSessionItem('users')).toBeNull();
     expect(component.state('showModal')).toBeUndefined();
   });
+
+  it('should call post api on modal confirm', () => {
+    const props = {
+      state: {
+        space: {
+          id: 1,
+          name: 'space1',
+          status: true
+        }
+      }
+    };
+
+    const component = shallow(<Space location={props} />);
+    const confirmModal = component.find('ConfirmModal');
+    const spy = jest.spyOn(axios, 'post');
+
+    component.setState({
+      user: {
+        name: 'user1',
+        space: 1
+      }
+    });
+    confirmModal.props().confirm();
+
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith(api.createNameRelatedPoll, {
+      space: 1,
+      name: 'user1'
+    });
+  });
 });

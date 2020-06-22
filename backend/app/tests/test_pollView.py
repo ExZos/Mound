@@ -215,7 +215,7 @@ class getJoinPollResultsTests(TestCase):
         response = self.client.get('/poll/getJoinResults/5/Alex/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-class createJoinPollTests(TestCase):
+class createNameRelatedPollTests(TestCase):
     client = APIClient()
 
     @classmethod
@@ -225,25 +225,25 @@ class createJoinPollTests(TestCase):
         self.client.post('/api/users/', {'name': 'Alex', 'space': 1}, format='json')
         self.client.post('/api/polls/', {'space': 2, 'name': 'Zaray'}, format='json')
 
-    def test_create_join_poll_w_unique_name(self):
-        response = self.client.post('/poll/createJoin/', {'space': 1, 'name': 'Bob'})
+    def test_create_nr_poll_w_unique_name(self):
+        response = self.client.post('/poll/createNameRelated/', {'space': 1, 'name': 'Bob'})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_create_join_poll_w_recurring_name(self):
-        response = self.client.post('/poll/createJoin/', {'space': 2, 'name': 'Alex'})
+    def test_create_nr_poll_w_recurring_name(self):
+        response = self.client.post('/poll/createNameRelated/', {'space': 2, 'name': 'Alex'})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_fail_create_join_poll_w_matching_join_poll_name(self):
-        response = self.client.post('/poll/createJoin/', {'space': 2, 'name': 'Zaray'})
+    def test_fail_create_nr_poll_w_matching_join_poll_name(self):
+        response = self.client.post('/poll/createNameRelated/', {'space': 2, 'name': 'Zaray'})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertContains(response, "Unique", status_code=status.HTTP_400_BAD_REQUEST)
 
-    def test_fail_create_join_poll_w_matching_user_name(self):
-        response = self.client.post('/poll/createJoin/', {'space': 1, 'name': 'Alex'})
+    def test_fail_create_nr_poll_w_matching_user_name(self):
+        response = self.client.post('/poll/createNameRelated/', {'space': 1, 'name': 'Alex'})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertContains(response, "Unique", status_code=status.HTTP_400_BAD_REQUEST)
 
-    def test_fail_create_join_poll_in_missing_space(self):
-        response = self.client.post('/poll/createJoin/', {'space': 3, 'name': 'Alex'})
+    def test_fail_create_nr_poll_in_missing_space(self):
+        response = self.client.post('/poll/createNameRelated/', {'space': 3, 'name': 'Alex'})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertContains(response, "Invalid", status_code=status.HTTP_400_BAD_REQUEST)

@@ -23,8 +23,6 @@ from .models import Vote
 
 # TODO: if Space.status not True in a week --> delete
 # TODO: Space with 0 users deleted in a day
-# TODO: Space.status = False -> no message space
-# TODO: add response.status = HTTP_404_NOT_FOUND to post methods
 class SpaceView(viewsets.ModelViewSet):
 	serializer_class = SpaceSerializer
 	queryset = Space.objects.all()
@@ -55,7 +53,6 @@ class SpaceView(viewsets.ModelViewSet):
 			'userCount': userCount
 		})
 
-# TODO: move create join poll logic here
 class UserView(viewsets.ModelViewSet):
 	serializer_class = UserSerializer
 	queryset = User.objects.all()
@@ -211,7 +208,7 @@ class PollView(viewsets.ModelViewSet):
 		})
 
 	@api_view(['POST',])
-	def createJoinPoll(request):
+	def createNameRelatedPoll(request):
 		pollSerializer = PollSerializer(data=request.data)
 		if pollSerializer.is_valid():
 			# Check if existing pending join poll in space with name
