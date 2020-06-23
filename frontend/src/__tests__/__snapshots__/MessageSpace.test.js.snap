@@ -126,6 +126,11 @@ exports[`MessageSpace should render messages correctly with props and session 1`
     spaceID={2}
     userID={2}
   />
+  <br />
+  <NamePoll
+    spaceID={2}
+    userID={2}
+  />
 </div>
 `;
 
@@ -158,6 +163,11 @@ exports[`MessageSpace should render no messages correctly with props and session
   </div>
   <br />
   <PollSpace
+    spaceID={1}
+    userID={1}
+  />
+  <br />
+  <NamePoll
     spaceID={1}
     userID={1}
   />

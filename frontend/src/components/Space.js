@@ -68,8 +68,8 @@ class Space extends GeneralComponent {
       const poll = {
         space: this.state.space.id,
         name: this.state.user.name
-      }
-      
+      };
+
       server.post(api.createNameRelatedPoll, poll)
         .then((res) => {
           let user = this.state.user;

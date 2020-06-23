@@ -211,8 +211,8 @@ class PollView(viewsets.ModelViewSet):
 	def createNameRelatedPoll(request):
 		pollSerializer = PollSerializer(data=request.data)
 		if pollSerializer.is_valid():
-			# Check if existing pending join poll in space with name
-			polls = Poll.objects.filter(status=None, user=None, space=pollSerializer.validated_data['space'], name=pollSerializer.validated_data['name'])
+			# Check if existing pending name related poll in space with name
+			polls = Poll.objects.filter(status=None, space=pollSerializer.validated_data['space'], name=pollSerializer.validated_data['name'])
 			pollsSerializer = PollSerializer(polls, many=True)
 			if len(pollsSerializer.data) > 0:
 				return Response("Unique poll name conflict: User '" + pollSerializer.validated_data['name'] + "' has already requested to join.", status=status.HTTP_400_BAD_REQUEST)

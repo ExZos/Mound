@@ -233,7 +233,7 @@ class createNameRelatedPollTests(TestCase):
         response = self.client.post('/poll/createNameRelated/', {'space': 2, 'name': 'Alex'})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_fail_create_nr_poll_w_matching_join_poll_name(self):
+    def test_fail_create_nr_poll_w_matching_nr_poll_name(self):
         response = self.client.post('/poll/createNameRelated/', {'space': 2, 'name': 'Zaray'})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertContains(response, "Unique", status_code=status.HTTP_400_BAD_REQUEST)

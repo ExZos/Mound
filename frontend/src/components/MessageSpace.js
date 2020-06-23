@@ -3,6 +3,7 @@ import { Spinner } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import PollSpace from './PollSpace';
+import NamePoll from './NamePoll';
 import { server, api } from '../server';
 import '../styles/messageSpace.css';
 
@@ -167,6 +168,10 @@ class MessageSpace extends GeneralComponent {
         <br />
 
         <PollSpace spaceID={this.user.space} userID={this.user.id} />
+
+        <br />
+
+        <NamePoll spaceID={this.user.space} userID={this.user.id} />
       </div>
     );
   }
