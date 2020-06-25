@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Drawer } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
-import '../styles/header.css';
+import '../styles/sidebar.css';
 
 // TODO: new message indicators
-class Header extends GeneralComponent {
+class Sidebar extends GeneralComponent {
   componentDidMount(props) {
     this.pushMainContent();
   }
@@ -52,7 +52,7 @@ class Header extends GeneralComponent {
   render() {
     return (
       <Drawer invert variant="permanent">
-        <div id="header">
+        <div id="sidebar">
           <div id="menuNav">
             <span className="menuItem">
               <Link to="/" tabIndex="-1">
@@ -74,4 +74,4 @@ class Header extends GeneralComponent {
   }
 }
 
-export default Header;
+export default Sidebar;

@@ -3,19 +3,19 @@ import { shallow, mount, render } from 'enzyme';
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
 
-import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
 import TestingUtilities from '../TestingUtilities';
 
 const history = createBrowserHistory();
 const tutils = new TestingUtilities();
 
-describe('Header', () => {
+describe('Sidebar', () => {
   beforeEach(() => {
     sessionStorage.clear();
   });
 
   it('should render correctly without props nor session', () => {
-    const component = shallow(<Header />);
+    const component = shallow(<Sidebar />);
     const tabs = component.find('div.spaceNavItem');
 
     expect(component).toMatchSnapshot();
@@ -27,7 +27,7 @@ describe('Header', () => {
     tutils.addUserSessionItem(2, 2, undefined);
     tutils.addUserSessionItem(3, 3, undefined);
 
-    const component = shallow(<Header />);
+    const component = shallow(<Sidebar />);
     const tabs = component.find('div.spaceNavItem');
 
     expect(component).toMatchSnapshot();
@@ -42,7 +42,7 @@ describe('Header', () => {
     tutils.addUserSessionItem(2, 2, undefined);
     tutils.addUserSessionItem(3, 3, undefined);
 
-    const component = shallow(<Header spaceID={2} />);
+    const component = shallow(<Sidebar spaceID={2} />);
     const tab = component.find('Link.active');
 
     expect(tab).toHaveLength(1);
@@ -54,7 +54,7 @@ describe('Header', () => {
     tutils.addUserSessionItem(2, 2, undefined);
     tutils.addUserSessionItem(3, 3, undefined);
 
-    const component = shallow(<Header />);
+    const component = shallow(<Sidebar />);
     const clear = component.find('Link.clearSesh');
 
     clear.props().onClick();

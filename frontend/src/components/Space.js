@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Nav, NavItem, Button } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
-import Header from './Header';
+import Sidebar from './Sidebar';
 import ConfirmModal from './ConfirmModal';
 import MessageSpace from './MessageSpace';
 import PendingUser from './PendingUser';
@@ -171,7 +171,7 @@ class Space extends GeneralComponent {
 
     return (
       <div id="space">
-        <Header />
+        <Sidebar />
 
         <br />
 

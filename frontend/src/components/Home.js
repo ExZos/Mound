@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GeneralComponent from './GeneralComponent';
-import Header from './Header';
+import Sidebar from './Sidebar';
 import ConfirmModal from './ConfirmModal';
 import { server, api } from '../server';
 import '../styles/home.css';
@@ -62,7 +62,7 @@ class Home extends GeneralComponent {
   render() {
     return (
       <div id="home">
-        <Header />
+        <Sidebar />
 
         <br />
 

@@ -4,7 +4,7 @@ exports[`Home should render correctly with no props 1`] = `
 <div
   id="home"
 >
-  <Header />
+  <Sidebar />
   <br />
   <form
     id="getSpaceByName"

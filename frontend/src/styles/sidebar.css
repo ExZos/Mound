@@ -1,9 +1,9 @@
-div#header div#menuNav {
+div#sidebar div#menuNav {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   padding: 0.3rem 0;
 }
 
-div#header div#menuNav span.menuItem a {
+div#sidebar div#menuNav span.menuItem a {
   text-decoration: none;
   outline: none;
   padding: 0.5rem 1rem;
@@ -14,17 +14,17 @@ div#header div#menuNav span.menuItem a {
   -webkit-transition: background-color 0.4s;
 }
 
-div#header div#menuNav span.menuItem a:hover {
+div#sidebar div#menuNav span.menuItem a:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-div#header div#spaceNav {
+div#sidebar div#spaceNav {
   text-align: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   white-space: nowrap;
 }
 
-div#header div#spaceNav div.spaceNavItem a {
+div#sidebar div#spaceNav div.spaceNavItem a {
   text-decoration: none;
   outline: none;
   padding: 0.5rem 1rem;
@@ -38,11 +38,11 @@ div#header div#spaceNav div.spaceNavItem a {
   -webkit-transition: background-color 0.4s;
 }
 
-div#header div#spaceNav div.spaceNavItem a:hover {
+div#sidebar div#spaceNav div.spaceNavItem a:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-div#header div#spaceNav div.spaceNavItem a.active {
+div#sidebar div#spaceNav div.spaceNavItem a.active {
     background-color: rgba(0, 0, 0, 0.1);
     pointer-events: none;
     border: 1px solid rgba(0, 0, 0.1);
