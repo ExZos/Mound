@@ -6,32 +6,30 @@ exports[`Home should render correctly with no props 1`] = `
 >
   <Header />
   <br />
-  <div>
-    <form
-      id="getSpaceByName"
-      onSubmit={[Function]}
-    >
-      <input
-        autoFocus={true}
-        name="name"
-        onChange={[Function]}
-        placeholder="Type a space name..."
-        type="text"
-        value=""
-      />
-      <button
-        onClick={[Function]}
-        tabIndex="-1"
-      >
-        ENTER
-      </button>
-    </form>
-    <ConfirmModal
-      confirm={[Function]}
-      mBody="Do you want to request approval for this space?"
-      mHeader="Space '' does not exist"
-      toggleModal={[Function]}
+  <form
+    id="getSpaceByName"
+    onSubmit={[Function]}
+  >
+    <input
+      autoFocus={true}
+      name="name"
+      onChange={[Function]}
+      placeholder="Type a space name..."
+      type="text"
+      value=""
     />
-  </div>
+    <button
+      onClick={[Function]}
+      tabIndex="-1"
+    >
+      ENTER
+    </button>
+  </form>
+  <ConfirmModal
+    confirm={[Function]}
+    mBody="Do you want to request approval for this space?"
+    mHeader="Space '' does not exist"
+    toggleModal={[Function]}
+  />
 </div>
 `;

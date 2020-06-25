@@ -36,7 +36,7 @@ describe('Space', () => {
     expect(user).toHaveLength(0);
     expect(space).toHaveLength(1);
     expect(space.children().text()).toEqual('space1');
-    expect(close).toHaveLength(0);
+    expect(close).toHaveLength(1);
     expect(spaceForm).toHaveLength(1);
   });
 

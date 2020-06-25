@@ -122,16 +122,6 @@ class Space extends GeneralComponent {
     }
   }
 
-  displayCloseButton = (users) => {
-    if(users && users[this.state.space.id]) {
-      return(
-        <NavItem className="close">
-          <Link tabIndex="-1" to="/" onClick={() => this.removeSessionArrayItem('users', this.state.space.id)}><Button tabIndex="-1" close /></Link>
-        </NavItem>
-      );
-    }
-  }
-
   toggleMessages = (users) => {
     if(users && users[this.state.space.id]) {
       if(users[this.state.space.id].space_status) {
@@ -179,9 +169,9 @@ class Space extends GeneralComponent {
   render() {
     const users = this.getSessionItem('users');
 
-    return(
+    return (
       <div id="space">
-        <Header spaceID={this.state.space.id} />
+        <Header />
 
         <br />
 
@@ -192,7 +182,9 @@ class Space extends GeneralComponent {
             {this.state.space.name}
           </NavItem>
 
-          {this.displayCloseButton(users)}
+          <NavItem className="close">
+            <Link tabIndex="-1" to="/" onClick={() => this.removeSessionArrayItem('users', this.state.space.id)}><Button tabIndex="-1" close /></Link>
+          </NavItem>
         </Nav>
 
         <br />

@@ -18,7 +18,7 @@ describe('Home', () => {
   it('should create a state entry equal to the input value', () => {
     const component = shallow(<Home />);
     const input = component.find('input');
-
+    
     input.props().onChange({
       target: {
         name: 'name',

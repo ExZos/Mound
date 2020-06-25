@@ -66,22 +66,20 @@ class Home extends GeneralComponent {
 
         <br />
 
-        <div>
-          <form id="getSpaceByName" onSubmit={this.handleFormSubmit}>
-            <input type="text" name="name" placeholder="Type a space name..." autoFocus
-              value={this.state.space.name}
-              onChange={(e) => this.handleInputChange(e, 'space')}
-            />
-
-            <button tabIndex="-1" onClick={this.getSpaceByName}>ENTER</button>
-          </form>
-
-          <ConfirmModal showModal={this.state.showModal}
-            toggleModal={this.toggleModal} confirm={this.addSpace}
-            mHeader={"Space '" + this.state.space.name + "' does not exist"}
-            mBody="Do you want to request approval for this space?"
+        <form id="getSpaceByName" onSubmit={this.handleFormSubmit}>
+          <input type="text" name="name" placeholder="Type a space name..." autoFocus
+            value={this.state.space.name}
+            onChange={(e) => this.handleInputChange(e, 'space')}
           />
-        </div>
+
+          <button tabIndex="-1" onClick={this.getSpaceByName}>ENTER</button>
+        </form>
+
+        <ConfirmModal showModal={this.state.showModal}
+          toggleModal={this.toggleModal} confirm={this.addSpace}
+          mHeader={"Space '" + this.state.space.name + "' does not exist"}
+          mBody="Do you want to request approval for this space?"
+        />
       </div>
     );
   }

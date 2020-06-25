@@ -1,17 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Drawer } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import '../styles/header.css';
 
+// TODO: new message indicators
 class Header extends GeneralComponent {
-  // TODO: new message indicators
+  componentDidMount(props) {
+    this.pushMainContent();
+  }
+
+  componentDidUpdate() {
+    this.pushMainContent();
+  }
+
+  pushMainContent = () => {
+    const sidebarContainer = document.getElementsByClassName('MuiPaper-root')[0];
+
+    if(sidebarContainer) {
+      document.body.style.marginLeft = sidebarContainer.offsetWidth + 'px';
+    }
+  }
+
   renderSpaces = () => {
     const users = this.getSessionItem('users');
 
     if(users) {
       return Object.values(users).map(user => (
-        <span key={user.space} className="spaceNavItem ">
+        <div key={user.space} className="spaceNavItem ">
           <Link className={(user.space === this.props.spaceID) ? "active" : ""} tabIndex="-1" to={{
             pathname: "/r/",
             state: {
@@ -27,30 +44,32 @@ class Header extends GeneralComponent {
           }}>
             {user.space_name}
           </Link>
-        </span>
+        </div>
       ));
     }
   }
 
   render() {
-    return(
-      <div id="header">
-        <div id="menuNav">
-          <span className="menuItem">
-            <Link to="/" tabIndex="-1">
-              Home
-            </Link>
-          </span>
+    return (
+      <Drawer invert variant="permanent">
+        <div id="header">
+          <div id="menuNav">
+            <span className="menuItem">
+              <Link to="/" tabIndex="-1">
+                Home
+              </Link>
+            </span>
 
-          <span className="menuItem">
-            <Link to="/" className="clearSesh" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
-          </span>
-        </div>
+            <span className="menuItem">
+              <Link to="/" className="clearSesh" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
+            </span>
+          </div>
 
-        <div id="spaceNav">
-          {this.renderSpaces()}
+          <div id="spaceNav">
+            {this.renderSpaces()}
+          </div>
         </div>
-      </div>
+      </Drawer>
     );
   }
 }

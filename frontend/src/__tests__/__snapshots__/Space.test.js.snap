@@ -4,9 +4,7 @@ exports[`Space should render MessageSpace with props and session 1`] = `
 <div
   id="space"
 >
-  <Header
-    spaceID={2}
-  />
+  <Header />
   <br />
   <Nav
     className="header"
@@ -55,9 +53,7 @@ exports[`Space should render PendingSpace with props and session 1`] = `
 <div
   id="space"
 >
-  <Header
-    spaceID={3}
-  />
+  <Header />
   <br />
   <Nav
     className="header"
@@ -106,9 +102,7 @@ exports[`Space should render PendingUser with props and session  1`] = `
 <div
   id="space"
 >
-  <Header
-    spaceID={3}
-  />
+  <Header />
   <br />
   <Nav
     className="header"
@@ -157,9 +151,7 @@ exports[`Space should render correctly with props but no session 1`] = `
 <div
   id="space"
 >
-  <Header
-    spaceID={1}
-  />
+  <Header />
   <br />
   <Nav
     className="header"
@@ -171,6 +163,23 @@ exports[`Space should render correctly with props but no session 1`] = `
       tag="li"
     >
       space1
+    </NavItem>
+    <NavItem
+      className="close"
+      tag="li"
+    >
+      <Link
+        onClick={[Function]}
+        tabIndex="-1"
+        to="/"
+      >
+        <Button
+          close={true}
+          color="secondary"
+          tabIndex="-1"
+          tag="button"
+        />
+      </Link>
     </NavItem>
   </Nav>
   <br />

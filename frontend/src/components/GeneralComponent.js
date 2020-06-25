@@ -6,7 +6,8 @@ class GeneralComponent extends Component {
 
     this.state = {
       showModal: false,
-      showDropdown: false
+      showDropdown: false,
+      showSidebar: false
     };
   }
 
@@ -45,7 +46,13 @@ class GeneralComponent extends Component {
 
   toggleDropdown = () => {
     this.setState({
-      showModal: !this.state.showDropdown
+      showDropdown: !this.state.showDropdown
+    });
+  }
+
+  toggleSidebar = () => {
+    this.setState({
+      showSidebar: !this.state.showSidebar
     });
   }
 

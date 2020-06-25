@@ -16,7 +16,7 @@ describe('Header', () => {
 
   it('should render correctly without props nor session', () => {
     const component = shallow(<Header />);
-    const tabs = component.find('span.spaceNavItem');
+    const tabs = component.find('div.spaceNavItem');
 
     expect(component).toMatchSnapshot();
     expect(tabs).toHaveLength(0);
@@ -28,7 +28,7 @@ describe('Header', () => {
     tutils.addUserSessionItem(3, 3, undefined);
 
     const component = shallow(<Header />);
-    const tabs = component.find('span.spaceNavItem');
+    const tabs = component.find('div.spaceNavItem');
 
     expect(component).toMatchSnapshot();
     expect(tabs).toHaveLength(3);
