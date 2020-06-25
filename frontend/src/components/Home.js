@@ -2,7 +2,7 @@ import React from 'react';
 
 import GeneralComponent from './GeneralComponent';
 import Sidebar from './Sidebar';
-import ConfirmModal from './ConfirmModal';
+import ConfirmDialog from './ConfirmDialog';
 import { server, api } from '../server';
 import '../styles/home.css';
 
@@ -13,7 +13,8 @@ class Home extends GeneralComponent {
     this.state = {
       space: {
         name: ''
-      }
+      },
+      showModal: false
     };
   }
 
@@ -75,7 +76,7 @@ class Home extends GeneralComponent {
           <button tabIndex="-1" onClick={this.getSpaceByName}>ENTER</button>
         </form>
 
-        <ConfirmModal showModal={this.state.showModal}
+        <ConfirmDialog showModal={this.state.showModal}
           toggleModal={this.toggleModal} confirm={this.addSpace}
           mHeader={"Space '" + this.state.space.name + "' does not exist"}
           mBody="Do you want to request approval for this space?"

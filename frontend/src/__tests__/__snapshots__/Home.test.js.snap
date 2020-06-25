@@ -25,10 +25,11 @@ exports[`Home should render correctly with no props 1`] = `
       ENTER
     </button>
   </form>
-  <ConfirmModal
+  <ConfirmDialog
     confirm={[Function]}
     mBody="Do you want to request approval for this space?"
     mHeader="Space '' does not exist"
+    showModal={false}
     toggleModal={[Function]}
   />
 </div>

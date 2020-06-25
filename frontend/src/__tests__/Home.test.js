@@ -18,7 +18,7 @@ describe('Home', () => {
   it('should create a state entry equal to the input value', () => {
     const component = shallow(<Home />);
     const input = component.find('input');
-    
+
     input.props().onChange({
       target: {
         name: 'name',
@@ -84,12 +84,13 @@ describe('Home', () => {
     expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + '/');
     expect(component.state('space')).toBeDefined();
     expect(component.state('space')).not.toHaveProperty('id');
-    expect(component.state('showModal')).toBeUndefined();
+    expect(component.state('showModal')).toBeDefined();
+    expect(component.state('showModal')).toBeFalsy();
   });
 
   it('should call post api on modal confirm', () => {
     const component = shallow(<Home history={history} />);
-    const confirmModal = component.find('ConfirmModal');
+    const confirmDialog = component.find('ConfirmDialog');
     const spy = jest.spyOn(axios, 'post');
 
     component.setState({
@@ -97,7 +98,7 @@ describe('Home', () => {
         name: 'space1'
       }
     });
-    confirmModal.props().confirm();
+    confirmDialog.props().confirm();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.spaces, {

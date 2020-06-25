@@ -2,12 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Drawer } from '@material-ui/core';
 
+import GamepadIcon from '@material-ui/icons/Gamepad';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+
 import GeneralComponent from './GeneralComponent';
 import '../styles/sidebar.css';
 
 // TODO: new message indicators
 class Sidebar extends GeneralComponent {
   componentDidMount(props) {
+    this.sidebarContainer = document.getElementsByClassName('MuiDrawer-paper')[0];
+
     this.pushMainContent();
   }
 
@@ -16,10 +22,8 @@ class Sidebar extends GeneralComponent {
   }
 
   pushMainContent = () => {
-    const sidebarContainer = document.getElementsByClassName('MuiPaper-root')[0];
-
-    if(sidebarContainer) {
-      document.body.style.marginLeft = sidebarContainer.offsetWidth + 'px';
+    if(this.sidebarContainer) {
+      document.body.style.marginLeft = this.sidebarContainer.offsetWidth + 'px';
     }
   }
 
@@ -49,24 +53,29 @@ class Sidebar extends GeneralComponent {
     }
   }
 
+  // TEMP clear link
   render() {
     return (
-      <Drawer invert variant="permanent">
+      <Drawer variant="permanent">
         <div id="sidebar">
-          <div id="menuNav">
-            <span className="menuItem">
-              <Link to="/" tabIndex="-1">
-                Home
-              </Link>
-            </span>
-
-            <span className="menuItem">
-              <Link to="/" className="clearSesh" tabIndex="-1" onClick={this.clearSession}>CLEAR</Link>
-            </span>
+          <div className="logo">
+            <GamepadIcon fontSize="large" />
           </div>
 
-          <div id="spaceNav">
+          <div className="spaceNav">
             {this.renderSpaces()}
+          </div>
+
+          <div className="menuItem">
+            <Link to="/" tabIndex="-1">
+              <AddCircleOutlineIcon fontSize="large" />
+            </Link>
+          </div>
+
+          <div className="menuItem clear">
+            <Link to="/" tabIndex="-1" onClick={this.clearSession}>
+              <ClearAllIcon fontSize="large" />
+            </Link>
           </div>
         </div>
       </Drawer>

@@ -1,0 +1,6 @@
+#confirmDialog .closeDialog {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  outline: none;
+}

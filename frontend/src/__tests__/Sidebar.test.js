@@ -55,7 +55,7 @@ describe('Sidebar', () => {
     tutils.addUserSessionItem(3, 3, undefined);
 
     const component = shallow(<Sidebar />);
-    const clear = component.find('Link.clearSesh');
+    const clear = component.find('div.menuItem.clear Link');
 
     clear.props().onClick();
 

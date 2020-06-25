@@ -1,7 +1,6 @@
 import React from 'react';
 
 import GeneralComponent from './GeneralComponent';
-// import ConfirmModal from './ConfirmModal';
 import { server, api } from '../server';
 import '../styles/namePoll.css';
 

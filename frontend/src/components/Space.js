@@ -4,7 +4,7 @@ import { Nav, NavItem, Button } from 'reactstrap';
 
 import GeneralComponent from './GeneralComponent';
 import Sidebar from './Sidebar';
-import ConfirmModal from './ConfirmModal';
+import ConfirmDialog from './ConfirmDialog';
 import MessageSpace from './MessageSpace';
 import PendingUser from './PendingUser';
 import PendingSpace from './PendingSpace';
@@ -157,7 +157,7 @@ class Space extends GeneralComponent {
           <button tabIndex="-1" onClick={this.getUserInSpaceByName}>ENTER</button>
         </form>
 
-        <ConfirmModal showModal={this.state.showModal}
+        <ConfirmDialog showModal={this.state.showModal}
           toggleModal={this.toggleModal} confirm={this.addUser}
           mHeader={"User '" + this.state.user.name + "' does not exist"}
           mBody={"Do you want to request to join this space as '" + this.state.user.name + "'"}

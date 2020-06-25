@@ -203,7 +203,7 @@ exports[`Space should render correctly with props but no session 1`] = `
         ENTER
       </button>
     </form>
-    <ConfirmModal
+    <ConfirmDialog
       confirm={[Function]}
       mBody="Do you want to request to join this space as ''"
       mHeader="User '' does not exist"

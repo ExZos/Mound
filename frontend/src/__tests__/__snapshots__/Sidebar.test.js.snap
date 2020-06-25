@@ -2,81 +2,66 @@
 
 exports[`Sidebar should render correctly without props nor session 1`] = `
 <WithStyles(ForwardRef(Drawer))
-  invert={true}
   variant="permanent"
 >
   <div
     id="sidebar"
   >
     <div
-      id="menuNav"
+      className="logo"
     >
-      <span
-        className="menuItem"
-      >
-        <Link
-          tabIndex="-1"
-          to="/"
-        >
-          Home
-        </Link>
-      </span>
-      <span
-        className="menuItem"
-      >
-        <Link
-          className="clearSesh"
-          onClick={[Function]}
-          tabIndex="-1"
-          to="/"
-        >
-          CLEAR
-        </Link>
-      </span>
+      <GamepadIcon
+        fontSize="large"
+      />
     </div>
     <div
-      id="spaceNav"
+      className="spaceNav"
     />
+    <div
+      className="menuItem"
+    >
+      <Link
+        tabIndex="-1"
+        to="/"
+      >
+        <AddCircleOutlineIcon
+          fontSize="large"
+        />
+      </Link>
+    </div>
+    <div
+      className="menuItem clear"
+    >
+      <Link
+        onClick={[Function]}
+        tabIndex="-1"
+        to="/"
+      >
+        <ClearAllIcon
+          fontSize="large"
+        />
+      </Link>
+    </div>
   </div>
 </WithStyles(ForwardRef(Drawer))>
 `;
 
 exports[`Sidebar should render tabs with session storage 1`] = `
 <WithStyles(ForwardRef(Drawer))
-  invert={true}
   variant="permanent"
 >
   <div
     id="sidebar"
   >
     <div
-      id="menuNav"
+      className="logo"
     >
-      <span
-        className="menuItem"
-      >
-        <Link
-          tabIndex="-1"
-          to="/"
-        >
-          Home
-        </Link>
-      </span>
-      <span
-        className="menuItem"
-      >
-        <Link
-          className="clearSesh"
-          onClick={[Function]}
-          tabIndex="-1"
-          to="/"
-        >
-          CLEAR
-        </Link>
-      </span>
+      <GamepadIcon
+        fontSize="large"
+      />
     </div>
     <div
-      id="spaceNav"
+      className="spaceNav"
     >
       <div
         className="spaceNavItem "
@@ -156,6 +141,31 @@ exports[`Sidebar should render tabs with session storage 1`] = `
           space3
         </Link>
       </div>
+    </div>
+    <div
+      className="menuItem"
+    >
+      <Link
+        tabIndex="-1"
+        to="/"
+      >
+        <AddCircleOutlineIcon
+          fontSize="large"
+        />
+      </Link>
+    </div>
+    <div
+      className="menuItem clear"
+    >
+      <Link
+        onClick={[Function]}
+        tabIndex="-1"
+        to="/"
+      >
+        <ClearAllIcon
+          fontSize="large"
+        />
+      </Link>
     </div>
   </div>
 </WithStyles(ForwardRef(Drawer))>

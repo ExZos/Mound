@@ -288,7 +288,7 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const confirmModal = component.find('ConfirmModal');
+    const confirmDialog = component.find('ConfirmDialog');
     const spy = jest.spyOn(axios, 'post');
 
     component.setState({
@@ -297,7 +297,7 @@ describe('Space', () => {
         space: 1
       }
     });
-    confirmModal.props().confirm();
+    confirmDialog.props().confirm();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.createNameRelatedPoll, {

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmDialog should render correctly with props 1`] = `
+<WithStyles(ForwardRef(Dialog))
+  id="confirmDialog"
+  open={true}
+>
+  <WithStyles(ForwardRef(DialogTitle))
+    onClose={[MockFunction]}
+  >
+    Some header
+    <WithStyles(ForwardRef(IconButton))
+      aria-label="close"
+      className="closeDialog"
+      onClick={[MockFunction]}
+    >
+      <CloseIcon />
+    </WithStyles(ForwardRef(IconButton))>
+  </WithStyles(ForwardRef(DialogTitle))>
+  <WithStyles(ForwardRef(DialogContent))
+    dividers={true}
+  >
+    Some body
+  </WithStyles(ForwardRef(DialogContent))>
+  <WithStyles(ForwardRef(DialogActions))>
+    <Button
+      className="modalConfirm"
+      color="primary"
+      onClick={[Function]}
+      tag="button"
+    >
+      Confirm
+    </Button>
+    <Button
+      className="modalCancel"
+      color="secondary"
+      onClick={[MockFunction]}
+      tag="button"
+    >
+      Cancel
+    </Button>
+  </WithStyles(ForwardRef(DialogActions))>
+</WithStyles(ForwardRef(Dialog))>
+`;
