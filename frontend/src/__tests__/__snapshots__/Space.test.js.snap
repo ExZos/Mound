@@ -207,6 +207,7 @@ exports[`Space should render correctly with props but no session 1`] = `
       confirm={[Function]}
       mBody="Do you want to request to join this space as ''"
       mHeader="User '' does not exist"
+      showModal={false}
       toggleModal={[Function]}
     />
   </div>

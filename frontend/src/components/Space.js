@@ -26,7 +26,8 @@ class Space extends GeneralComponent {
         space: this.props.location.state.space.id,
         space_name: this.props.location.state.space.name,
         space_status: this.props.location.state.space.status
-      }
+      },
+      showModal: false
     };
   }
 

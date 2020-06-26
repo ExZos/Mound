@@ -273,7 +273,8 @@ describe('Space', () => {
     expect(component.state('user')).not.toHaveProperty('id');
     expect(component.state('poll')).toBeUndefined();
     expect(tutils.getSessionItem('users')).toBeNull();
-    expect(component.state('showModal')).toBeUndefined();
+    expect(component.state('showModal')).toBeDefined();
+    expect(component.state('showModal')).toBeFalsy();
   });
 
   it('should call post api on modal confirm', () => {
