@@ -12,12 +12,11 @@ class MessageSpace extends GeneralComponent {
     super(props);
 
     this.loaded = false;
-    this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
       messages: [],
       message: {
-        user: this.user.id,
+        user: this.props.user.id,
         content: ''
       }
     };
@@ -25,7 +24,7 @@ class MessageSpace extends GeneralComponent {
 
   componentDidMount() {
     // TEMP
-    console.log(this.user.id + " : " + this.user.name + " : " + this.user.space);
+    console.log(this.props.user.id + " : " + this.props.user.name + " : " + this.props.user.space);
 
     this.getMessages();
     this.interval = setInterval(this.getMessages, 1000);
@@ -36,7 +35,6 @@ class MessageSpace extends GeneralComponent {
       this.loaded = false;
 
       this.props.updateState();
-      this.user = this.getSessionItem('users')[this.props.spaceID];
       this.getMessages();
     }
   }
@@ -49,7 +47,7 @@ class MessageSpace extends GeneralComponent {
 
   getMessages = async () => {
     try {
-      const res = await server.get(api.getMessagesInSpace + this.user.space);
+      const res = await server.get(api.getMessagesInSpace + this.props.user.space);
 
       this.loaded = true;
 
@@ -63,9 +61,9 @@ class MessageSpace extends GeneralComponent {
     }
   }
 
-  updateUserLastActive= async () => {
+  updateUserLastActive = async () => {
     try {
-      const res = await server.put(api.users + this.user.id + '/', this.user)
+      const res = await server.put(api.users + this.props.user.id + '/', this.props.user);
 
       if(this.loaded) {
         this.addToSessionArrayItem('users', res.data);
@@ -75,7 +73,7 @@ class MessageSpace extends GeneralComponent {
     } catch (e) {
       // User deleted: force logout
       // TODO: implement bans (User.banned)
-      this.removeSessionArrayItem('users', this.user.space);
+      this.removeSessionArrayItem('users', this.props.user.space);
 
       this.props.history.push({
         pathname: '/'
@@ -85,12 +83,12 @@ class MessageSpace extends GeneralComponent {
 
   addMessage = async () => {
     try {
-      const res = await server.post(api.messages, this.state.message);
+      /*const res = */await server.post(api.messages, this.state.message);
       this.getMessages();
 
       this.setState({
         message: {
-          user: this.user.id,
+          user: this.props.user.id,
           content: ''
         }
       });
@@ -130,10 +128,10 @@ class MessageSpace extends GeneralComponent {
 
     return messages.map(message => (
       <div key={message.id}
-        className={(message.user === this.user.id) ? "message own" : "message"}
+        className={(message.user === this.props.user.id) ? "message own" : "message"}
       >
         <div className="sender">
-          {(message.user === this.user.id) ? "You" : message.user_name}
+          {(message.user === this.props.user.id) ? "You" : message.user_name}
         </div>
 
         <div className="content" onClick={this.toggleMessageTimestamp}>
@@ -174,11 +172,11 @@ class MessageSpace extends GeneralComponent {
 
         <br />
 
-        <PollSpace spaceID={this.user.space} userID={this.user.id} />
+        <PollSpace spaceID={this.props.user.space} userID={this.props.user.id} />
 
         <br />
 
-        <NamePoll spaceID={this.user.space} userID={this.user.id} />
+        <NamePoll spaceID={this.props.user.space} userID={this.props.user.id} />
       </div>
     );
   }

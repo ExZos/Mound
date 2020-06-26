@@ -43,8 +43,17 @@ exports[`Space should render MessageSpace with props and session 1`] = `
   </Nav>
   <br />
   <MessageSpace
-    spaceID={2}
     updateState={[Function]}
+    user={
+      Object {
+        "id": 2,
+        "name": "user2",
+        "poll": 2,
+        "space": 2,
+        "space_name": "space2",
+        "space_status": true,
+      }
+    }
   />
 </div>
 `;
@@ -92,8 +101,16 @@ exports[`Space should render PendingSpace with props and session 1`] = `
   </Nav>
   <br />
   <PendingSpace
-    spaceID={3}
     updateState={[Function]}
+    user={
+      Object {
+        "name": "userundefined",
+        "poll": 3,
+        "space": 3,
+        "space_name": "space3",
+        "space_status": false,
+      }
+    }
   />
 </div>
 `;
@@ -141,8 +158,16 @@ exports[`Space should render PendingUser with props and session  1`] = `
   </Nav>
   <br />
   <PendingUser
-    spaceID={3}
     updateState={[Function]}
+    user={
+      Object {
+        "name": "userundefined",
+        "poll": 3,
+        "space": 3,
+        "space_name": "space3",
+        "space_status": true,
+      }
+    }
   />
 </div>
 `;

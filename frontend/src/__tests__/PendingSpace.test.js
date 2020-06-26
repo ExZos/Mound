@@ -11,17 +11,17 @@ const history = createBrowserHistory();
 const tutils = new TestingUtilities();
 
 describe('PendingSpace', () => {
-  beforeEach(() => {
-    tutils.addUserSessionItem(1, 1, undefined);
-    tutils.addUserSessionItem(2, 2, undefined);
-    tutils.addUserSessionItem(3, 3, undefined);
-  });
-
   it('should render approved correctly with props and session', async () => {
     const mockUpdateState = jest.fn();
+    const user = {
+      id: 1,
+      name: 'user1',
+      space: 1,
+      space_name: 'space1'
+    };
 
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<PendingSpace spaceID={1} updateState={mockUpdateState} />);
+    const component = await shallow(<PendingSpace user={user} updateState={mockUpdateState} />);
     const progressStatement = component.find('div.progressStatement');
     const resultingStatement = component.find('div.resultingStatement');
 
@@ -35,9 +35,15 @@ describe('PendingSpace', () => {
 
   it('should render pending correctly with props and session', async () => {
     const mockUpdateState = jest.fn();
+    const user = {
+      id: 2,
+      name: 'user2',
+      space: 2,
+      space_name: 'space2'
+    };
 
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<PendingSpace spaceID={2} updateState={mockUpdateState} />);
+    const component = await shallow(<PendingSpace user={user} updateState={mockUpdateState} />);
     const progressStatement = component.find('div.progressStatement');
     const resultingStatement = component.find('div.resultingStatement');
 
@@ -51,9 +57,15 @@ describe('PendingSpace', () => {
 
   it('should render pending correctly with props and session', async () => {
     const mockUpdateState = jest.fn();
+    const user = {
+      id: 3,
+      name: 'user3',
+      space: 3,
+      space_name: 'space3'
+    };
 
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<PendingSpace spaceID={3} updateState={mockUpdateState} />);
+    const component = await shallow(<PendingSpace user={user} updateState={mockUpdateState} />);
     const progressStatement = component.find('div.progressStatement');
     const resultingStatement = component.find('div.resultingStatement');
 

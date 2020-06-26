@@ -44,7 +44,7 @@ class PollSpace extends GeneralComponent {
     };
 
     try {
-      const res = await server.post(api.createVoteNUpdatePoll, vote);
+      /*const res = */await server.post(api.createVoteNUpdatePoll, vote);
 
       this.getPolls();
     } catch (e) {

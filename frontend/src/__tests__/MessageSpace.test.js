@@ -13,14 +13,15 @@ const history = createBrowserHistory();
 const tutils = new TestingUtilities();
 
 describe('MessageSpace', () => {
-  beforeEach(() => {
-    tutils.addUserSessionItem(1, 1, undefined);
-    tutils.addUserSessionItem(2, 2, undefined);
-    tutils.addUserSessionItem(3, 3, undefined);
-  });
-
   it('should render spinner while loading messages with props and session', () => {
-    const component = shallow(<MessageSpace spaceID={1} updateState={jest.fn()} history={history} />);
+    const user = {
+      id: 1,
+      name: 'user1',
+      space: 1,
+      space_name: 'space1'
+    };
+
+    const component = shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
     const messages = component.find('div.message');
     const spinner = component.find('Spinner');
 
@@ -30,8 +31,15 @@ describe('MessageSpace', () => {
   });
 
   it('should render no messages correctly with props and session', async () => {
+    const user = {
+      id: 1,
+      name: 'user1',
+      space: 1,
+      space_name: 'space1'
+    };
+
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<MessageSpace spaceID={1} updateState={jest.fn()} history={history} />);
+    const component = await shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
     const messages = component.find('div.message');
     const noMessages = component.find('div.noMessages');
 
@@ -43,8 +51,15 @@ describe('MessageSpace', () => {
   });
 
   it('should render messages correctly with props and session', async () => {
+    const user = {
+      id: 2,
+      name: 'user2',
+      space: 2,
+      space_name: 'space2'
+    };
+
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<MessageSpace spaceID={2} updateState={jest.fn()} history={history} />);
+    const component = await shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
     const messages = component.find('div.message');
 
     expect(component).toMatchSnapshot();
@@ -54,8 +69,15 @@ describe('MessageSpace', () => {
   });
 
   it('should mark own messages correctly', async () => {
+    const user = {
+      id: 2,
+      name: 'user2',
+      space: 2,
+      space_name: 'space2'
+    };
+
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<MessageSpace spaceID={2} updateState={jest.fn()} history={history} />);
+    const component = await shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
     const messages = component.find('div.message.own div.sender');
 
     expect(spy).toHaveBeenCalled();
@@ -66,7 +88,14 @@ describe('MessageSpace', () => {
   });
 
   it('should create a state entry equal to the input value', async () => {
-    const component = await shallow(<MessageSpace spaceID={2} updateState={jest.fn()} history={history} />);
+    const user = {
+      id: 2,
+      name: 'user2',
+      space: 2,
+      space_name: 'space2'
+    };
+
+    const component = await shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
     const textarea = component.find('textarea');
 
     textarea.props().onChange({
@@ -81,7 +110,14 @@ describe('MessageSpace', () => {
   });
 
   it('should call post api on message submit', async () => {
-    const component = await shallow(<MessageSpace spaceID={2} updateState={jest.fn()} history={history} />);
+    const user = {
+      id: 2,
+      name: 'user2',
+      space: 2,
+      space_name: 'space2'
+    };
+
+    const component = await shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
     const textarea = component.find('textarea');
     const spy = jest.spyOn(axios, 'post');
     const mockPreventDefault = jest.fn();

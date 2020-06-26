@@ -14,6 +14,7 @@ class ConfirmDialog extends GeneralComponent {
     this.props.confirm();
   }
 
+  // TODO: fix dialog title overlapping with 'X' close button
   render() {
     return (
       <Dialog id="confirmDialog" open={this.props.showModal}>

@@ -11,17 +11,17 @@ const history = createBrowserHistory();
 const tutils = new TestingUtilities();
 
 describe('PendingUser', () => {
-  beforeEach(() => {
-    tutils.addUserSessionItem(1, 1, 1);
-    tutils.addUserSessionItem(2, 2, 2);
-    tutils.addUserSessionItem(3, 3, 3);
-  });
-
   it('should render pending correctly with props and session', async () => {
     const mockUpdateState = jest.fn();
+    const user = {
+      name: 'user1',
+      space: 1,
+      space_name: 'space1',
+      poll: 1
+    };
 
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<PendingUser spaceID={1} updateState={mockUpdateState} />)
+    const component = await shallow(<PendingUser user={user} updateState={mockUpdateState} />)
     const statusStatement = component.find('div.statusStatement');
     const progressStatement = component.find('div.progressStatement');
     const resultingStatement = component.find('div.resultingStatement');
@@ -38,9 +38,15 @@ describe('PendingUser', () => {
 
   it('should render approved correctly with props and session', async () => {
     const mockUpdateState = jest.fn();
+    const user = {
+      name: 'user2',
+      space: 2,
+      space_name: 'space2',
+      poll: 2
+    };
 
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<PendingUser spaceID={2} updateState={mockUpdateState} />);
+    const component = await shallow(<PendingUser user={user} updateState={mockUpdateState} />);
     const statusStatement = component.find('div.statusStatement');
     const progressStatement = component.find('div.progressStatement');
     const resultingStatement = component.find('div.resultingStatement');
@@ -57,9 +63,15 @@ describe('PendingUser', () => {
 
   it('should render rejected correctly with props and session', async () => {
     const mockUpdateState = jest.fn();
+    const user = {
+      name: 'user3',
+      space: 3,
+      space_name: 'space3',
+      poll: 3
+    };
 
     const spy = jest.spyOn(axios, 'get');
-    const component = await shallow(<PendingUser spaceID={3} updateState={mockUpdateState} />)
+    const component = await shallow(<PendingUser user={user} updateState={mockUpdateState} />)
     const statusStatement = component.find('div.statusStatement');
     const progressStatement = component.find('div.progressStatement');
     const resultingStatement = component.find('div.resultingStatement');

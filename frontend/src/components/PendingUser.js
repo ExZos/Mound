@@ -10,7 +10,6 @@ class PendingUser extends GeneralComponent {
     super(props);
 
     this.loaded = false;
-    this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
       userCount: '',
@@ -31,7 +30,6 @@ class PendingUser extends GeneralComponent {
       this.loaded = false;
 
       this.props.updateState();
-      this.user =  this.getSessionItem('users')[this.props.spaceID];
       this.getPollResults();
     }
   }
@@ -43,7 +41,7 @@ class PendingUser extends GeneralComponent {
   getPollResults = async () => {
     try {
       // Get poll results
-      const res = await server.get(api.getJoinPollResults + this.user.poll + '/' + this.user.name);
+      const res = await server.get(api.getJoinPollResults + this.props.user.poll + '/' + this.props.user.name);
 
       this.loaded = true;
 
@@ -60,8 +58,8 @@ class PendingUser extends GeneralComponent {
         remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount)
       });
 
-      // Update user session item
-      if(user) {
+      // User approved: update user session item
+      if(user && this.loaded) {
         this.addToSessionArrayItem('users', user);
         this.props.updateState();
       }

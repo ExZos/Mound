@@ -49,7 +49,7 @@ class Space extends GeneralComponent {
   getPendingJoinPollInSpaceByName = async () => {
     try {
       const res = await server.get(api.getPendingJoinPollInSpaceByName + this.state.space.id + '/' + this.state.user.name);
-      
+
       // Existing join poll
       let user = this.state.user;
       user.poll = res.data.id;
@@ -128,25 +128,27 @@ class Space extends GeneralComponent {
 
   toggleMessages = (users) => {
     if(users && users[this.state.space.id]) {
-      if(users[this.state.space.id].space_status) {
+      const user = users[this.state.space.id];
+
+      if(user.space_status) {
         // Approved space and user
-        if(users[this.state.space.id].id) {
+        if(user.id) {
           return (
-            <MessageSpace spaceID={this.state.space.id} updateState={this.updateState}
-              history={this.props.history}
+            <MessageSpace history={this.props.history} updateState={this.updateState}
+              user={user}
             />
           );
         }
 
         // Approved space but pending user
         return (
-          <PendingUser spaceID={this.state.space.id} updateState={this.updateState} />
+          <PendingUser updateState={this.updateState} user={user} />
         );
       }
 
       // Pending space
       return (
-        <PendingSpace spaceID={this.state.space.id} updateState={this.updateState} />
+        <PendingSpace updateState={this.updateState} user={user} />
       );
     }
 
@@ -170,6 +172,9 @@ class Space extends GeneralComponent {
     );
   }
 
+  // TODO: fix user name display
+  // TODO: convert nav into material ui nav
+  // TODO: make nav sticky
   render() {
     const users = this.getSessionItem('users');
 

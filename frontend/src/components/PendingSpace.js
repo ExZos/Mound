@@ -10,7 +10,6 @@ class PendingSpace extends GeneralComponent {
     super(props);
 
     this.loaded = false;
-    this.user = this.getSessionItem('users')[this.props.spaceID];
 
     this.state = {
       requiredUsers: 3,
@@ -29,7 +28,6 @@ class PendingSpace extends GeneralComponent {
       this.loaded = false;
 
       this.props.updateState();
-      this.user =  this.getSessionItem('users')[this.props.spaceID];
       this.getUserCountOfSpace();
     }
   }
@@ -40,8 +38,8 @@ class PendingSpace extends GeneralComponent {
 
   getUserCountOfSpace = async () => {
     try {
-      const res = await server.get(api.getUserCountInSpaceForUser + this.props.spaceID + '/' + this.user.id);
-      
+      const res = await server.get(api.getUserCountInSpaceForUser + this.props.user.space + '/' + this.props.user.id);
+
       this.loaded = true;
 
       const userCount = res.data['userCount'];
@@ -53,8 +51,8 @@ class PendingSpace extends GeneralComponent {
         loaded: true
       });
 
-      // Update user session item
-      if(user) {
+      // Space approved: update user session item
+      if(user && this.loaded) {
         this.addToSessionArrayItem('users', user);
         this.props.updateState();
       }
