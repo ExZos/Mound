@@ -17,29 +17,32 @@ class NamePoll extends GeneralComponent {
     });
   }
 
-  addNamePoll = () => {
+  addNamePoll = async () => {
     const poll = {
       space: this.state.user.space,
       user: this.state.user.id,
       name: this.state.user.name
     };
 
-    server.post(api.createNameRelatedPoll, poll)
-      .then((res) => {
-        let user = this.state.user;
-        user.poll = res.data.id;
+    try {
+      const res = await server.post(api.createNameRelatedPoll, poll)
 
-        this.addToSessionArrayItem('users', user);
+      let user = this.state.user;
+      user.poll = res.data.id;
 
-        this.setState({
-          user: {
-            id: this.props.userID,
-            space: this.props.spaceID,
-            name: ''
-          },
-          poll: res.data
-        });
+      this.addToSessionArrayItem('users', user);
+
+      this.setState({
+        user: {
+          id: this.props.userID,
+          space: this.props.spaceID,
+          name: ''
+        },
+        poll: res.data
       });
+    } catch (e) {
+      // TODO: render error component
+    }
   }
 
   render() {

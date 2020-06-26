@@ -31,36 +31,39 @@ class Space extends GeneralComponent {
     };
   }
 
-  getUserInSpaceByName = () => {
-    server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name)
-      .then((res) => {
-        // Existing user
-        this.addToSessionArrayItem('users', res.data);
+  getUserInSpaceByName = async () => {
+    try {
+      const res = await server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name);
 
-        this.setState({
-          user: res.data
-        });
-      })
-      .catch((err) => {
-        server.get(api.getPendingJoinPollInSpaceByName + this.state.space.id + '/' + this.state.user.name)
-          .then((res) => {
-            // Existing join poll
-            let user = this.state.user;
-            user.poll = res.data.id;
+      // Existing user
+      this.addToSessionArrayItem('users', res.data);
 
-            this.addToSessionArrayItem('users', this.state.user);
-
-            this.setState({
-              poll: res.data
-            });
-          })
-          // Create user or join poll
-          .catch((err) => {
-            if(this.state.user.name) {
-              this.toggleModal();
-            }
-          });
+      this.setState({
+        user: res.data
       });
+    } catch (e) {
+      this.getPendingJoinPollInSpaceByName();
+    }
+  }
+
+  getPendingJoinPollInSpaceByName = async () => {
+    try {
+      const res = await server.get(api.getPendingJoinPollInSpaceByName + this.state.space.id + '/' + this.state.user.name);
+      
+      // Existing join poll
+      let user = this.state.user;
+      user.poll = res.data.id;
+
+      this.addToSessionArrayItem('users', this.state.user);
+
+      this.setState({
+        poll: res.data
+      });
+    } catch (e) {
+      if(this.state.user.name) {
+        this.toggleModal();
+      }
+    }
   }
 
   addUser = () => {

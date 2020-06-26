@@ -206,7 +206,7 @@ describe('Space', () => {
         space: 2
       }
     });
-    await await await await button.props().onClick();
+    await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.getPendingJoinPollInSpaceByName + '2/user2');
@@ -238,7 +238,7 @@ describe('Space', () => {
         name: 'Missing User'
       }
     });
-    await await await await button.props().onClick();
+    await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.getPendingJoinPollInSpaceByName + '1/Missing User');
@@ -265,7 +265,7 @@ describe('Space', () => {
     const button = component.find('button');
     const spy = jest.spyOn(axios, 'get');
 
-    await await await await button.props().onClick();
+    await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.getPendingJoinPollInSpaceByName + '1/');

@@ -40,31 +40,34 @@ class PendingUser extends GeneralComponent {
     clearInterval(this.interval);
   }
 
-  getPollResults = () => {
-    // Get poll results
-    server.get(api.getJoinPollResults + this.user.poll + '/' + this.user.name)
-      .then((res) => {
-        this.loaded = true;
+  getPollResults = async () => {
+    try {
+      // Get poll results
+      const res = await server.get(api.getJoinPollResults + this.user.poll + '/' + this.user.name);
 
-        const userCount = res.data['userCount'];
-        const positiveVoteCount = res.data['positiveVoteCount'];
-        const negativeVoteCount = res.data['negativeVoteCount'];
-        const user = res.data['user'];
+      this.loaded = true;
 
-        this.setState({
-          userCount: userCount,
-          requiredVoteCount: userCount,
-          positiveVoteCount: positiveVoteCount,
-          negativeVoteCount: negativeVoteCount,
-          remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount)
-        });
+      const userCount = res.data['userCount'];
+      const positiveVoteCount = res.data['positiveVoteCount'];
+      const negativeVoteCount = res.data['negativeVoteCount'];
+      const user = res.data['user'];
 
-        // Update user session item
-        if(user) {
-          this.addToSessionArrayItem('users', user);
-          this.props.updateState();
-        }
+      this.setState({
+        userCount: userCount,
+        requiredVoteCount: userCount,
+        positiveVoteCount: positiveVoteCount,
+        negativeVoteCount: negativeVoteCount,
+        remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount)
       });
+
+      // Update user session item
+      if(user) {
+        this.addToSessionArrayItem('users', user);
+        this.props.updateState();
+      }
+    } catch (e) {
+      // TODO: render error component
+    }
   }
 
   displayStatusStatement = () => {

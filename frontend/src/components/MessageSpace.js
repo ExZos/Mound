@@ -47,49 +47,56 @@ class MessageSpace extends GeneralComponent {
     clearInterval(this.interval);
   }
 
-  getMessages = () => {
-    server.get(api.getMessagesInSpace + this.user.space)
-      .then((res) => {
-        this.loaded = true;
+  getMessages = async () => {
+    try {
+      const res = await server.get(api.getMessagesInSpace + this.user.space);
 
-        this.setState({
-          messages: res.data
-        });
+      this.loaded = true;
+
+      this.setState({
+        messages: res.data
       });
 
-    this.updateUserLastActive();
+      this.updateUserLastActive();
+    } catch (e) {
+      // TODO: render error component
+    }
   }
 
-  updateUserLastActive= () => {
-    server.put(api.users + this.user.id + '/', this.user)
-      .then((res) => {
-        if(this.loaded) {
-          this.addToSessionArrayItem('users', res.data);
+  updateUserLastActive= async () => {
+    try {
+      const res = await server.put(api.users + this.user.id + '/', this.user)
 
-          this.props.updateState();
-        }
-      })
-      .catch((err) => {
-        // User deleted: force logout
-        // TODO: implement bans (User.banned)
-        this.removeSessionArrayItem('users', this.user.space);
+      if(this.loaded) {
+        this.addToSessionArrayItem('users', res.data);
 
-        this.props.history.push({
-          pathname: '/'
-        });
-      });
-  }
-
-  addMessage = () => {
-    server.post(api.messages, this.state.message);
-    this.getMessages();
-
-    this.setState({
-      message: {
-        user: this.user.id,
-        content: ''
+        this.props.updateState();
       }
-    });
+    } catch (e) {
+      // User deleted: force logout
+      // TODO: implement bans (User.banned)
+      this.removeSessionArrayItem('users', this.user.space);
+
+      this.props.history.push({
+        pathname: '/'
+      });
+    }
+  }
+
+  addMessage = async () => {
+    try {
+      const res = await server.post(api.messages, this.state.message);
+      this.getMessages();
+
+      this.setState({
+        message: {
+          user: this.user.id,
+          content: ''
+        }
+      });
+    } catch (e) {
+      // TODO: render error component
+    }
   }
 
   handleKeyFormSubmit = (e) => {

@@ -38,26 +38,29 @@ class PendingSpace extends GeneralComponent {
     clearInterval(this.interval);
   }
 
-  getUserCountOfSpace = () => {
-    server.get(api.getUserCountInSpaceForUser + this.props.spaceID + '/' + this.user.id)
-      .then((res) => {
-        this.loaded = true;
+  getUserCountOfSpace = async () => {
+    try {
+      const res = await server.get(api.getUserCountInSpaceForUser + this.props.spaceID + '/' + this.user.id);
+      
+      this.loaded = true;
 
-        const userCount = res.data['userCount'];
-        const user = res.data['user'];
+      const userCount = res.data['userCount'];
+      const user = res.data['user'];
 
-        this.setState({
-          userCount: userCount,
-          remainingUsers: this.state.requiredUsers - userCount,
-          loaded: true
-        });
-
-        // Update user session item
-        if(user) {
-          this.addToSessionArrayItem('users', user);
-          this.props.updateState();
-        }
+      this.setState({
+        userCount: userCount,
+        remainingUsers: this.state.requiredUsers - userCount,
+        loaded: true
       });
+
+      // Update user session item
+      if(user) {
+        this.addToSessionArrayItem('users', user);
+        this.props.updateState();
+      }
+    } catch (e) {
+      // TODO: render error component
+    }
   }
 
   displayResultingStatement = () => {

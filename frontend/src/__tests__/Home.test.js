@@ -58,7 +58,7 @@ describe('Home', () => {
         name: 'Missing Space'
       }
     });
-    await await button.props().onClick();
+    await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + 'Missing Space/');
@@ -78,7 +78,7 @@ describe('Home', () => {
         name: ''
       }
     });
-    await await button.props().onClick();
+    await button.props().onClick();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + '/');

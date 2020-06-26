@@ -24,22 +24,32 @@ class PollSpace extends GeneralComponent {
     clearInterval(this.interval);
   }
 
-  getPolls = () => {
-    server.get(api.getPendingUnvotedPollsForUser + this.props.userID)
-      .then((res) => this.setState({
+  getPolls = async () => {
+    try {
+      const res = await server.get(api.getPendingUnvotedPollsForUser + this.props.userID);
+
+      this.setState({
         polls: res.data
-      }));
+      });
+    } catch (e) {
+      // TODO: render error component
+    }
   }
 
-  addVote = (e, result) => {
+  addVote = async (e, result) => {
     const vote = {
       poll: e.target.id,
       user: this.props.userID,
       result: result
     };
 
-    server.post(api.createVoteNUpdatePoll, vote)
-      .then((res) => this.getPolls());
+    try {
+      const res = await server.post(api.createVoteNUpdatePoll, vote);
+
+      this.getPolls();
+    } catch (e) {
+      // TODO: render error component
+    }
   }
 
   determinePollStatement = (poll) => {

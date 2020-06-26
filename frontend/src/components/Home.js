@@ -23,25 +23,25 @@ class Home extends GeneralComponent {
     console.log(this.getSessionItem('users'));
   }
 
-  getSpaceByName = () => {
-    server.get(api.getSpaceByName + this.state.space.name + '/')
-      .then((res) => {
-          this.setState({
-            space: res.data
-          });
+  getSpaceByName = async () => {
+    try {
+      const res = await server.get(api.getSpaceByName + this.state.space.name + '/');
 
-          this.props.history.push({
-            pathname: '/s/',
-            state: {
-              space: this.state.space
-            }
-          });
-        })
-      .catch((err) => {
-        if(this.state.space.name) {
-          this.toggleModal();
+      this.setState({
+        space: res.data
+      });
+
+      this.props.history.push({
+        pathname: '/s/',
+        state: {
+          space: this.state.space
         }
       });
+    } catch (e) {
+      if(this.state.space.name) {
+        this.toggleModal();
+      }
+    }
   }
 
   addSpace = () => {
