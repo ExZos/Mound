@@ -1,6 +1,6 @@
-#confirmDialog .closeDialog {
+div#confirmDialog div.MuiDialog-paper button.closeDialog {
   position: absolute;
-  top: 0.35rem;
-  right: 0.35rem;
+  top: 0;
+  right: 0;
   outline: none;
 }

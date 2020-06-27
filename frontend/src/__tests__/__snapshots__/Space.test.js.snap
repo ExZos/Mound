@@ -5,42 +5,29 @@ exports[`Space should render MessageSpace with props and session 1`] = `
   id="space"
 >
   <Sidebar />
-  <br />
-  <Nav
-    className="header"
-    tag="ul"
-    vertical={false}
+  <WithStyles(ForwardRef(AppBar))
+    position="static"
   >
-    <NavItem
-      className="user"
-      tag="li"
-    >
-      user2
-    </NavItem>
-    <NavItem
-      className="space"
-      tag="li"
-    >
-      space2
-    </NavItem>
-    <NavItem
-      className="close"
-      tag="li"
-    >
-      <Link
-        onClick={[Function]}
-        tabIndex="-1"
-        to="/"
+    <WithStyles(ForwardRef(Toolbar))>
+      <WithStyles(ForwardRef(Typography))
+        className="userName"
       >
-        <Button
-          close={true}
-          color="secondary"
-          tabIndex="-1"
-          tag="button"
-        />
-      </Link>
-    </NavItem>
-  </Nav>
+        user2
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        className="spaceName"
+      >
+        space2
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(IconButton))
+        aria-label="close"
+        className="closeSpace"
+        onClick={[Function]}
+      >
+        <CloseIcon />
+      </WithStyles(ForwardRef(IconButton))>
+    </WithStyles(ForwardRef(Toolbar))>
+  </WithStyles(ForwardRef(AppBar))>
   <br />
   <MessageSpace
     updateState={[Function]}
@@ -63,42 +50,29 @@ exports[`Space should render PendingSpace with props and session 1`] = `
   id="space"
 >
   <Sidebar />
-  <br />
-  <Nav
-    className="header"
-    tag="ul"
-    vertical={false}
+  <WithStyles(ForwardRef(AppBar))
+    position="static"
   >
-    <NavItem
-      className="user"
-      tag="li"
-    >
-      userundefined
-    </NavItem>
-    <NavItem
-      className="space"
-      tag="li"
-    >
-      space3
-    </NavItem>
-    <NavItem
-      className="close"
-      tag="li"
-    >
-      <Link
-        onClick={[Function]}
-        tabIndex="-1"
-        to="/"
+    <WithStyles(ForwardRef(Toolbar))>
+      <WithStyles(ForwardRef(Typography))
+        className="userName"
       >
-        <Button
-          close={true}
-          color="secondary"
-          tabIndex="-1"
-          tag="button"
-        />
-      </Link>
-    </NavItem>
-  </Nav>
+        userundefined
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        className="spaceName"
+      >
+        space3
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(IconButton))
+        aria-label="close"
+        className="closeSpace"
+        onClick={[Function]}
+      >
+        <CloseIcon />
+      </WithStyles(ForwardRef(IconButton))>
+    </WithStyles(ForwardRef(Toolbar))>
+  </WithStyles(ForwardRef(AppBar))>
   <br />
   <PendingSpace
     updateState={[Function]}
@@ -120,42 +94,29 @@ exports[`Space should render PendingUser with props and session  1`] = `
   id="space"
 >
   <Sidebar />
-  <br />
-  <Nav
-    className="header"
-    tag="ul"
-    vertical={false}
+  <WithStyles(ForwardRef(AppBar))
+    position="static"
   >
-    <NavItem
-      className="user"
-      tag="li"
-    >
-      userundefined
-    </NavItem>
-    <NavItem
-      className="space"
-      tag="li"
-    >
-      space3
-    </NavItem>
-    <NavItem
-      className="close"
-      tag="li"
-    >
-      <Link
-        onClick={[Function]}
-        tabIndex="-1"
-        to="/"
+    <WithStyles(ForwardRef(Toolbar))>
+      <WithStyles(ForwardRef(Typography))
+        className="userName"
       >
-        <Button
-          close={true}
-          color="secondary"
-          tabIndex="-1"
-          tag="button"
-        />
-      </Link>
-    </NavItem>
-  </Nav>
+        userundefined
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        className="spaceName"
+      >
+        space3
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(IconButton))
+        aria-label="close"
+        className="closeSpace"
+        onClick={[Function]}
+      >
+        <CloseIcon />
+      </WithStyles(ForwardRef(IconButton))>
+    </WithStyles(ForwardRef(Toolbar))>
+  </WithStyles(ForwardRef(AppBar))>
   <br />
   <PendingUser
     updateState={[Function]}
@@ -177,36 +138,24 @@ exports[`Space should render correctly with props but no session 1`] = `
   id="space"
 >
   <Sidebar />
-  <br />
-  <Nav
-    className="header"
-    tag="ul"
-    vertical={false}
+  <WithStyles(ForwardRef(AppBar))
+    position="static"
   >
-    <NavItem
-      className="space"
-      tag="li"
-    >
-      space1
-    </NavItem>
-    <NavItem
-      className="close"
-      tag="li"
-    >
-      <Link
-        onClick={[Function]}
-        tabIndex="-1"
-        to="/"
+    <WithStyles(ForwardRef(Toolbar))>
+      <WithStyles(ForwardRef(Typography))
+        className="spaceName"
       >
-        <Button
-          close={true}
-          color="secondary"
-          tabIndex="-1"
-          tag="button"
-        />
-      </Link>
-    </NavItem>
-  </Nav>
+        space1
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(IconButton))
+        aria-label="close"
+        className="closeSpace"
+        onClick={[Function]}
+      >
+        <CloseIcon />
+      </WithStyles(ForwardRef(IconButton))>
+    </WithStyles(ForwardRef(Toolbar))>
+  </WithStyles(ForwardRef(AppBar))>
   <br />
   <div>
     <form

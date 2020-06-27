@@ -1,29 +1,30 @@
-div#space ul.header {
+div#space header.MuiAppBar-root {
+  background-color: rgb(100, 100, 200);
+}
+
+div#space header.MuiAppBar-root div.MuiToolbar-root {
   justify-content: center;
 }
 
-div#space ul.header li.nav-item {
-  display: block;
+div#space header.MuiAppBar-root p.userName {
+  position: absolute;
+  left: 0;
   padding: 0 1rem;
 }
 
-div#space ul.header li.nav-item.user {
-  position: absolute;
-  left: 0;
-}
-
-div#space ul.header li.nav-item.space {
+div#space header.MuiAppBar-root p.spaceName {
   font-weight: bold;
 }
 
-div#space ul.header li.nav-item.close {
+div#space header.MuiAppBar-root button.closeSpace {
   position: absolute;
   right: 0;
+  color: white;
+  outline: none;
 }
 
-div#space ul.header li.nav-item.close button {
-  outline: none;
-  color: rgb(200, 0, 0);
+div#space header.MuiAppBar-root button.closeSpace:hover {
+  /* background-color: black; */
 }
 
 div#space form#getUserInSpaceByName {
@@ -31,7 +32,7 @@ div#space form#getUserInSpaceByName {
 }
 
 div#space form#getUserInSpaceByName input {
-  /* outline: none; */
+  outline: none;
 }
 
 div#space div#errorBlock {

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, NavItem, Button } from 'reactstrap';
+import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+
+import CloseIcon from '@material-ui/icons/Close';
 
 import GeneralComponent from './GeneralComponent';
 import Sidebar from './Sidebar';
@@ -100,6 +101,12 @@ class Space extends GeneralComponent {
     }
   }
 
+  closeSpace = (key, spaceID) => {
+    this.removeSessionArrayItem(key, spaceID);
+
+    this.props.history.push('/');
+  }
+
   updateState = () => {
     this.setState({
       space: {
@@ -119,9 +126,9 @@ class Space extends GeneralComponent {
   displayUser = (users) => {
     if(users && users[this.state.space.id]) {
       return(
-        <NavItem className="user">
-          {users[this.state.space.id].name}
-        </NavItem>
+          <Typography className="userName">
+            {users[this.state.space.id].name}
+          </Typography>
       );
     }
   }
@@ -173,8 +180,6 @@ class Space extends GeneralComponent {
   }
 
   // TODO: fix user name display
-  // TODO: convert nav into material ui nav
-  // TODO: make nav sticky
   render() {
     const users = this.getSessionItem('users');
 
@@ -182,19 +187,19 @@ class Space extends GeneralComponent {
       <div id="space">
         <Sidebar />
 
-        <br />
+        <AppBar position="sticky">
+          <Toolbar>
+            {this.displayUser(users)}
 
-        <Nav className="header">
-          {this.displayUser(users)}
+            <Typography className="spaceName">
+              {this.state.space.name}
+            </Typography>
 
-          <NavItem className="space">
-            {this.state.space.name}
-          </NavItem>
-
-          <NavItem className="close">
-            <Link tabIndex="-1" to="/" onClick={() => this.removeSessionArrayItem('users', this.state.space.id)}><Button tabIndex="-1" close /></Link>
-          </NavItem>
-        </Nav>
+            <IconButton className="closeSpace" aria-label="close" onClick={() => this.closeSpace('users', this.state.space.id)}>
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
 
         <br />
 

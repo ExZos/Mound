@@ -27,9 +27,9 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('NavItem.user');
-    const space = component.find('NavItem.space');
-    const close = component.find('NavItem.close');
+    const user = component.find('.userName');
+    const space = component.find('.spaceName');
+    const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
 
     expect(component).toMatchSnapshot();
@@ -54,9 +54,9 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('NavItem.user');
-    const space = component.find('NavItem.space');
-    const close = component.find('NavItem.close');
+    const user = component.find('.userName');
+    const space = component.find('.spaceName');
+    const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
     const messageSpace = component.find('MessageSpace');
 
@@ -84,9 +84,9 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('NavItem.user');
-    const space = component.find('NavItem.space');
-    const close = component.find('NavItem.close');
+    const user = component.find('.userName');
+    const space = component.find('.spaceName');
+    const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
     const pendingUser = component.find('PendingUser');
 
@@ -114,9 +114,9 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('NavItem.user');
-    const space = component.find('NavItem.space');
-    const close = component.find('NavItem.close');
+    const user = component.find('.userName');
+    const space = component.find('.spaceName');
+    const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
     const pendingSpace = component.find('PendingSpace');
 
