@@ -29,7 +29,7 @@ describe('ConfirmDialog', () => {
       toggleModal={mockCancel} confirm={mockConfirm}
       mHeader='Some header' mBody='Some body'
     />);
-    const button = component.find('Button.modalCancel');
+    const button = component.find('.modalCancel');
 
     button.props().onClick();
 
@@ -45,7 +45,7 @@ describe('ConfirmDialog', () => {
       toggleModal={mockCancel} confirm={mockConfirm}
       mHeader='Some header' mBody='Some body'
     />);
-    const button = component.find('Button.modalConfirm');
+    const button = component.find('.modalConfirm');
 
     button.props().onClick();
 

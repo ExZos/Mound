@@ -10,20 +10,26 @@ exports[`Home should render correctly with no props 1`] = `
     id="getSpaceByName"
     onSubmit={[Function]}
   >
-    <input
-      autoFocus={true}
-      name="name"
-      onChange={[Function]}
-      placeholder="Type a space name..."
-      type="text"
-      value=""
-    />
-    <button
-      onClick={[Function]}
-      tabIndex="-1"
+    <WithStyles(ForwardRef(ButtonGroup))
+      size="small"
+      variant="outlined"
     >
-      ENTER
-    </button>
+      <WithStyles(ForwardRef(TextField))
+        autoFocus={true}
+        label="Type a space name..."
+        name="name"
+        onChange={[Function]}
+        value=""
+      />
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[Function]}
+        tabIndex="-1"
+        type="submit"
+      >
+        ENTER
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(ButtonGroup))>
   </form>
   <ConfirmDialog
     confirm={[Function]}

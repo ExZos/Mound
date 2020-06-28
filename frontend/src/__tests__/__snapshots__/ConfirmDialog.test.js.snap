@@ -23,22 +23,20 @@ exports[`ConfirmDialog should render correctly with props 1`] = `
     Some body
   </WithStyles(ForwardRef(DialogContent))>
   <WithStyles(ForwardRef(DialogActions))>
-    <Button
+    <WithStyles(ForwardRef(Button))
       className="modalConfirm"
-      color="primary"
       onClick={[Function]}
-      tag="button"
+      variant="contained"
     >
       Confirm
-    </Button>
-    <Button
+    </WithStyles(ForwardRef(Button))>
+    <WithStyles(ForwardRef(Button))
       className="modalCancel"
-      color="secondary"
       onClick={[MockFunction]}
-      tag="button"
+      variant="contained"
     >
       Cancel
-    </Button>
+    </WithStyles(ForwardRef(Button))>
   </WithStyles(ForwardRef(DialogActions))>
 </WithStyles(ForwardRef(Dialog))>
 `;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextField, Button, ButtonGroup } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import Sidebar from './Sidebar';
@@ -68,12 +69,14 @@ class Home extends GeneralComponent {
         <br />
 
         <form id="getSpaceByName" onSubmit={this.handleFormSubmit}>
-          <input type="text" name="name" placeholder="Type a space name..." autoFocus
-            value={this.state.space.name}
-            onChange={(e) => this.handleInputChange(e, 'space')}
-          />
+          <ButtonGroup size="small" variant="outlined">
+            <TextField name="name" label="Type a space name..." autoFocus
+              value={this.state.space.name}
+              onChange={(e) => this.handleInputChange(e, 'space')}
+            />
 
-          <button tabIndex="-1" onClick={this.getSpaceByName}>ENTER</button>
+            <Button type="submit" color="primary" tabIndex="-1" onClick={this.getSpaceByName}>ENTER</Button>
+          </ButtonGroup>
         </form>
 
         <ConfirmDialog showModal={this.state.showModal}

@@ -1,6 +1,5 @@
 import React from "react";
-import { Button } from "reactstrap";
-import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Button } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -14,7 +13,6 @@ class ConfirmDialog extends GeneralComponent {
     this.props.confirm();
   }
 
-  // TODO: fix dialog title overlapping with 'X' close button
   render() {
     return (
       <Dialog id="confirmDialog" open={this.props.showModal}>
@@ -31,8 +29,8 @@ class ConfirmDialog extends GeneralComponent {
         </DialogContent>
 
         <DialogActions>
-          <Button className="modalConfirm" color="primary" onClick={this.confirm}>Confirm</Button>
-          <Button className="modalCancel" color="secondary" onClick={this.props.toggleModal}>Cancel</Button>
+          <Button className="modalConfirm" variant="contained" onClick={this.confirm}>Confirm</Button>
+          <Button className="modalCancel" variant="contained" onClick={this.props.toggleModal}>Cancel</Button>
         </DialogActions>
       </Dialog>
     );

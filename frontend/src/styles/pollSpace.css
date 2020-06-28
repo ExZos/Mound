@@ -18,21 +18,17 @@ div#pollSpace div.poll div.pollAnswers {
 }
 
 div#pollSpace div.poll div.pollAnswers button {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 div#pollSpace div.poll div.pollAnswers button.accept {
-  border-right: 2px solid rgba(0, 0, 0, 0.1);
-
-  border-radius: 0.25rem 0 0 0.25rem;
-  -moz-border-radius: 0.25rem 0 0 0.25rem;
-  -webkit-border-radius: 0.25rem 0 0 0.25rem;
+  outline: none;
+  background-color: rgb(40, 167, 69);
+  color: white;
 }
 
 div#pollSpace div.poll div.pollAnswers button.decline {
-  border-left: 2px solid rgba(0, 0, 0, 0.1);
-
-  border-radius: 0 0.25rem 0.25rem 0;
-  -moz-border-radius: 0 0.25rem 0.25rem 0;
-  -webkit-border-radius: 0 0.25rem 0.25rem 0;
+  outline: none;
+  background-color: rgb(220,53,69);
+  color: white;
 }

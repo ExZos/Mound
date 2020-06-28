@@ -26,28 +26,29 @@ exports[`PollSpace should render poll correctly with props 1`] = `
          wants to join this space.
       </div>
     </div>
-    <div
+    <WithStyles(ForwardRef(ButtonGroup))
       className="pollAnswers"
+      variant="contained"
     >
-      <Button
+      <WithStyles(ForwardRef(Button))
         className="accept"
-        color="success"
         id={1}
         onClick={[Function]}
-        tag="button"
+        tabIndex="-1"
+        variant="contained"
       >
         Accept
-      </Button>
-      <Button
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
         className="decline"
-        color="danger"
         id={1}
         onClick={[Function]}
-        tag="button"
+        tabIndex="-1"
+        variant="contained"
       >
         Decline
-      </Button>
-    </div>
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(ButtonGroup))>
   </div>
   <div
     className="poll"
@@ -58,28 +59,29 @@ exports[`PollSpace should render poll correctly with props 1`] = `
     >
       Name Poll
     </div>
-    <div
+    <WithStyles(ForwardRef(ButtonGroup))
       className="pollAnswers"
+      variant="contained"
     >
-      <Button
+      <WithStyles(ForwardRef(Button))
         className="accept"
-        color="success"
         id={2}
         onClick={[Function]}
-        tag="button"
+        tabIndex="-1"
+        variant="contained"
       >
         Accept
-      </Button>
-      <Button
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
         className="decline"
-        color="danger"
         id={2}
         onClick={[Function]}
-        tag="button"
+        tabIndex="-1"
+        variant="contained"
       >
         Decline
-      </Button>
-    </div>
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(ButtonGroup))>
   </div>
   <div
     className="poll"
@@ -90,28 +92,29 @@ exports[`PollSpace should render poll correctly with props 1`] = `
     >
       Ban Poll
     </div>
-    <div
+    <WithStyles(ForwardRef(ButtonGroup))
       className="pollAnswers"
+      variant="contained"
     >
-      <Button
+      <WithStyles(ForwardRef(Button))
         className="accept"
-        color="success"
         id={3}
         onClick={[Function]}
-        tag="button"
+        tabIndex="-1"
+        variant="contained"
       >
         Accept
-      </Button>
-      <Button
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
         className="decline"
-        color="danger"
         id={3}
         onClick={[Function]}
-        tag="button"
+        tabIndex="-1"
+        variant="contained"
       >
         Decline
-      </Button>
-    </div>
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(ButtonGroup))>
   </div>
 </div>
 `;

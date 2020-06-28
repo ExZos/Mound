@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
@@ -74,10 +74,10 @@ class PollSpace extends GeneralComponent {
           {this.determinePollStatement(poll)}
         </div>
 
-        <div className="pollAnswers">
-          <Button color="success" className="accept" id={poll.id} onClick={(e) => this.addVote(e, true)}>Accept</Button>
-          <Button color="danger" className="decline" id={poll.id} onClick={(e) => this.addVote(e, false)}>Decline</Button>
-        </div>
+        <ButtonGroup variant="contained" className="pollAnswers">
+          <Button variant="contained" className="accept" tabIndex="-1" id={poll.id} onClick={(e) => this.addVote(e, true)}>Accept</Button>
+          <Button variant="contained" className="decline" tabIndex="-1" id={poll.id} onClick={(e) => this.addVote(e, false)}>Decline</Button>
+        </ButtonGroup>
       </div>
     ));
   }

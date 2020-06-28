@@ -142,7 +142,7 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const input = component.find('input');
+    const input = component.find('WithStyles(ForwardRef(TextField))');
 
     input.props().onChange({
       target: {
@@ -167,7 +167,7 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const button = component.find('button');
+    const button = component.find('WithStyles(ForwardRef(Button))');
     const spy = jest.spyOn(axios, 'get');
 
     component.setState({
@@ -197,7 +197,7 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const button = component.find('button');
+    const button = component.find('WithStyles(ForwardRef(Button))');
     const spy = jest.spyOn(axios, 'get');
 
     component.setState({
@@ -230,7 +230,7 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const button = component.find('button');
+    const button = component.find('WithStyles(ForwardRef(Button))');
     const spy = jest.spyOn(axios, 'get');
 
     component.setState({
@@ -262,7 +262,7 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const button = component.find('button');
+    const button = component.find('WithStyles(ForwardRef(Button))');
     const spy = jest.spyOn(axios, 'get');
 
     await button.props().onClick();

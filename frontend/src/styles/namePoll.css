@@ -1,3 +1,17 @@
 div#namePoll {
   text-align: center;
 }
+
+div#namePoll form#addNamePoll div.MuiOutlinedInput-root {
+  border-top-right-radius: 0;
+  -moz-top-right-radius: 0;
+  -webkit-top-right-radius: 0;
+
+  border-bottom-right-radius: 0;
+  -moz-bottom-right-radius: 0;
+  -webkit-bottom-right-radius: 0;
+}
+
+div#namePoll form#addNamePoll button {
+  outline: none;
+}

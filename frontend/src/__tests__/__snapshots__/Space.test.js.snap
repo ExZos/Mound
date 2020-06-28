@@ -6,7 +6,7 @@ exports[`Space should render MessageSpace with props and session 1`] = `
 >
   <Sidebar />
   <WithStyles(ForwardRef(AppBar))
-    position="static"
+    position="sticky"
   >
     <WithStyles(ForwardRef(Toolbar))>
       <WithStyles(ForwardRef(Typography))
@@ -23,6 +23,7 @@ exports[`Space should render MessageSpace with props and session 1`] = `
         aria-label="close"
         className="closeSpace"
         onClick={[Function]}
+        tabIndex="-1"
       >
         <CloseIcon />
       </WithStyles(ForwardRef(IconButton))>
@@ -51,7 +52,7 @@ exports[`Space should render PendingSpace with props and session 1`] = `
 >
   <Sidebar />
   <WithStyles(ForwardRef(AppBar))
-    position="static"
+    position="sticky"
   >
     <WithStyles(ForwardRef(Toolbar))>
       <WithStyles(ForwardRef(Typography))
@@ -68,6 +69,7 @@ exports[`Space should render PendingSpace with props and session 1`] = `
         aria-label="close"
         className="closeSpace"
         onClick={[Function]}
+        tabIndex="-1"
       >
         <CloseIcon />
       </WithStyles(ForwardRef(IconButton))>
@@ -95,7 +97,7 @@ exports[`Space should render PendingUser with props and session  1`] = `
 >
   <Sidebar />
   <WithStyles(ForwardRef(AppBar))
-    position="static"
+    position="sticky"
   >
     <WithStyles(ForwardRef(Toolbar))>
       <WithStyles(ForwardRef(Typography))
@@ -112,6 +114,7 @@ exports[`Space should render PendingUser with props and session  1`] = `
         aria-label="close"
         className="closeSpace"
         onClick={[Function]}
+        tabIndex="-1"
       >
         <CloseIcon />
       </WithStyles(ForwardRef(IconButton))>
@@ -139,7 +142,7 @@ exports[`Space should render correctly with props but no session 1`] = `
 >
   <Sidebar />
   <WithStyles(ForwardRef(AppBar))
-    position="static"
+    position="sticky"
   >
     <WithStyles(ForwardRef(Toolbar))>
       <WithStyles(ForwardRef(Typography))
@@ -151,6 +154,7 @@ exports[`Space should render correctly with props but no session 1`] = `
         aria-label="close"
         className="closeSpace"
         onClick={[Function]}
+        tabIndex="-1"
       >
         <CloseIcon />
       </WithStyles(ForwardRef(IconButton))>
@@ -162,20 +166,26 @@ exports[`Space should render correctly with props but no session 1`] = `
       id="getUserInSpaceByName"
       onSubmit={[Function]}
     >
-      <input
-        autoFocus={true}
-        name="name"
-        onChange={[Function]}
-        placeholder="Type a user name..."
-        type="text"
-        value=""
-      />
-      <button
-        onClick={[Function]}
-        tabIndex="-1"
+      <WithStyles(ForwardRef(ButtonGroup))
+        size="small"
+        variant="outlined"
       >
-        ENTER
-      </button>
+        <WithStyles(ForwardRef(TextField))
+          autoFocus={true}
+          label="Type a user name..."
+          name="name"
+          onChange={[Function]}
+          value=""
+        />
+        <WithStyles(ForwardRef(Button))
+          color="primary"
+          onClick={[Function]}
+          tabIndex="-1"
+          type="submit"
+        >
+          ENTER
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(ButtonGroup))>
     </form>
     <ConfirmDialog
       confirm={[Function]}

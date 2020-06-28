@@ -17,7 +17,7 @@ describe('Home', () => {
 
   it('should create a state entry equal to the input value', () => {
     const component = shallow(<Home />);
-    const input = component.find('input');
+    const input = component.find('WithStyles(ForwardRef(TextField))');
 
     input.props().onChange({
       target: {
@@ -32,7 +32,7 @@ describe('Home', () => {
 
   it('should create a state entry on valid submit', async () => {
     const component = shallow(<Home history={history} />);
-    const button = component.find('button');
+    const button = component.find('WithStyles(ForwardRef(Button))');
     const spy = jest.spyOn(axios, 'get');
 
     component.setState({
@@ -50,7 +50,7 @@ describe('Home', () => {
 
   it('should not create a state entry on invalid submit and should trigger modal', async () => {
     const component = shallow(<Home history={history} />);
-    const button = component.find('button');
+    const button = component.find('WithStyles(ForwardRef(Button))');
     const spy = jest.spyOn(axios, 'get');
 
     component.setState({
@@ -70,7 +70,7 @@ describe('Home', () => {
 
   it('should not create a state entry nor trigger modal on empty submit', async () => {
     const component = shallow(<Home history={history} />);
-    const button = component.find('button');
+    const button = component.find('WithStyles(ForwardRef(Button))');
     const spy = jest.spyOn(axios, 'get');
 
     component.setState({

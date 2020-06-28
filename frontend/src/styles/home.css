@@ -3,11 +3,21 @@ div#home form#getSpaceByName {
 }
 
 div#home form#getSpaceByName input {
-  /* outline: none; */
+  /* padding: 1rem; */
+}
+
+div#home form#getSpaceByName div.MuiOutlinedInput-root {
+  border-top-right-radius: 0;
+  -moz-top-right-radius: 0;
+  -webkit-top-right-radius: 0;
+
+  border-bottom-right-radius: 0;
+  -moz-bottom-right-radius: 0;
+  -webkit-bottom-right-radius: 0;
 }
 
 div#home form#getSpaceByName button {
-
+  outline: none;
 }
 
 div#home div#errorBlock {

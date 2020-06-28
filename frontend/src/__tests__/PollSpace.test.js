@@ -32,7 +32,7 @@ describe('PollSpace', () => {
 
   it('should call post api on accept click with positive vote', async () => {
     const component = await shallow(<PollSpace userID={2} />);
-    const button = component.find('Button.accept');
+    const button = component.find('.accept');
     const spyPost = jest.spyOn(axios, 'post');
     const spyGet = jest.spyOn(axios, 'get');
 
@@ -53,11 +53,11 @@ describe('PollSpace', () => {
 
   it('should call post api on decline click with negative vote', async () => {
     const component = await shallow(<PollSpace userID={2} />);
-    const button = component.find('Button.decline');
+    const button = component.find('.decline');
     const spyPost = jest.spyOn(axios, 'post');
     const spyGet = jest.spyOn(axios, 'get');
 
-    button.at(1).props().onClick({
+    button.at(0).props().onClick({
       target: {
         id: 2
       }

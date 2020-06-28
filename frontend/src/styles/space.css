@@ -32,6 +32,20 @@ div#space form#getUserInSpaceByName {
 }
 
 div#space form#getUserInSpaceByName input {
+
+}
+
+div#space form#getUserInSpaceByName div.MuiOutlinedInput-root {
+  border-top-right-radius: 0;
+  -moz-top-right-radius: 0;
+  -webkit-top-right-radius: 0;
+
+  border-bottom-right-radius: 0;
+  -moz-bottom-right-radius: 0;
+  -webkit-bottom-right-radius: 0;
+}
+
+div#space form#getUserInSpaceByName button {
   outline: none;
 }
 

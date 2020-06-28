@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, TextField, Button, ButtonGroup } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -162,12 +162,14 @@ class Space extends GeneralComponent {
     return (
       <div>
         <form id="getUserInSpaceByName" onSubmit={this.handleFormSubmit}>
-          <input type="text" name="name" placeholder="Type a user name..." autoFocus
-            value={this.state.user.name}
-            onChange={(e) => this.handleInputChange(e, 'user')}
-          />
+          <ButtonGroup size="small" variant="outlined">
+            <TextField name="name" label="Type a user name..." autoFocus
+              value={this.state.user.name}
+              onChange={(e) => this.handleInputChange(e, 'user')}
+            />
 
-          <button tabIndex="-1" onClick={this.getUserInSpaceByName}>ENTER</button>
+            <Button type="submit" color="primary" tabIndex="-1" onClick={this.getUserInSpaceByName}>ENTER</Button>
+          </ButtonGroup>
         </form>
 
         <ConfirmDialog showModal={this.state.showModal}
@@ -195,7 +197,7 @@ class Space extends GeneralComponent {
               {this.state.space.name}
             </Typography>
 
-            <IconButton className="closeSpace" aria-label="close" onClick={() => this.closeSpace('users', this.state.space.id)}>
+            <IconButton className="closeSpace" aria-label="close" tabIndex="-1" onClick={() => this.closeSpace('users', this.state.space.id)}>
               <CloseIcon />
             </IconButton>
           </Toolbar>
