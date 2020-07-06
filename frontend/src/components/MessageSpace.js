@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner } from 'reactstrap';
+import { TextField, CircularProgress } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import PollSpace from './PollSpace';
@@ -105,7 +105,7 @@ class MessageSpace extends GeneralComponent {
   }
 
   toggleMessageTimestamp = (e) => {
-    console.log(e.target.className);
+    // console.log(e.target.className);
     if(e.target.nextSibling.style.display) {
       e.target.nextSibling.style.display = "";
     }
@@ -149,7 +149,7 @@ class MessageSpace extends GeneralComponent {
     if(!this.loaded) {
       return (
         <div id="messageSpace">
-          <Spinner type="border" color="dark" />
+          <CircularProgress color="inherit" />
         </div>
       );
     }
@@ -161,8 +161,9 @@ class MessageSpace extends GeneralComponent {
         </div>
 
         <div>
-          <form onSubmit={this.handleFormSubmit}>
-            <textarea name="content" placeholder="Type a message... " autoFocus
+          <form id="createMessage" onSubmit={this.handleFormSubmit}>
+            <TextField name="content" placeholder="Type a message... " autoFocus
+              variant="outlined" multiline fullWidth
               value={this.state.message.content}
               onChange={(e) => this.handleInputChange(e, 'message')}
               onKeyDown={this.handleKeyFormSubmit}

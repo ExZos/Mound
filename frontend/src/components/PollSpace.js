@@ -75,8 +75,8 @@ class PollSpace extends GeneralComponent {
         </div>
 
         <ButtonGroup variant="contained" className="pollAnswers">
-          <Button variant="contained" className="accept" tabIndex="-1" id={poll.id} onClick={(e) => this.addVote(e, true)}>Accept</Button>
-          <Button variant="contained" className="decline" tabIndex="-1" id={poll.id} onClick={(e) => this.addVote(e, false)}>Decline</Button>
+          <Button className="accept" tabIndex="-1" id={poll.id} onClick={(e) => this.addVote(e, true)}>Accept</Button>
+          <Button className="decline" tabIndex="-1" id={poll.id} onClick={(e) => this.addVote(e, false)}>Decline</Button>
         </ButtonGroup>
       </div>
     ));

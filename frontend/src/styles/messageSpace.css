@@ -31,13 +31,20 @@ div#messageSpace div.message.own {
 }
 
 div#messageSpace div.message div.content {
+  text-align: left;
   display: inline-block;
   background-color: rgb(250, 250, 250);
   padding: 3px 11px;
+  margin-right: 25%;
 
   border-radius: 1rem;
   -moz-border-radius: 1rem;
   -webkit-border-radius: 1rem;
+}
+
+div#messageSpace div.message.own div.content {
+  margin-right: 0;
+  margin-left: 25%;
 }
 
 div#messageSpace div.message div.sender {
@@ -56,14 +63,17 @@ div#messageSpace div.message div.timestamp {
   display: none;
   position: relative;
   left: 10px;
+  font-style: italic;
 }
 
 div#messageSpace div.message.own div.timestamp {
   left: -10px;
 }
 
-div#messageSpace textarea {
-  resize: none;
+div#messageSpace form#createMessage div.MuiFormControl-root {
   width: 98%;
-  /* outline: none; */
+}
+
+div#messageSpace form#createMessage div.MuiInputBase-root {
+
 }

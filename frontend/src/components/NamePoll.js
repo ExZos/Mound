@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Button, ButtonGroup } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
@@ -50,14 +50,17 @@ class NamePoll extends GeneralComponent {
     return (
       <div id="namePoll">
         <form id="addNamePoll" onSubmit={this.handleFormSubmit}>
-          <ButtonGroup size="small" variant="outlined">
+          <div className="textFieldWButton">
             <TextField name="name" label="Type a user name..."
+              size="small" variant="outlined"
               value={this.state.user.name}
               onChange={(e) => this.handleInputChange(e, 'user')}
             />
 
-            <Button color="primary" tabIndex="-1" onClick={this.addNamePoll}>REQUEST</Button>
-          </ButtonGroup>
+            <Button color="primary"
+              size="small" variant="outlined"
+              tabIndex="-1" onClick={this.addNamePoll}>REQUEST</Button>
+          </div>
         </form>
       </div>
     );

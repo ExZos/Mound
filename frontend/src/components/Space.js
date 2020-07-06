@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, TextField, Button, ButtonGroup } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, TextField, Button } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -162,14 +162,19 @@ class Space extends GeneralComponent {
     return (
       <div>
         <form id="getUserInSpaceByName" onSubmit={this.handleFormSubmit}>
-          <ButtonGroup size="small" variant="outlined">
+          <div className="textFieldWButton">
             <TextField name="name" label="Type a user name..." autoFocus
+              size="small" variant="outlined"
               value={this.state.user.name}
               onChange={(e) => this.handleInputChange(e, 'user')}
             />
 
-            <Button type="submit" color="primary" tabIndex="-1" onClick={this.getUserInSpaceByName}>ENTER</Button>
-          </ButtonGroup>
+            <Button type="submit" color="primary"
+              size="small" variant="outlined"
+              tabIndex="-1" onClick={this.getUserInSpaceByName}>
+                ENTER
+            </Button>
+          </div>
         </form>
 
         <ConfirmDialog showModal={this.state.showModal}

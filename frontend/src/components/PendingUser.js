@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner } from 'reactstrap';
+import { CircularProgress } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
@@ -110,7 +110,7 @@ class PendingUser extends GeneralComponent {
     if(!this.loaded) {
       return (
         <div id="pendingSpace">
-          <Spinner type="border" color="dark" />
+          <CircularProgress color="inherit" />
         </div>
       );
     }

@@ -166,26 +166,29 @@ exports[`Space should render correctly with props but no session 1`] = `
       id="getUserInSpaceByName"
       onSubmit={[Function]}
     >
-      <WithStyles(ForwardRef(ButtonGroup))
-        size="small"
-        variant="outlined"
+      <div
+        className="textFieldWButton"
       >
         <WithStyles(ForwardRef(TextField))
           autoFocus={true}
           label="Type a user name..."
           name="name"
           onChange={[Function]}
+          size="small"
           value=""
+          variant="outlined"
         />
         <WithStyles(ForwardRef(Button))
           color="primary"
           onClick={[Function]}
+          size="small"
           tabIndex="-1"
           type="submit"
+          variant="outlined"
         >
           ENTER
         </WithStyles(ForwardRef(Button))>
-      </WithStyles(ForwardRef(ButtonGroup))>
+      </div>
     </form>
     <ConfirmDialog
       confirm={[Function]}

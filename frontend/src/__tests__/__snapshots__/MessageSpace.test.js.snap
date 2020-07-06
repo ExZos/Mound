@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MessageSpace should render CircularProgress while loading messages with props and session 1`] = `
+<div
+  id="messageSpace"
+>
+  <WithStyles(ForwardRef(CircularProgress))
+    color="inherit"
+  />
+</div>
+`;
+
 exports[`MessageSpace should render messages correctly with props and session 1`] = `
 <div
   id="messageSpace"
@@ -109,15 +119,19 @@ exports[`MessageSpace should render messages correctly with props and session 1`
   </div>
   <div>
     <form
+      id="createMessage"
       onSubmit={[Function]}
     >
-      <textarea
+      <WithStyles(ForwardRef(TextField))
         autoFocus={true}
+        fullWidth={true}
+        multiline={true}
         name="content"
         onChange={[Function]}
         onKeyDown={[Function]}
         placeholder="Type a message... "
         value=""
+        variant="outlined"
       />
     </form>
   </div>
@@ -149,15 +163,19 @@ exports[`MessageSpace should render no messages correctly with props and session
   </div>
   <div>
     <form
+      id="createMessage"
       onSubmit={[Function]}
     >
-      <textarea
+      <WithStyles(ForwardRef(TextField))
         autoFocus={true}
+        fullWidth={true}
+        multiline={true}
         name="content"
         onChange={[Function]}
         onKeyDown={[Function]}
         placeholder="Type a message... "
         value=""
+        variant="outlined"
       />
     </form>
   </div>
@@ -171,19 +189,5 @@ exports[`MessageSpace should render no messages correctly with props and session
     spaceID={1}
     userID={1}
   />
-</div>
-`;
-
-exports[`MessageSpace should render spinner while loading messages with props and session 1`] = `
-<div
-  id="messageSpace"
->
-  <Spinner
-    color="dark"
-    tag="div"
-    type="border"
-  >
-    Loading...
-  </Spinner>
 </div>
 `;

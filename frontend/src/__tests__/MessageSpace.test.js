@@ -13,7 +13,7 @@ const history = createBrowserHistory();
 const tutils = new TestingUtilities();
 
 describe('MessageSpace', () => {
-  it('should render spinner while loading messages with props and session', () => {
+  it('should render CircularProgress while loading messages with props and session', () => {
     const user = {
       id: 1,
       name: 'user1',
@@ -23,11 +23,11 @@ describe('MessageSpace', () => {
 
     const component = shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
     const messages = component.find('div.message');
-    const spinner = component.find('Spinner');
+    const circularProgresss = component.find('WithStyles(ForwardRef(CircularProgress))');
 
     expect(component).toMatchSnapshot();
     expect(messages).toHaveLength(0);
-    expect(spinner).toHaveLength(1);
+    expect(circularProgresss).toHaveLength(1);
   });
 
   it('should render no messages correctly with props and session', async () => {
@@ -96,9 +96,9 @@ describe('MessageSpace', () => {
     };
 
     const component = await shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
-    const textarea = component.find('textarea');
+    const textField = component.find('WithStyles(ForwardRef(TextField))');
 
-    textarea.props().onChange({
+    textField.props().onChange({
       target: {
         name: 'content',
         value: 'content1'
@@ -118,7 +118,7 @@ describe('MessageSpace', () => {
     };
 
     const component = await shallow(<MessageSpace user={user} updateState={jest.fn()} history={history} />);
-    const textarea = component.find('textarea');
+    const textField = component.find('WithStyles(ForwardRef(TextField))');
     const spy = jest.spyOn(axios, 'post');
     const mockPreventDefault = jest.fn();
 
@@ -128,7 +128,7 @@ describe('MessageSpace', () => {
         content: 'content1'
       }
     });
-    textarea.props().onKeyDown({
+    textField.props().onKeyDown({
       keyCode: 13,
       shiftKey: false,
       preventDefault: mockPreventDefault
