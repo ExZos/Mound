@@ -14,6 +14,7 @@ export const endpoints = {
   getMessagesInSpace: '/message/getInSpace/',
   getPendingPollsInSpace: '/poll/getPendingInSpace/',
   getPendingUnvotedPollsForUser: '/poll/getPendingUnvotedForUser/',
+  getNamePollResultsInSpaceByUser: '/poll/getNameResultsInSpaceByUser/',
   getPendingJoinPollInSpaceByName: 'poll/getPendingJoinInSpaceByName/',
   getJoinPollResults: '/poll/getJoinResults/',
   createNameRelatedPoll: '/poll/createNameRelated/',

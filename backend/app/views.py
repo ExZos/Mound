@@ -165,6 +165,50 @@ class PollView(viewsets.ModelViewSet):
 		return Response(serializer.data)
 
 	@api_view(['GET',])
+	def getNamePollResultsInSpaceByUser(request, spaceID, userID):
+		# Get poll
+		queryset = Poll.objects.all()
+		nameNone = Q(name=None)
+		poll = get_object_or_404(queryset, ~nameNone, status=None, user=userID, space=spaceID)
+
+		# Get users in space of poll
+		eqSpaceID = Q(space=poll.space.id)
+		eqUserID = Q(id=userID)
+		users = User.objects.filter(eqSpaceID&~eqUserID)
+		usersSerializer = UserSerializer(users, many=True)
+
+		# Get positive/negative votes for poll
+		votes = Vote.objects.filter(poll=poll.id)
+		positiveVotes = votes.filter(result=True)
+		negativeVotes = votes.filter(result=False)
+		positiveVoteSerializer = VoteSerializer(positiveVotes, many=True)
+		negativeVoteSerializer = VoteSerializer(negativeVotes, many=True)
+
+		# Get reused counts
+		userCount = len(usersSerializer.data)
+		positiveVoteCount = len(positiveVoteSerializer.data)
+
+		# Name poll to be approved
+		if positiveVoteCount >= userCount:
+			# Get user
+			allUsers = User.objects.all()
+			user = get_object_or_404(allUsers, id=userID)
+			userSerializer = UserSerializer(user)
+
+			return Response({
+				'userCount': userCount,
+				'positiveVoteCount': positiveVoteCount,
+				'negativeVoteCount': len(negativeVoteSerializer.data),
+				'user': userSerializer.data
+			})
+
+		return Response({
+			'userCount': userCount,
+			'positiveVoteCount': positiveVoteCount,
+			'negativeVoteCount': len(negativeVoteSerializer.data)
+		})
+
+	@api_view(['GET',])
 	def getJoinPollResults(request, pollID, userName):
 		# Get poll
 		queryset = Poll.objects.all()

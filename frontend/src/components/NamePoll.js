@@ -31,20 +31,35 @@ class NamePoll extends GeneralComponent {
 
   getNamePoll = async () => {
     try {
-      const res = await server.get(api.getNamePollInSpaceByUser, '');
+      const res = await server.get(api.getNamePollResultsInSpaceByUser + this.props.spaceID + '/' + this.props.userID + '/');
 
       this.loaded = true;
 
+      const userCount = res.data['userCount'];
+      const positiveVoteCount = res.data['positiveVoteCount'];
+      const negativeVoteCount = res.data['negativeVoteCount'];
+      const user = res.data['user'];
+
       this.setState({
-        poll: res.data
+        existingPoll: true,
+        userCount: userCount,
+        requiredVoteCount: userCount,
+        positiveVoteCount: positiveVoteCount,
+        negativeVoteCount: negativeVoteCount,
+        remainingVoteCount: userCount - (positiveVoteCount + negativeVoteCount)
       });
+
+      // User approved: update user session item
+      if(user && this.loaded) {
+        this.addToSessionArrayItem('users', user);
+      }
     }
     catch (e) {
       clearInterval(this.interval);
       this.loaded = true;
 
       this.setState({
-        poll: undefined
+        existingPoll: false
       });
     }
   }
@@ -77,6 +92,44 @@ class NamePoll extends GeneralComponent {
     }
   }
 
+  displayStatusStatement = () => {
+    if(this.state.positiveVoteCount < this.state.requiredVoteCount && this.state.remainingVoteCount === 0) {
+      return 'rejected';
+    }
+
+    return 'pending';
+  }
+
+  displayResultingStatement = () => {
+    if(this.state.positiveVoteCount < this.state.requiredVoteCount) {
+      // Quota not met but still more users left to vote
+      if(this.state.remainingVoteCount > 0) {
+        return (
+          <div>
+            Some users have not yet voted.
+          </div>
+        );
+      }
+
+      // Join request rejected
+      return (
+        <div>
+          All users have voted.<br />
+          The required votes has not been met.<br />
+          Your request has been rejected.
+        </div>
+      );
+    }
+
+    // Join request to be approved
+    return (
+      <div>
+        The required votes has been met.<br />
+        Your request will be approved shortly.
+      </div>
+    );
+  }
+
   // TODO: display poll progress
   render() {
     if(!this.loaded) {
@@ -86,7 +139,7 @@ class NamePoll extends GeneralComponent {
         </div>
       );
     }
-    else if(!this.state.poll) {
+    else if(!this.state.existingPoll) {
       return (
         <div id="namePoll">
           <form id="addNamePoll" onSubmit={this.handleFormSubmit}>
@@ -108,7 +161,19 @@ class NamePoll extends GeneralComponent {
 
     return (
       <div id="namePoll">
-        Pending Name Poll
+        <div className="statusStatement">
+          Status: {this.displayStatusStatement()}
+        </div>
+
+        <div className="progressStatement">
+          Progress: {this.state.positiveVoteCount}/{this.state.requiredVoteCount}
+        </div>
+
+        <br />
+
+        <div className="resultingStatement">
+          {this.displayResultingStatement()}
+        </div>
       </div>
     );
   }

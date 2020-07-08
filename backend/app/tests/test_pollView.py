@@ -155,6 +155,74 @@ class getPendingJoinPollInSpaceByNameTests(TestCase):
         response = self.client.get('/poll/getPendingJoinInSpaceByName/2/Zaray/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+class getNamePollResultsInSpaceByUserTests(TestCase):
+    client = APIClient()
+
+    @classmethod
+    def setUpTestData(self):
+        self.client.post('/api/spaces/', {'name': 'Home'}, format='json')
+        self.client.post('/api/spaces/', {'name': 'Work'}, format='json')
+        self.client.post('/api/spaces/', {'name': 'School'}, format='json')
+        self.client.post('/api/users/', {'name': 'Alex', 'space': 1}, format='json')
+        self.client.post('/api/users/', {'name': 'Bob', 'space': 1}, format='json')
+        self.client.post('/api/users/', {'name': 'Celine', 'space': 1}, format='json')
+        self.client.post('/api/users/', {'name': 'Daphne', 'space': 1}, format='json')
+        self.client.post('/api/users/', {'name': 'Alex', 'space': 2}, format='json')
+        self.client.post('/api/users/', {'name': 'Bob', 'space': 2}, format='json')
+        self.client.post('/api/users/', {'name': 'Celine', 'space': 2}, format='json')
+        self.client.post('/api/users/', {'name': 'Alex', 'space': 3}, format='json')
+        self.client.post('/api/users/', {'name': 'Bob', 'space': 3}, format='json')
+        self.client.post('/api/polls/', {'space': 1, 'user': 1, 'name': 'Zaray'}, format='json')
+        self.client.post('/api/polls/', {'space': 1, 'user': 2}, format='json')
+        self.client.post('/api/polls/', {'space': 1, 'user': 3, 'status': True, 'name': 'Yon'}, format='json')
+        self.client.post('/api/polls/', {'space': 2, 'user': 6, 'name': 'Yon'}, format='json')
+        self.client.post('/api/polls/', {'space': 3, 'user': 8, 'name': 'Xiao'}, format='json')
+        self.client.post('/api/votes/', {'poll': 1, 'user': 2, 'result': True}, format='json')
+        self.client.post('/api/votes/', {'poll': 1, 'user': 3, 'result': False}, format='json')
+        self.client.post('/api/votes/', {'poll': 1, 'user': 4, 'result': False}, format='json')
+        self.client.post('/api/votes/', {'poll': 4, 'user': 5, 'result': False}, format='json')
+        self.client.post('/api/votes/', {'poll': 4, 'user': 7, 'result': True}, format='json')
+        self.client.post('/api/votes/', {'poll': 5, 'user': 9, 'result': True}, format='json')
+
+    def test_get_results_3u_1p_2n(self):
+        response = self.client.get('/poll/getNameResultsInSpaceByUser/1/1/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['userCount'], 3)
+        self.assertEqual(response.data['positiveVoteCount'], 1)
+        self.assertEqual(response.data['negativeVoteCount'], 2)
+        self.assertNotIn('user', response.data)
+
+    def test_get_results_2u_1p_1n(self):
+        response = self.client.get('/poll/getNameResultsInSpaceByUser/2/6/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['userCount'], 2)
+        self.assertEqual(response.data['positiveVoteCount'], 1)
+        self.assertEqual(response.data['negativeVoteCount'], 1)
+        self.assertNotIn('user', response.data)
+
+    def test_get_results_1u_1p_0n(self):
+        response = self.client.get('/poll/getNameResultsInSpaceByUser/3/8/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['userCount'], 1)
+        self.assertEqual(response.data['positiveVoteCount'], 1)
+        self.assertEqual(response.data['negativeVoteCount'], 0)
+        self.assertIn('user', response.data)
+
+    def test_fail_get_by_user_w_no_poll(self):
+        response = self.client.get('/poll/getNameResultsInSpaceByUser/1/4/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_fail_get_for_missing_user(self):
+        response = self.client.get('/poll/getNameResultsInSpaceByUser/1/10/')
+
+    def test_fail_get_non_name_poll(self):
+        response = self.client.get('/poll/getNameResultsInSpaceByUser/1/2/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_fail_get_non_pending_poll(self):
+        response = self.client.get('/poll/getNameResultsInSpaceByUser/1/3/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 class getJoinPollResultsTests(TestCase):
     client = APIClient()
 
