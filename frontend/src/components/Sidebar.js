@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Drawer } from '@material-ui/core';
 
-import GamepadIcon from '@material-ui/icons/Gamepad';
+import LandscapeIcon from '@material-ui/icons/Landscape';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
@@ -59,7 +59,7 @@ class Sidebar extends GeneralComponent {
       <Drawer variant="permanent">
         <div id="sidebar">
           <div className="logo">
-            <GamepadIcon fontSize="large" />
+            <LandscapeIcon fontSize="large" />
           </div>
 
           <div className="spaceNav">

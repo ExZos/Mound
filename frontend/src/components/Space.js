@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, TextField, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, TextField, Button, Menu, MenuItem } from '@material-ui/core';
 
+import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
 import GeneralComponent from './GeneralComponent';
@@ -123,12 +124,33 @@ class Space extends GeneralComponent {
     });
   }
 
-  displayUser = (users) => {
+  displayMenu = (users) => {
     if(users && users[this.state.space.id]) {
       return(
-          <Typography className="userName">
-            {users[this.state.space.id].name}
-          </Typography>
+        <React.Fragment>
+          <IconButton className="openMenu" tabIndex="-1" onClick={this.setMenuAnchor}>
+            <MenuIcon />
+          </IconButton>
+
+          <Menu id="spaceNavMenu" open={Boolean(this.state.menuAnchor)} anchorEl={this.state.menuAnchor} onClose={this.removeMenuAnchor}
+            getContentAnchorEl={null} anchorOrigin={{ vertical: 'bottom', horizontal: 'left'}} transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
+            <MenuItem disabled>
+              {users[this.state.space.id].name}
+            </MenuItem>
+
+            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(undefined)}>
+              Messages
+            </MenuItem>
+
+            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(1)}>
+              Polls
+            </MenuItem>
+
+            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(2)}>
+              Change Name
+            </MenuItem>
+          </Menu>
+        </React.Fragment>
       );
     }
   }
@@ -142,7 +164,7 @@ class Space extends GeneralComponent {
         if(user.id) {
           return (
             <MessageSpace history={this.props.history} updateState={this.updateState}
-              user={user}
+              user={user} tab={this.state.tab}
             />
           );
         }
@@ -186,7 +208,6 @@ class Space extends GeneralComponent {
     );
   }
 
-  // TODO: fix user name display
   render() {
     const users = this.getSessionItem('users');
 
@@ -196,7 +217,7 @@ class Space extends GeneralComponent {
 
         <AppBar position="sticky">
           <Toolbar>
-            {this.displayUser(users)}
+            {this.displayMenu(users)}
 
             <Typography className="spaceName">
               {this.state.space.name}

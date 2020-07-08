@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup, CircularProgress } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
@@ -8,6 +8,8 @@ import '../styles/pollSpace.css';
 class PollSpace extends GeneralComponent {
   constructor(props) {
     super(props);
+
+    this.loaded = false;
 
     this.state = {
       polls: [],
@@ -27,6 +29,8 @@ class PollSpace extends GeneralComponent {
   getPolls = async () => {
     try {
       const res = await server.get(api.getPendingUnvotedPollsForUser + this.props.userID);
+
+      this.loaded = true;
 
       this.setState({
         polls: res.data
@@ -83,9 +87,24 @@ class PollSpace extends GeneralComponent {
   }
 
   render() {
+    if(!this.loaded) {
+      return (
+        <div id="pollSpace">
+          <CircularProgress color="inherit" />
+        </div>
+      );
+    }
+    else if(this.state.polls.length > 0) {
+      return (
+        <div id="pollSpace">
+          {this.renderPolls()}
+        </div>
+      );
+    }
+
     return (
       <div id="pollSpace">
-        {this.renderPolls()}
+        No polls
       </div>
     );
   }

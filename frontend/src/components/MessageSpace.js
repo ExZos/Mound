@@ -114,6 +114,43 @@ class MessageSpace extends GeneralComponent {
     }
   }
 
+  renderTab = () => {
+    if(!this.props.tab) {
+      return (
+        <React.Fragment>
+          <div className="messages">
+            {this.renderMessages()}
+          </div>
+
+          <div>
+            <form id="createMessage" onSubmit={this.handleFormSubmit}>
+              <TextField name="content" placeholder="Type a message... " autoFocus
+                variant="outlined" multiline fullWidth
+                value={this.state.message.content}
+                onChange={(e) => this.handleInputChange(e, 'message')}
+                onKeyDown={this.handleKeyFormSubmit}
+              />
+            </form>
+          </div>
+        </React.Fragment>
+      );
+    }
+    else if(this.props.tab === 1) {
+      return (
+        <PollSpace spaceID={this.props.user.space} userID={this.props.user.id} />
+      );
+    }
+    else if(this.props.tab === 2) {
+      return (
+        <NamePoll spaceID={this.props.user.space} userID={this.props.user.id} />
+      );
+    }
+    else {
+      // TODO: render error component? OR messages
+      console.log('');
+    }
+  }
+
   renderMessages = () => {
     const messages = this.state.messages;
 
@@ -156,28 +193,7 @@ class MessageSpace extends GeneralComponent {
 
     return(
       <div id="messageSpace">
-        <div className="messages">
-          {this.renderMessages()}
-        </div>
-
-        <div>
-          <form id="createMessage" onSubmit={this.handleFormSubmit}>
-            <TextField name="content" placeholder="Type a message... " autoFocus
-              variant="outlined" multiline fullWidth
-              value={this.state.message.content}
-              onChange={(e) => this.handleInputChange(e, 'message')}
-              onKeyDown={this.handleKeyFormSubmit}
-            />
-          </form>
-        </div>
-
-        <br />
-
-        <PollSpace spaceID={this.props.user.space} userID={this.props.user.id} />
-
-        <br />
-
-        <NamePoll spaceID={this.props.user.space} userID={this.props.user.id} />
+        {this.renderTab()}
       </div>
     );
   }
