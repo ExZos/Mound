@@ -9,11 +9,52 @@ exports[`Space should render MessageSpace with props and session 1`] = `
     position="sticky"
   >
     <WithStyles(ForwardRef(Toolbar))>
-      <WithStyles(ForwardRef(Typography))
-        className="userName"
+      <WithStyles(ForwardRef(IconButton))
+        className="openMenu"
+        onClick={[Function]}
+        tabIndex="-1"
       >
-        user2
-      </WithStyles(ForwardRef(Typography))>
+        <MenuIcon />
+      </WithStyles(ForwardRef(IconButton))>
+      <WithStyles(ForwardRef(Menu))
+        anchorOrigin={
+          Object {
+            "horizontal": "left",
+            "vertical": "bottom",
+          }
+        }
+        getContentAnchorEl={null}
+        id="spaceNavMenu"
+        onClose={[Function]}
+        open={false}
+        transformOrigin={
+          Object {
+            "horizontal": "left",
+            "vertical": "top",
+          }
+        }
+      >
+        <WithStyles(ForwardRef(MenuItem))
+          disabled={true}
+        >
+          user2
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Messages
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Polls
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Change Name
+        </WithStyles(ForwardRef(MenuItem))>
+      </WithStyles(ForwardRef(Menu))>
       <WithStyles(ForwardRef(Typography))
         className="spaceName"
       >
@@ -55,11 +96,52 @@ exports[`Space should render PendingSpace with props and session 1`] = `
     position="sticky"
   >
     <WithStyles(ForwardRef(Toolbar))>
-      <WithStyles(ForwardRef(Typography))
-        className="userName"
+      <WithStyles(ForwardRef(IconButton))
+        className="openMenu"
+        onClick={[Function]}
+        tabIndex="-1"
       >
-        userundefined
-      </WithStyles(ForwardRef(Typography))>
+        <MenuIcon />
+      </WithStyles(ForwardRef(IconButton))>
+      <WithStyles(ForwardRef(Menu))
+        anchorOrigin={
+          Object {
+            "horizontal": "left",
+            "vertical": "bottom",
+          }
+        }
+        getContentAnchorEl={null}
+        id="spaceNavMenu"
+        onClose={[Function]}
+        open={false}
+        transformOrigin={
+          Object {
+            "horizontal": "left",
+            "vertical": "top",
+          }
+        }
+      >
+        <WithStyles(ForwardRef(MenuItem))
+          disabled={true}
+        >
+          userundefined
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Messages
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Polls
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Change Name
+        </WithStyles(ForwardRef(MenuItem))>
+      </WithStyles(ForwardRef(Menu))>
       <WithStyles(ForwardRef(Typography))
         className="spaceName"
       >
@@ -100,11 +182,52 @@ exports[`Space should render PendingUser with props and session  1`] = `
     position="sticky"
   >
     <WithStyles(ForwardRef(Toolbar))>
-      <WithStyles(ForwardRef(Typography))
-        className="userName"
+      <WithStyles(ForwardRef(IconButton))
+        className="openMenu"
+        onClick={[Function]}
+        tabIndex="-1"
       >
-        userundefined
-      </WithStyles(ForwardRef(Typography))>
+        <MenuIcon />
+      </WithStyles(ForwardRef(IconButton))>
+      <WithStyles(ForwardRef(Menu))
+        anchorOrigin={
+          Object {
+            "horizontal": "left",
+            "vertical": "bottom",
+          }
+        }
+        getContentAnchorEl={null}
+        id="spaceNavMenu"
+        onClose={[Function]}
+        open={false}
+        transformOrigin={
+          Object {
+            "horizontal": "left",
+            "vertical": "top",
+          }
+        }
+      >
+        <WithStyles(ForwardRef(MenuItem))
+          disabled={true}
+        >
+          userundefined
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Messages
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Polls
+        </WithStyles(ForwardRef(MenuItem))>
+        <WithStyles(ForwardRef(MenuItem))
+          onClick={[Function]}
+        >
+          Change Name
+        </WithStyles(ForwardRef(MenuItem))>
+      </WithStyles(ForwardRef(Menu))>
       <WithStyles(ForwardRef(Typography))
         className="spaceName"
       >

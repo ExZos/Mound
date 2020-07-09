@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NamePoll should render approved poll correctly with props 1`] = `
+<div
+  id="namePoll"
+>
+  <div
+    className="statusStatement"
+  >
+    Status: 
+    pending
+  </div>
+  <div
+    className="progressStatement"
+  >
+    Progress: 
+    3
+    /
+    3
+  </div>
+  <br />
+  <div
+    className="resultingStatement"
+  >
+    <div>
+      The required votes has been met.
+      <br />
+      Your request will be approved shortly.
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NamePoll should render name correctly with props 1`] = `
+<div
+  id="namePoll"
+>
+  <form
+    id="addNamePoll"
+    onSubmit={[Function]}
+  >
+    <div
+      className="textFieldWButton"
+    >
+      <WithStyles(ForwardRef(TextField))
+        label="Type a user name..."
+        name="name"
+        onChange={[Function]}
+        size="small"
+        value=""
+        variant="outlined"
+      />
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[Function]}
+        size="small"
+        tabIndex="-1"
+        variant="outlined"
+      >
+        REQUEST
+      </WithStyles(ForwardRef(Button))>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`NamePoll should render pending poll correctly with props 1`] = `
+<div
+  id="namePoll"
+>
+  <div
+    className="statusStatement"
+  >
+    Status: 
+    pending
+  </div>
+  <div
+    className="progressStatement"
+  >
+    Progress: 
+    5
+    /
+    10
+  </div>
+  <br />
+  <div
+    className="resultingStatement"
+  >
+    <div>
+      Some users have not yet voted.
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NamePoll should render rejected poll correctly with props 1`] = `
+<div
+  id="namePoll"
+>
+  <div
+    className="statusStatement"
+  >
+    Status: 
+    rejected
+  </div>
+  <div
+    className="progressStatement"
+  >
+    Progress: 
+    2
+    /
+    7
+  </div>
+  <br />
+  <div
+    className="resultingStatement"
+  >
+    <div>
+      All users have voted.
+      <br />
+      The required votes has not been met.
+      <br />
+      Your request has been rejected.
+    </div>
+  </div>
+</div>
+`;

@@ -27,13 +27,13 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('.userName');
+    const openMenu = component.find('.openMenu');
     const space = component.find('.spaceName');
     const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
 
     expect(component).toMatchSnapshot();
-    expect(user).toHaveLength(0);
+    expect(openMenu).toHaveLength(0);
     expect(space).toHaveLength(1);
     expect(space.children().text()).toEqual('space1');
     expect(close).toHaveLength(1);
@@ -54,15 +54,14 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('.userName');
+    const openMenu = component.find('.openMenu');
     const space = component.find('.spaceName');
     const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
     const messageSpace = component.find('MessageSpace');
 
     expect(component).toMatchSnapshot();
-    expect(user).toHaveLength(1);
-    expect(user.children().text()).toEqual('user2');
+    expect(openMenu).toHaveLength(1);
     expect(space).toHaveLength(1);
     expect(space.children().text()).toEqual('space2');
     expect(close).toHaveLength(1);
@@ -84,15 +83,14 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('.userName');
+    const openMenu = component.find('.openMenu');
     const space = component.find('.spaceName');
     const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
     const pendingUser = component.find('PendingUser');
 
     expect(component).toMatchSnapshot();
-    expect(user).toHaveLength(1);
-    expect(user.children().text()).toEqual('userundefined');
+    expect(openMenu).toHaveLength(1);
     expect(space).toHaveLength(1);
     expect(space.children().text()).toEqual('space3');
     expect(close).toHaveLength(1);
@@ -114,15 +112,14 @@ describe('Space', () => {
     };
 
     const component = shallow(<Space location={props} />);
-    const user = component.find('.userName');
+    const openMenu = component.find('.openMenu');
     const space = component.find('.spaceName');
     const close = component.find('.closeSpace');
     const spaceForm = component.find('form#getUserInSpaceByName');
     const pendingSpace = component.find('PendingSpace');
 
     expect(component).toMatchSnapshot();
-    expect(user).toHaveLength(1);
-    expect(user.children().text()).toEqual('userundefined');
+    expect(openMenu).toHaveLength(1);
     expect(space).toHaveLength(1);
     expect(space.children().text()).toEqual('space3');
     expect(close).toHaveLength(1);

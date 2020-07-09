@@ -141,6 +141,40 @@ const axios = {
           }
         });
 
+      case api.getNamePollResultsInSpaceByUser + '2/2/':
+        return Promise.resolve({
+          data: {
+            userCount: 10,
+      			positiveVoteCount: 5,
+      			negativeVoteCount: 3
+          }
+        });
+
+      case api.getNamePollResultsInSpaceByUser + '3/3/':
+        return Promise.resolve({
+          data: {
+            userCount: 3,
+      			positiveVoteCount: 3,
+      			negativeVoteCount: 0,
+            user: {
+              id: 3,
+              name: 'user3',
+              space: 3,
+              space_name: 'space3',
+              space_status: true
+            }
+          }
+        });
+
+      case api.getNamePollResultsInSpaceByUser + '4/4/':
+        return Promise.resolve({
+          data: {
+            userCount: 7,
+            positiveVoteCount: 2,
+            negativeVoteCount: 5
+          }
+        });
+
       case api.getPendingUnvotedPollsForUser + '1':
         return Promise.resolve({
           data: []

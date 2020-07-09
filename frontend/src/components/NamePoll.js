@@ -130,7 +130,6 @@ class NamePoll extends GeneralComponent {
     );
   }
 
-  // TODO: display poll progress
   render() {
     if(!this.loaded) {
       return (

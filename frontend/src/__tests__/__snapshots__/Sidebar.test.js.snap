@@ -10,7 +10,7 @@ exports[`Sidebar should render correctly without props nor session 1`] = `
     <div
       className="logo"
     >
-      <GamepadIcon
+      <LandscapeIcon
         fontSize="large"
       />
     </div>
@@ -56,7 +56,7 @@ exports[`Sidebar should render tabs with session storage 1`] = `
     <div
       className="logo"
     >
-      <GamepadIcon
+      <LandscapeIcon
         fontSize="large"
       />
     </div>
