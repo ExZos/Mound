@@ -5,7 +5,7 @@ import GeneralComponent from './GeneralComponent';
 import Sidebar from './Sidebar';
 import ConfirmDialog from './ConfirmDialog';
 import { server, api } from '../server';
-import '../styles/home.css';
+import '../styles/home.scss';
 
 class Home extends GeneralComponent {
   constructor(props) {

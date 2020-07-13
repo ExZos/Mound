@@ -7,7 +7,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 import GeneralComponent from './GeneralComponent';
-import '../styles/sidebar.css';
+import '../styles/sidebar.scss';
 
 // TODO: new message indicators
 class Sidebar extends GeneralComponent {

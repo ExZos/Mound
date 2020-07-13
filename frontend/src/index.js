@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/index.css';
+import './styles/index.scss';
 
 import Home from './components/Home';
 import Space from './components/Space';

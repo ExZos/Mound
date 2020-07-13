@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GeneralComponent from './GeneralComponent';
-import '../styles/errorBlock.css';
+import '../styles/errorBlock.scss';
 
 class ErrorBlock extends GeneralComponent {
   render() {

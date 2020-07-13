@@ -5,7 +5,7 @@ import GeneralComponent from './GeneralComponent';
 import PollSpace from './PollSpace';
 import NamePoll from './NamePoll';
 import { server, api } from '../server';
-import '../styles/messageSpace.css';
+import '../styles/messageSpace.scss';
 
 class MessageSpace extends GeneralComponent {
   constructor(props) {

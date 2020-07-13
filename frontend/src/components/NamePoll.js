@@ -3,7 +3,7 @@ import { TextField, Button, CircularProgress } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
-import '../styles/namePoll.css';
+import '../styles/namePoll.scss';
 
 class NamePoll extends GeneralComponent {
   constructor(props) {

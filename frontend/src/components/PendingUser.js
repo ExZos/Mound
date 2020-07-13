@@ -3,7 +3,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
-import '../styles/pendingUser.css';
+import '../styles/pendingUser.scss';
 
 class PendingUser extends GeneralComponent {
   constructor(props) {

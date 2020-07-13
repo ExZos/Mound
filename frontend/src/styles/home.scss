@@ -1,0 +1,28 @@
+@import 'globals';
+
+div#home {
+  form#getSpaceByName {
+    text-align: center;
+
+    input {
+      // padding: 1rem;
+    }
+
+    div.textFieldWButton {
+      display: inline-flex;
+    }
+
+    div.MuiOutlinedInput-root {
+      @include border-top-right-radius(0);
+      @include border-bottom-right-radius(0);
+    }
+
+    button {
+      outline: none;
+      margin-left: -1px;
+
+      @include border-top-left-radius(0);
+      @include border-bottom-left-radius(0);
+    }
+  }
+}

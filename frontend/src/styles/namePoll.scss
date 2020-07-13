@@ -1,0 +1,24 @@
+@import 'globals';
+
+div#namePoll {
+  text-align: center;
+
+  form#addNamePoll {
+    div.textFieldWButton {
+      display: inline-flex;
+    }
+
+    div.MuiOutlinedInput-root {
+      @include border-top-right-radius(0);
+      @include border-bottom-right-radius(0);
+    }
+
+    button {
+      outline: none;
+      margin-left: -1px;
+
+      @include border-top-left-radius(0);
+      @include border-bottom-left-radius(0);
+    }
+  }
+}

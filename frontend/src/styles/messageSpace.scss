@@ -1,0 +1,81 @@
+@import 'globals';
+
+div#messageSpace {
+  margin: 0 5px 5px;
+  text-align: center;
+
+  div.messages {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 0;
+    margin: 0 2%;
+    padding: 1rem;
+  }
+
+  div.noMessages {
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+
+  div.message {
+    text-align: left;
+    white-space: pre-line;
+    padding-bottom: 1rem;
+
+    div.content {
+      text-align: left;
+      display: inline-block;
+      background-color: rgb(250, 250, 250);
+      padding: 3px 11px;
+      margin-right: 25%;
+
+      @include border-radius(1rem);
+    }
+
+    div.sender {
+      position: relative;
+      font-size: 0.7rem;
+      font-style: italic;
+      left: 10px;
+    }
+
+    div.timestamp {
+      font-size: 0.6rem;
+      display: none;
+      position: relative;
+      left: 10px;
+      font-style: italic;
+    }
+  }
+
+  div.message:last-child {
+    padding-bottom: 0;
+  }
+
+  div.message.own {
+    text-align: right;
+
+    div.content {
+      margin-right: 0;
+      margin-left: 25%;
+    }
+
+    div.sender {
+      left: -10px;
+    }
+
+    div.timestamp {
+      left: -10px;
+    }
+  }
+
+  form#createMessage {
+    div.MuiFormControl-root {
+      width: 98%;
+    }
+
+    div.MuiInputBase-root {
+
+    }
+  }
+}

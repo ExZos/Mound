@@ -1,0 +1,63 @@
+@import 'globals';
+
+div#sidebar {
+  height: 100%;
+  z-index: 0;
+
+  div.logo {
+    padding: 1rem;
+    text-align: center;
+
+    a {
+      text-decoration: none;
+      outline: none;
+    }
+  }
+
+  div.menuItem {
+    padding: 1rem;
+    text-align: center;
+
+    a {
+      text-decoration: none;
+      outline: none;
+      color: rgb(75, 75, 75);
+    }
+  }
+
+  div.menuItem.clear {
+    bottom: 0px;
+    position: absolute;
+  }
+
+  div.spaceNav {
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-right: none;
+    border-left: none;
+    white-space: nowrap;
+
+    div.spaceNavItem {
+      a {
+        text-decoration: none;
+        outline: none;
+        padding: 0.5rem 1rem;
+        border: 1px solid transparent;
+        display: inline-block;
+        width: 100%;
+
+        @include transition(background-color, 0.5s);
+      }
+
+      a:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      a.active {
+          background-color: rgba(0, 0, 0, 0.1);
+          pointer-events: none;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}

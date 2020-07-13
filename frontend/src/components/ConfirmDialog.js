@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Button }
 import CloseIcon from '@material-ui/icons/Close';
 
 import GeneralComponent from './GeneralComponent';
-import '../styles/confirmDialog.css';
+import '../styles/confirmDialog.scss';
 
 class ConfirmDialog extends GeneralComponent {
   confirm = () => {

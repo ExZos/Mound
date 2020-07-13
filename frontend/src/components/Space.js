@@ -11,7 +11,7 @@ import MessageSpace from './MessageSpace';
 import PendingUser from './PendingUser';
 import PendingSpace from './PendingSpace';
 import { server, api } from '../server';
-import '../styles/space.css';
+import '../styles/space.scss';
 
 class Space extends GeneralComponent {
   constructor(props) {

@@ -1,0 +1,79 @@
+@import 'globals';
+
+div#space {
+  header.MuiAppBar-root {
+    background-color: rgb(100, 100, 200);
+
+    div.MuiToolbar-root {
+      justify-content: center;
+    }
+
+    button.openMenu {
+      position: absolute;
+      left: 0;
+      color: white;
+      outline: none;
+    }
+
+    p.spaceName {
+      font-weight: bold;
+    }
+
+    button.closeSpace {
+      position: absolute;
+      right: 0;
+      color: white;
+      outline: none;
+    }
+
+    button.closeSpace:hover {
+      // background-color: black;
+    }
+  }
+
+  form#getUserInSpaceByName {
+    text-align: center;
+
+    input {
+
+    }
+
+    div.textFieldWButton {
+      display: inline-flex;
+    }
+
+    div.MuiOutlinedInput-root {
+      @include border-top-right-radius(0);
+      @include border-bottom-right-radius(0);
+    }
+
+    button {
+      outline: none;
+      margin-left: -1px;
+
+      @include border-top-left-radius(0);
+      @include border-bottom-left-radius(0);
+    }
+  }
+}
+
+div#spaceNavMenu {
+  ul.MuiList-root {
+    padding: 0;
+  }
+
+  li.MuiButtonBase-root {
+    @include transition(background-color, 0.5s);
+  }
+
+  li.MuiButtonBase-root:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  li.MuiButtonBase-root.Mui-disabled {
+    opacity: 1;
+    justify-content: center;
+    background-color: black;
+    color: white;
+  }
+}

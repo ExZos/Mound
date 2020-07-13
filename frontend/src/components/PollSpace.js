@@ -3,7 +3,7 @@ import { Button, ButtonGroup, CircularProgress } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import { server, api } from '../server';
-import '../styles/pollSpace.css';
+import '../styles/pollSpace.scss';
 
 class PollSpace extends GeneralComponent {
   constructor(props) {
