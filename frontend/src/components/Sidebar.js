@@ -56,7 +56,7 @@ class Sidebar extends GeneralComponent {
   // TEMP clear link
   render() {
     return (
-      <Drawer variant="permanent">
+      <Drawer id="sidebarContainer" variant="permanent">
         <div id="sidebar">
           <div className="logo">
             <LandscapeIcon fontSize="large" />

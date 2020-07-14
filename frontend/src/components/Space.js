@@ -213,7 +213,7 @@ class Space extends GeneralComponent {
 
     return (
       <div id="space">
-        <Sidebar />
+        <Sidebar spaceID={this.state.space.id} />
 
         <AppBar position="sticky">
           <Toolbar>

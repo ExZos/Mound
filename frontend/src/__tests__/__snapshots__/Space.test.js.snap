@@ -4,7 +4,9 @@ exports[`Space should render MessageSpace with props and session 1`] = `
 <div
   id="space"
 >
-  <Sidebar />
+  <Sidebar
+    spaceID={2}
+  />
   <WithStyles(ForwardRef(AppBar))
     position="sticky"
   >
@@ -91,7 +93,9 @@ exports[`Space should render PendingSpace with props and session 1`] = `
 <div
   id="space"
 >
-  <Sidebar />
+  <Sidebar
+    spaceID={3}
+  />
   <WithStyles(ForwardRef(AppBar))
     position="sticky"
   >
@@ -177,7 +181,9 @@ exports[`Space should render PendingUser with props and session  1`] = `
 <div
   id="space"
 >
-  <Sidebar />
+  <Sidebar
+    spaceID={3}
+  />
   <WithStyles(ForwardRef(AppBar))
     position="sticky"
   >
@@ -263,7 +269,9 @@ exports[`Space should render correctly with props but no session 1`] = `
 <div
   id="space"
 >
-  <Sidebar />
+  <Sidebar
+    spaceID={1}
+  />
   <WithStyles(ForwardRef(AppBar))
     position="sticky"
   >

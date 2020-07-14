@@ -2,6 +2,7 @@
 
 exports[`Sidebar should render correctly without props nor session 1`] = `
 <WithStyles(ForwardRef(Drawer))
+  id="sidebarContainer"
   variant="permanent"
 >
   <div
@@ -48,6 +49,7 @@ exports[`Sidebar should render correctly without props nor session 1`] = `
 
 exports[`Sidebar should render tabs with session storage 1`] = `
 <WithStyles(ForwardRef(Drawer))
+  id="sidebarContainer"
   variant="permanent"
 >
   <div

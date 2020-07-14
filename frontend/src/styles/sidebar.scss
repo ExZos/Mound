@@ -1,12 +1,20 @@
 @import 'globals';
 
+div#sidebarContainer {
+  div.MuiPaper-root {
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+  }
+}
+
 div#sidebar {
   height: 100%;
   z-index: 0;
+  background-color: rgba(0, 0, 0, 0.75);
 
   div.logo {
     padding: 1rem;
     text-align: center;
+    color: white;
 
     a {
       text-decoration: none;
@@ -21,18 +29,19 @@ div#sidebar {
     a {
       text-decoration: none;
       outline: none;
-      color: rgb(75, 75, 75);
+      color: white;
     }
   }
 
   div.menuItem.clear {
     bottom: 0px;
     position: absolute;
+    color: white;
   }
 
   div.spaceNav {
     text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.75);
     border-right: none;
     border-left: none;
     white-space: nowrap;
@@ -45,18 +54,19 @@ div#sidebar {
         border: 1px solid transparent;
         display: inline-block;
         width: 100%;
+        color: white;
 
         @include transition(background-color, 0.5s);
       }
 
       a:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.2);
       }
 
       a.active {
-          background-color: rgba(0, 0, 0, 0.1);
-          pointer-events: none;
-          border: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.75);
+        color: black;
+        pointer-events: none;
       }
     }
   }
