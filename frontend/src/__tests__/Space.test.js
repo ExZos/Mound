@@ -243,8 +243,8 @@ describe('Space', () => {
     expect(component.state('user')).not.toHaveProperty('id');
     expect(component.state('poll')).toBeUndefined();
     expect(tutils.getSessionItem('users')).toBeNull();
-    expect(component.state('showModal')).toBeDefined();
-    expect(component.state('showModal')).toBeTruthy();
+    expect(component.state('showDialog')).toBeDefined();
+    expect(component.state('showDialog')).toBeTruthy();
   });
 
   it('should not create state or session entries nor trigger modal on empty submit', async () => {
@@ -270,8 +270,8 @@ describe('Space', () => {
     expect(component.state('user')).not.toHaveProperty('id');
     expect(component.state('poll')).toBeUndefined();
     expect(tutils.getSessionItem('users')).toBeNull();
-    expect(component.state('showModal')).toBeDefined();
-    expect(component.state('showModal')).toBeFalsy();
+    expect(component.state('showDialog')).toBeDefined();
+    expect(component.state('showDialog')).toBeFalsy();
   });
 
   it('should call post api on modal confirm', () => {

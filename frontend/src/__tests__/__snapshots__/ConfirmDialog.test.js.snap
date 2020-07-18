@@ -3,16 +3,15 @@
 exports[`ConfirmDialog should render correctly with props 1`] = `
 <WithStyles(ForwardRef(Dialog))
   id="confirmDialog"
-  open={true}
 >
   <WithStyles(ForwardRef(DialogTitle))
-    onClose={[MockFunction]}
+    onClose={[Function]}
   >
     Some header
     <WithStyles(ForwardRef(IconButton))
       aria-label="close"
       className="closeDialog"
-      onClick={[MockFunction]}
+      onClick={[Function]}
     >
       <CloseIcon />
     </WithStyles(ForwardRef(IconButton))>
@@ -32,7 +31,7 @@ exports[`ConfirmDialog should render correctly with props 1`] = `
     </WithStyles(ForwardRef(Button))>
     <WithStyles(ForwardRef(Button))
       className="modalCancel"
-      onClick={[MockFunction]}
+      onClick={[Function]}
       variant="contained"
     >
       Cancel

@@ -29,7 +29,7 @@ class Space extends GeneralComponent {
         space_name: this.props.location.state.space.name,
         space_status: this.props.location.state.space.status
       },
-      showModal: false
+      showDialog: false
     };
   }
 
@@ -63,7 +63,7 @@ class Space extends GeneralComponent {
       });
     } catch (e) {
       if(this.state.user.name) {
-        this.toggleModal();
+        this.setShowDialog(!this.state.showDialog);
       }
     }
   }
@@ -199,8 +199,8 @@ class Space extends GeneralComponent {
           </div>
         </form>
 
-        <ConfirmDialog showModal={this.state.showModal}
-          toggleModal={this.toggleModal} confirm={this.addUser}
+        <ConfirmDialog showDialog={this.state.showDialog}
+          setShowDialog={this.setShowDialog} confirm={this.addUser}
           mHeader={"User '" + this.state.user.name + "' does not exist"}
           mBody={"Do you want to request to join this space as '" + this.state.user.name + "'"}
         />

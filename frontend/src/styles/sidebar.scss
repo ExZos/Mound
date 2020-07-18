@@ -2,14 +2,14 @@
 
 div#sidebarContainer {
   div.MuiPaper-root {
-    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    border-right: 1px solid $mound-bg-white;
   }
 }
 
 div#sidebar {
   height: 100%;
   z-index: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: $mound-bg-black;
 
   div.logo {
     padding: 1rem;
@@ -41,7 +41,7 @@ div#sidebar {
 
   div.spaceNav {
     text-align: center;
-    border: 2px solid rgba(255, 255, 255, 0.75);
+    border: 2px solid $mound-bg-white;
     border-right: none;
     border-left: none;
     white-space: nowrap;
@@ -60,11 +60,11 @@ div#sidebar {
       }
 
       a:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: $mound-hover-white;
       }
 
       a.active {
-        background-color: rgba(255, 255, 255, 0.75);
+        background-color: $mound-bg-white;
         color: black;
         pointer-events: none;
       }

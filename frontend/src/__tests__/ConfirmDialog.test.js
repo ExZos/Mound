@@ -10,7 +10,7 @@ const history = createBrowserHistory();
 describe('ConfirmDialog', () => {
   it('should render correctly with props', () => {
     const component = shallow(<ConfirmDialog showModal={true}
-      toggleModal={jest.fn()} confirm={jest.fn()}
+      setShowDialog={jest.fn()} confirm={jest.fn()}
       mHeader='Some header' mBody='Some body'
     />);
     const dialogTitle = component.find('WithStyles(ForwardRef(DialogTitle))');
@@ -25,8 +25,8 @@ describe('ConfirmDialog', () => {
     const mockCancel = jest.fn();
     const mockConfirm = jest.fn();
 
-    const component = shallow(<ConfirmDialog showModal={true}
-      toggleModal={mockCancel} confirm={mockConfirm}
+    const component = shallow(<ConfirmDialog showDialog={true}
+      setShowDialog={mockCancel} confirm={mockConfirm}
       mHeader='Some header' mBody='Some body'
     />);
     const button = component.find('.modalCancel');
@@ -41,8 +41,8 @@ describe('ConfirmDialog', () => {
     const mockCancel = jest.fn();
     const mockConfirm = jest.fn();
 
-    const component = shallow(<ConfirmDialog showModal={true}
-      toggleModal={mockCancel} confirm={mockConfirm}
+    const component = shallow(<ConfirmDialog showDialog={true}
+      setShowDialog={mockCancel} confirm={mockConfirm}
       mHeader='Some header' mBody='Some body'
     />);
     const button = component.find('.modalConfirm');
@@ -54,8 +54,8 @@ describe('ConfirmDialog', () => {
   });
 
   it('should show the modal', () => {
-    const component = shallow(<ConfirmDialog showModal={true}
-      toggleModal={jest.fn()} confirm={jest.fn()}
+    const component = shallow(<ConfirmDialog showDialog={true}
+      setShowDialog={jest.fn()} confirm={jest.fn()}
       mHeader='Some header' mBody='Some body'
     />);
 
@@ -63,8 +63,8 @@ describe('ConfirmDialog', () => {
   });
 
   it('should hide the modal', () => {
-    const component = shallow(<ConfirmDialog showModal={false}
-      toggleModal={jest.fn()} confirm={jest.fn()}
+    const component = shallow(<ConfirmDialog showDialog={false}
+      setShowDialog={jest.fn()} confirm={jest.fn()}
       mHeader='Some header' mBody='Some body'
     />);
 

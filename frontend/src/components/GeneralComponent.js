@@ -5,7 +5,7 @@ class GeneralComponent extends Component {
     super(props);
 
     this.state = {
-      showModal: false,
+      showDialog: false,
       showDropdown: false,
       showSidebar: false
     };
@@ -38,9 +38,9 @@ class GeneralComponent extends Component {
     });
   }
 
-  toggleModal = () => {
+  setShowDialog = (show) => {
     this.setState({
-      showModal: !this.state.showModal
+      showDialog: show
     });
   }
 

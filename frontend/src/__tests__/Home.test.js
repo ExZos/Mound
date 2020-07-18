@@ -64,8 +64,8 @@ describe('Home', () => {
     expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + 'Missing Space/');
     expect(component.state('space')).toBeDefined();
     expect(component.state('space')).not.toHaveProperty('id');
-    expect(component.state('showModal')).toBeDefined();
-    expect(component.state('showModal')).toBeTruthy();
+    expect(component.state('showDialog')).toBeDefined();
+    expect(component.state('showDialog')).toBeTruthy();
   });
 
   it('should not create a state entry nor trigger modal on empty submit', async () => {
@@ -84,8 +84,8 @@ describe('Home', () => {
     expect(spy).toHaveBeenLastCalledWith(api.getSpaceByName + '/');
     expect(component.state('space')).toBeDefined();
     expect(component.state('space')).not.toHaveProperty('id');
-    expect(component.state('showModal')).toBeDefined();
-    expect(component.state('showModal')).toBeFalsy();
+    expect(component.state('showDialog')).toBeDefined();
+    expect(component.state('showDialog')).toBeFalsy();
   });
 
   it('should call post api on modal confirm', () => {

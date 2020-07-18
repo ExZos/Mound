@@ -60,6 +60,8 @@ div#space {
 div#spaceNavMenu {
   ul.MuiList-root {
     padding: 0;
+    background-color: $mound-bg-black;
+    color: white;
   }
 
   li.MuiButtonBase-root {
@@ -67,13 +69,13 @@ div#spaceNavMenu {
   }
 
   li.MuiButtonBase-root:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: $mound-hover-white;
   }
 
   li.MuiButtonBase-root.Mui-disabled {
     opacity: 1;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.75);
-    color: white;
+    background-color: $mound-bg-white;
+    color: black;
   }
 }

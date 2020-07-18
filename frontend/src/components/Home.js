@@ -15,7 +15,7 @@ class Home extends GeneralComponent {
       space: {
         name: ''
       },
-      showModal: false
+      showDialog: false
     };
   }
 
@@ -40,7 +40,7 @@ class Home extends GeneralComponent {
       });
     } catch (e) {
       if(this.state.space.name) {
-        this.toggleModal();
+        this.setShowDialog(!this.state.showDialog);
       }
     }
   }
@@ -84,8 +84,8 @@ class Home extends GeneralComponent {
           </div>
         </form>
 
-        <ConfirmDialog showModal={this.state.showModal}
-          toggleModal={this.toggleModal} confirm={this.addSpace}
+        <ConfirmDialog showDialog={this.state.showDialog}
+          setShowDialog={this.setShowDialog} confirm={this.addSpace}
           mHeader={"Space '" + this.state.space.name + "' does not exist"}
           mBody="Do you want to request approval for this space?"
         />

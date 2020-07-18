@@ -1,3 +1,7 @@
+$mound-bg-black: rgb(64, 64, 64);
+$mound-bg-white: rgb(207, 207, 207);
+$mound-hover-white: rgb(102, 102, 102);
+
 @mixin border-radius($radius) {
   border-radius: $radius;
   -moz-border-radius: $radius;
