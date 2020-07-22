@@ -4,8 +4,8 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Button }
 import CloseIcon from '@material-ui/icons/Close';
 import '../styles/confirmDialog.scss';
 
-const ConfirmDialog = (props) => {
-  function confirm() {
+function ConfirmDialog(props) {
+  const confirm = () => {
     props.setShowDialog(!props.showDialog);
     props.confirm();
   }
