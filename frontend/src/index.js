@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Router, Switch } from 'react-router';
 import { Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { Provider } from 'react-redux';
+import store from './store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.scss';
@@ -15,13 +17,15 @@ import * as serviceWorker from './serviceWorker';
 const history = createBrowserHistory();
 
 const routing = (
-  <Router history={history}>
-    <Switch>
-      <Route path="/r/" component={WorkaroundRedirect} />
-      <Route path="/s/" component={Space} />
-      <Route path="/" component={Home} />
-    </Switch>
-  </Router>
+  <Provider store={store}>
+    <Router history={history}>
+      <Switch>
+        <Route path="/r/" component={WorkaroundRedirect} />
+        <Route path="/s/" component={Space} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </Router>
+  </Provider>
 )
 
 ReactDOM.render(routing, document.getElementById('root'));

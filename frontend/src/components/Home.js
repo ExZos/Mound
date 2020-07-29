@@ -1,64 +1,58 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { TextField, Button } from '@material-ui/core';
 
 import GeneralComponent from './GeneralComponent';
 import Sidebar from './Sidebar';
 import ConfirmDialog from './ConfirmDialog';
-import { server, api } from '../server';
 import '../styles/home.scss';
 
+import { setSpace, setShowDialog } from '../store';
+import { getSpaceByName, addSpace } from '../middleware';
+
+const mapStateToProps = (state) => {
+  return {
+    loaded: state.root.loaded,
+    error: state.root.error,
+    space: state.root.space,
+    showDialog: state.root.showDialog,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSpace: (space) => dispatch(setSpace(space)),
+    setShowDialog: (show) => dispatch(setShowDialog(show)),
+    getSpaceByName: (name) => dispatch(getSpaceByName(name)),
+    addSpace: (space) => dispatch(addSpace(space)),
+  };
+};
+
 class Home extends GeneralComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      space: {
-        name: ''
-      },
-      showDialog: false
-    };
-  }
-
   componentDidMount() {
     // TEMP
     console.log(this.getSessionItem('users'));
   }
 
   getSpaceByName = async () => {
-    try {
-      const res = await server.get(api.getSpaceByName + this.state.space.name + '/');
+    await this.props.getSpaceByName(this.props.space.name);
+    this.push();
+  }
 
-      this.setState({
-        space: res.data
-      });
+  addSpace = async () => {
+    await this.props.addSpace(this.props.space);
+    this.push();
+  }
 
+  push = () => {
+    if(!this.props.error) {
       this.props.history.push({
         pathname: '/s/',
         state: {
-          space: this.state.space
+          space: this.props.space
         }
       });
-    } catch (e) {
-      if(this.state.space.name) {
-        this.setShowDialog(!this.state.showDialog);
-      }
     }
-  }
-
-  addSpace = () => {
-    server.post(api.spaces, this.state.space)
-      .then((res) => {
-        this.setState({
-          space: res.data
-        });
-
-        this.props.history.push({
-          pathname: '/s/',
-          state: {
-            space: this.state.space
-          }
-        });
-      });
   }
 
   render() {
@@ -72,8 +66,8 @@ class Home extends GeneralComponent {
           <div className="textFieldWButton">
             <TextField name="name" label="Type a space name..." autoFocus
               size="small" variant="outlined"
-              value={this.state.space.name}
-              onChange={(e) => this.handleInputChange(e, 'space')}
+              value={this.props.space.name}
+              onChange={(e) => this.props.setSpace({ name: e.target.value })}
             />
 
             <Button type="submit" color="primary"
@@ -84,9 +78,9 @@ class Home extends GeneralComponent {
           </div>
         </form>
 
-        <ConfirmDialog showDialog={this.state.showDialog}
-          setShowDialog={this.setShowDialog} confirm={this.addSpace}
-          mHeader={"Space '" + this.state.space.name + "' does not exist"}
+        <ConfirmDialog showDialog={this.props.showDialog}
+          setShowDialog={() => this.props.setShowDialog(!this.props.setShowDialog)} confirm={this.addSpace}
+          mHeader={"Space '" + this.props.space.name + "' does not exist"}
           mBody="Do you want to request approval for this space?"
         />
       </div>
@@ -94,4 +88,4 @@ class Home extends GeneralComponent {
   }
 }
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
