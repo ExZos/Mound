@@ -7,28 +7,35 @@ import Sidebar from './Sidebar';
 import ConfirmDialog from './ConfirmDialog';
 import '../styles/home.scss';
 
-import { setSpace, setShowDialog } from '../store';
+import { setShowDialog, setSpace } from '../store';
 import { getSpaceByName, addSpace } from '../middleware';
 
 const mapStateToProps = (state) => {
   return {
-    loaded: state.root.loaded,
-    error: state.root.error,
-    space: state.root.space,
+    loaded: state.space.loaded,
+    error: state.space.error,
     showDialog: state.root.showDialog,
+    space: state.space.space,
+    state: state,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setSpace: (space) => dispatch(setSpace(space)),
     setShowDialog: (show) => dispatch(setShowDialog(show)),
+    setSpace: (space) => dispatch(setSpace(space)),
     getSpaceByName: (name) => dispatch(getSpaceByName(name)),
     addSpace: (space) => dispatch(addSpace(space)),
   };
 };
 
 class Home extends GeneralComponent {
+  constructor(props) {
+    super(props);
+
+    this.props.setSpace({});
+  }
+
   componentDidMount() {
     // TEMP
     console.log(this.getSessionItem('users'));
@@ -36,26 +43,37 @@ class Home extends GeneralComponent {
 
   getSpaceByName = async () => {
     await this.props.getSpaceByName(this.props.space.name);
-    this.push();
+
+    if(!this.props.error) {
+      this.push();
+    }
+    else if(this.props.space.name) {
+      this.props.setShowDialog(true);
+    }
   }
 
   addSpace = async () => {
     await this.props.addSpace(this.props.space);
-    this.push();
-  }
 
-  push = () => {
     if(!this.props.error) {
-      this.props.history.push({
-        pathname: '/s/',
-        state: {
-          space: this.props.space
-        }
-      });
+      this.push();
+    }
+    else {
+      // TODO: render error component
     }
   }
 
+  push = () => {
+    this.props.history.push({
+      pathname: '/s/',
+      state: {
+        space: this.props.space
+      }
+    });
+  }
+
   render() {
+    // console.log(this.props.state);
     return (
       <div id="home">
         <Sidebar />

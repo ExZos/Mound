@@ -1,18 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { server, api } from '../server';
-import { setSpace } from '../store';
+import { setSpace, setUser } from '../store';
 
-export function spaceMiddleware({ dispatch }) {
+export function rootMiddleware({ dispatch }) {
   return function(next) {
     return function(action) {
       switch(action.type) {
         case setSpace.toString():
-          console.log(setSpace.toString());
+        case setUser.toString():
+          if(!action.payload.name) {
+            action.payload.name = '';
+          }
           break;
 
         default:
-          console.log('DEFAULT');
       }
 
       return next(action);
@@ -20,15 +22,14 @@ export function spaceMiddleware({ dispatch }) {
   };
 }
 
-export const getSpaceByName = createAsyncThunk('root/getSpaceByName', (name) => {
+export const getSpaceByName = createAsyncThunk('space/getSpaceByName', (name) => {
   return server.get(api.getSpaceByName + name)
     .then((res) => {
       return res.data;
     });
 });
 
-export const addSpace = createAsyncThunk('root/addSpace', (space) => {
-  console.log(space);
+export const addSpace = createAsyncThunk('space/addSpace', (space) => {
   return server.post(api.spaces, space)
     .then((res) => {
       return res.data;
