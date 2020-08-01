@@ -1,37 +1,28 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-
-import { server, api } from '../server';
-import { setSpace, setUser } from '../store';
+import { setSpace } from '../reducers/space';
+import { setUser } from '../reducers/user';
 
 export function rootMiddleware({ dispatch }) {
   return function(next) {
     return function(action) {
-      switch(action.type) {
-        case setSpace.toString():
-        case setUser.toString():
+      const reducerActions = {
+        [setSpace]: () => {
           if(!action.payload.name) {
             action.payload.name = '';
           }
-          break;
+        },
+        [setUser]: () => {
+          if(!action.payload.name) {
+            action.payload.name = '';
+          }
+        },
+      };
 
-        default:
+      let currentAction = reducerActions[action.type];
+      if(currentAction) {
+        currentAction();
       }
 
       return next(action);
     };
   };
 }
-
-export const getSpaceByName = createAsyncThunk('space/getSpaceByName', (name) => {
-  return server.get(api.getSpaceByName + name)
-    .then((res) => {
-      return res.data;
-    });
-});
-
-export const addSpace = createAsyncThunk('space/addSpace', (space) => {
-  return server.post(api.spaces, space)
-    .then((res) => {
-      return res.data;
-    });
-});

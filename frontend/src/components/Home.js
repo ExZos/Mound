@@ -7,8 +7,9 @@ import Sidebar from './Sidebar';
 import ConfirmDialog from './ConfirmDialog';
 import '../styles/home.scss';
 
-import { setShowDialog, setSpace } from '../store';
-import { getSpaceByName, addSpace } from '../middleware';
+import { setShowDialog } from '../reducers/root';
+import { setSpace, setSpaceName,
+         getSpaceByName, addSpace } from '../reducers/space';
 
 const mapStateToProps = (state) => {
   return {
@@ -16,7 +17,6 @@ const mapStateToProps = (state) => {
     error: state.space.error,
     showDialog: state.root.showDialog,
     space: state.space.space,
-    state: state,
   };
 };
 
@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setShowDialog: (show) => dispatch(setShowDialog(show)),
     setSpace: (space) => dispatch(setSpace(space)),
+    setSpaceName: (name) => dispatch(setSpaceName(name)),
     getSpaceByName: (name) => dispatch(getSpaceByName(name)),
     addSpace: (space) => dispatch(addSpace(space)),
   };
@@ -73,7 +74,7 @@ class Home extends GeneralComponent {
   }
 
   render() {
-    // console.log(this.props.state);
+    // console.log(this.props.space);
     return (
       <div id="home">
         <Sidebar />
@@ -85,7 +86,7 @@ class Home extends GeneralComponent {
             <TextField name="name" label="Type a space name..." autoFocus
               size="small" variant="outlined"
               value={this.props.space.name}
-              onChange={(e) => this.props.setSpace({ name: e.target.value })}
+              onChange={(e) => this.props.setSpaceName(e.target.value)}
             />
 
             <Button type="submit" color="primary"

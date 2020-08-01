@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { AppBar, Toolbar, Typography, IconButton, TextField, Button, Menu, MenuItem } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -13,9 +14,47 @@ import PendingSpace from './PendingSpace';
 import { server, api } from '../server';
 import '../styles/space.scss';
 
+import { setShowDialog } from '../reducers/root';
+import { setSpace } from '../reducers/space';
+import { setUser, setUserName,
+         getUserInSpaceByName } from '../reducers/user';
+import { getPendingJoinPollInSpaceByName } from '../reducers/poll';
+
+const mapStateToProps = (state) => {
+  return {
+    userLoaded: state.user.loaded,
+    userError: state.user.error,
+    pollLoaded: state.poll.loaded,
+    pollError: state.poll.error,
+    showDialog: state.root.showDialog,
+    space: state.space.space,
+    user: state.user.user,
+    poll: state.poll.poll,
+    state: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setShowDialog: (show) => dispatch(setShowDialog(show)),
+    setSpace: (space) => dispatch(setSpace(space)),
+    setUser: (user) => dispatch(setUser(user)),
+    setUserName: (name) => dispatch(setUserName(name)),
+    getUserInSpaceByName: (payload) => dispatch(getUserInSpaceByName(payload)),
+    getPendingJoinPollInSpaceByName: (payload) => dispatch(getPendingJoinPollInSpaceByName(payload)),
+  };
+};
+
 class Space extends GeneralComponent {
   constructor(props) {
     super(props);
+
+    this.props.setSpace(this.props.location.state.space);
+    this.props.setUser({
+      space: this.props.location.state.space.id,
+      space_name: this.props.location.state.space.name,
+      space_status: this.props.location.state.space.status
+    });
 
     this.state = {
       space: {
@@ -34,37 +73,36 @@ class Space extends GeneralComponent {
   }
 
   getUserInSpaceByName = async () => {
-    try {
-      const res = await server.get(api.getUserInSpaceByName + this.state.space.id + '/' + this.state.user.name);
+    await this.props.getUserInSpaceByName({
+      spaceID: this.props.space.id,
+      userName: this.props.user.name
+    });
 
+    if(!this.props.userError) {
       // Existing user
-      this.addToSessionArrayItem('users', res.data);
-
-      this.setState({
-        user: res.data
-      });
-    } catch (e) {
+      // TODO: move session logic to redux
+      this.addToSessionArrayItem('users', this.props.user);
+    }
+    else if(this.props.user.name) {
       this.getPendingJoinPollInSpaceByName();
     }
   }
 
   getPendingJoinPollInSpaceByName = async () => {
-    try {
-      const res = await server.get(api.getPendingJoinPollInSpaceByName + this.state.space.id + '/' + this.state.user.name);
+    await this.props.getPendingJoinPollInSpaceByName({
+      spaceID: this.props.space.id,
+      userName: this.props.user.name
+    });
 
-      // Existing join poll
-      let user = this.state.user;
-      user.poll = res.data.id;
-
-      this.addToSessionArrayItem('users', this.state.user);
-
-      this.setState({
-        poll: res.data
+    if(!this.props.pollError) {
+      // Exisiting join poll
+      this.addToSessionArrayItem('users', {
+        ...this.props.user,
+        poll: this.props.poll.id
       });
-    } catch (e) {
-      if(this.state.user.name) {
-        this.setShowDialog(!this.state.showDialog);
-      }
+    }
+    else {
+      this.props.setShowDialog(true);
     }
   }
 
@@ -109,6 +147,8 @@ class Space extends GeneralComponent {
   }
 
   updateState = () => {
+    // this.props.setSpace(this.props.location.state.space);
+
     this.setState({
       space: {
         id: this.props.location.state.space.id,
@@ -187,8 +227,8 @@ class Space extends GeneralComponent {
           <div className="textFieldWButton">
             <TextField name="name" label="Type a user name..." autoFocus
               size="small" variant="outlined"
-              value={this.state.user.name}
-              onChange={(e) => this.handleInputChange(e, 'user')}
+              value={this.props.user.name}
+              onChange={(e) => this.props.setUserName(e.target.value)}
             />
 
             <Button type="submit" color="primary"
@@ -199,10 +239,10 @@ class Space extends GeneralComponent {
           </div>
         </form>
 
-        <ConfirmDialog showDialog={this.state.showDialog}
-          setShowDialog={this.setShowDialog} confirm={this.addUser}
-          mHeader={"User '" + this.state.user.name + "' does not exist"}
-          mBody={"Do you want to request to join this space as '" + this.state.user.name + "'"}
+        <ConfirmDialog showDialog={this.props.showDialog}
+          setShowDialog={() => this.props.setShowDialog(!this.props.showDialog)} confirm={this.addUser}
+          mHeader={"User '" + this.props.user.name + "' does not exist"}
+          mBody={"Do you want to request to join this space as '" + this.props.user.name + "'"}
         />
       </div>
     );
@@ -237,4 +277,4 @@ class Space extends GeneralComponent {
   }
 }
 
-export default Space;
+export default connect(mapStateToProps, mapDispatchToProps)(Space);
