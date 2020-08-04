@@ -1,16 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+import GeneralComponent from '../components/GeneralComponent';
 import { server, api } from '../server';
 
-export const getPendingJoinPollInSpaceByName = createAsyncThunk('poll/getPendingJoinInSpaceByName', (payload) =>  {
-  return server.get(api.getPendingJoinPollInSpaceByName + payload.spaceID + '/' + payload.userName)
+const generalComponent = new GeneralComponent();
+
+export const getPendingJoinPollInSpaceByName = createAsyncThunk('poll/getPendingJoinInSpaceByName', (user) =>  {
+  return server.get(api.getPendingJoinPollInSpaceByName + user.space + '/' + user.name)
     .then((res) => {
+      generalComponent.addToSessionArrayItem('users', {
+        ...user,
+        poll: res.data.id
+      });
+
       return res.data;
     });
 });
 
-export const createNameRelatedPoll = createAsyncThunk('poll/createNameRelated', (poll) => {
-  return server.post(api.createNameRelatedPoll, poll)
+export const createNameRelatedPoll = createAsyncThunk('poll/createNameRelated', (user) => {
+  return server.post(api.createNameRelatedPoll, {
+      space: user.space,
+      name: user.name
+    })
     .then((res) => {
+      generalComponent.addToSessionArrayItem('users', {
+          ...user,
+          poll: res.data.id
+      });
+
       return res.data;
     });
 });

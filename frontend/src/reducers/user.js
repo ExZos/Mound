@@ -1,9 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+import GeneralComponent from '../components/GeneralComponent';
 import { server, api } from '../server';
+
+const generalComponent = new GeneralComponent();
 
 export const getUserInSpaceByName = createAsyncThunk('user/getInSpaceByName', (payload) => {
   return server.get(api.getUserInSpaceByName + payload.spaceID + '/' + payload.userName)
     .then((res) => {
+      generalComponent.addToSessionArrayItem('users', res.data);
+
+      return res.data;
+    });
+});
+
+export const createUserNApproveSpace = createAsyncThunk('user/createNApproveSpace', (user) => {
+  return server.post(api.createUserNApproveSpace, user)
+    .then((res) => {
+      generalComponent.addToSessionArrayItem('users', res.data.user);
+
       return res.data;
     });
 });
@@ -25,7 +40,7 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUserInSpaceByName.pending, (state, action) => {
+      .addCase(getUserInSpaceByName.pending, (state) => {
         console.log('GET PENDING');
         state.loaded = false;
         state.error = false;
@@ -40,6 +55,25 @@ const userSlice = createSlice({
         state.loaded = true;
         state.error = false;
         state.user = action.payload;
+      });
+
+    builder
+      .addCase(createUserNApproveSpace.pending, (state) => {
+        console.log('ADD PENDING');
+        state.loaded = false;
+        state.error = false;
+      })
+      .addCase(createUserNApproveSpace.rejected, (state) => {
+        console.log('ADD REJECTED');
+        state.loaded = true;
+        state.error = true;
+      })
+      .addCase(createUserNApproveSpace.fulfilled, (state, action) => {
+        console.log('ADD FULFILLED');
+        state.loaded = true;
+        state.error = false;
+        state.user = action.payload.user
+        state.space = action.payload.space
       });
   },
 });

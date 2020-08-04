@@ -56,15 +56,9 @@ class GeneralComponent extends Component {
     });
   }
 
-  setMenuAnchor = (e) => {
+  setMenuAnchor = (menuAnchor) => {
     this.setState({
-      menuAnchor: e.currentTarget
-    });
-  }
-
-  removeMenuAnchor = () => {
-    this.setState({
-      menuAnchor: null
+      menuAnchor: menuAnchor
     });
   }
 

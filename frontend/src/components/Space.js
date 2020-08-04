@@ -11,14 +11,13 @@ import ConfirmDialog from './ConfirmDialog';
 import MessageSpace from './MessageSpace';
 import PendingUser from './PendingUser';
 import PendingSpace from './PendingSpace';
-import { server, api } from '../server';
 import '../styles/space.scss';
 
-import { setShowDialog } from '../reducers/root';
+import { setShowDialog, setMenuAnchor, removeMenuAnchorNSetTab } from '../reducers/root';
 import { setSpace } from '../reducers/space';
 import { setUser, setUserName,
-         getUserInSpaceByName } from '../reducers/user';
-import { getPendingJoinPollInSpaceByName } from '../reducers/poll';
+         getUserInSpaceByName, createUserNApproveSpace } from '../reducers/user';
+import { getPendingJoinPollInSpaceByName, createNameRelatedPoll } from '../reducers/poll';
 
 const mapStateToProps = (state) => {
   return {
@@ -27,6 +26,8 @@ const mapStateToProps = (state) => {
     pollLoaded: state.poll.loaded,
     pollError: state.poll.error,
     showDialog: state.root.showDialog,
+    menuAnchor: state.root.menuAnchor,
+    tab: state.root.tab,
     space: state.space.space,
     user: state.user.user,
     poll: state.poll.poll,
@@ -37,11 +38,15 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setShowDialog: (show) => dispatch(setShowDialog(show)),
+    setMenuAnchor: (menuAnchor) => dispatch(setMenuAnchor(menuAnchor)),
+    removeMenuAnchorNSetTab: (tab) => dispatch(removeMenuAnchorNSetTab(tab)),
     setSpace: (space) => dispatch(setSpace(space)),
     setUser: (user) => dispatch(setUser(user)),
     setUserName: (name) => dispatch(setUserName(name)),
     getUserInSpaceByName: (payload) => dispatch(getUserInSpaceByName(payload)),
+    createUserNApproveSpace: (user) => dispatch(createUserNApproveSpace(user)),
     getPendingJoinPollInSpaceByName: (payload) => dispatch(getPendingJoinPollInSpaceByName(payload)),
+    createNameRelatedPoll: (poll) => dispatch(createNameRelatedPoll(poll)),
   };
 };
 
@@ -78,65 +83,35 @@ class Space extends GeneralComponent {
       userName: this.props.user.name
     });
 
-    if(!this.props.userError) {
-      // Existing user
-      // TODO: move session logic to redux
-      this.addToSessionArrayItem('users', this.props.user);
-    }
-    else if(this.props.user.name) {
+    if(this.props.userError && this.props.user.name) {
       this.getPendingJoinPollInSpaceByName();
     }
   }
 
   getPendingJoinPollInSpaceByName = async () => {
-    await this.props.getPendingJoinPollInSpaceByName({
-      spaceID: this.props.space.id,
-      userName: this.props.user.name
-    });
+    await this.props.getPendingJoinPollInSpaceByName(this.props.user);
 
-    if(!this.props.pollError) {
-      // Exisiting join poll
-      this.addToSessionArrayItem('users', {
-        ...this.props.user,
-        poll: this.props.poll.id
-      });
-    }
-    else {
+    if(this.props.pollError) {
       this.props.setShowDialog(true);
     }
   }
 
-  addUser = () => {
+  addUser = async () => {
     // Approved space: create join request
-    if(this.state.space.status) {
-      const poll = {
-        space: this.state.space.id,
-        name: this.state.user.name
-      };
+    if(this.props.space.status) {
+      await this.props.createNameRelatedPoll(this.props.user);
 
-      server.post(api.createNameRelatedPoll, poll)
-        .then((res) => {
-          let user = this.state.user;
-          user.poll = res.data.id;
-
-          this.addToSessionArrayItem('users', user);
-
-          this.setState({
-            poll: res.data
-          });
-        });
+      if(this.props.pollError) {
+        // TODO: render error component
+      }
     }
     // Pending space: create user
     else {
-      server.post(api.createUserNApproveSpace, this.state.user)
-        .then((res) => {
-          this.addToSessionArrayItem('users', res.data['user']);
+      await this.props.createUserNApproveSpace(this.props.user);
 
-          this.setState({
-            user: res.data['user'],
-            space: res.data['space']
-          });
-        });
+      if(this.props.userError) {
+        // TODO: render error component
+      }
     }
   }
 
@@ -165,39 +140,43 @@ class Space extends GeneralComponent {
   }
 
   displayMenu = (users) => {
-    if(users && users[this.state.space.id]) {
-      return(
-        <React.Fragment>
-          <IconButton className="openMenu" tabIndex="-1" onClick={this.setMenuAnchor}>
-            <MenuIcon />
-          </IconButton>
+    if(users) {
+      const user = users[this.props.space.id];
 
-          <Menu id="spaceNavMenu" open={Boolean(this.state.menuAnchor)} anchorEl={this.state.menuAnchor} onClose={this.removeMenuAnchor}
-            getContentAnchorEl={null} anchorOrigin={{ vertical: 'bottom', horizontal: 'left'}} transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
-            <MenuItem disabled>
-              {users[this.state.space.id].name}
-            </MenuItem>
+      if(user && user.id) {
+        return(
+          <React.Fragment>
+            <IconButton className="openMenu" tabIndex="-1" onClick={(e) => this.setMenuAnchor(e.currentTarget)}>
+              <MenuIcon />
+            </IconButton>
 
-            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(undefined)}>
-              Messages
-            </MenuItem>
+            <Menu id="spaceNavMenu" open={Boolean(this.state.menuAnchor)} anchorEl={this.state.menuAnchor} onClose={() => this.setMenuAnchor(null)}
+              getContentAnchorEl={null} anchorOrigin={{ vertical: 'bottom', horizontal: 'left'}} transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
+              <MenuItem disabled>
+                {users[this.props.space.id].name}
+              </MenuItem>
 
-            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(1)}>
-              Polls
-            </MenuItem>
+              <MenuItem onClick={() => this.removeMenuAnchorNSetTab(undefined)}>
+                Messages
+              </MenuItem>
 
-            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(2)}>
-              Change Name
-            </MenuItem>
-          </Menu>
-        </React.Fragment>
-      );
+              <MenuItem onClick={() => this.removeMenuAnchorNSetTab(1)}>
+                Polls
+              </MenuItem>
+
+              <MenuItem onClick={() => this.removeMenuAnchorNSetTab(2)}>
+                Change Name
+              </MenuItem>
+            </Menu>
+          </React.Fragment>
+        );
+      }
     }
   }
 
   toggleMessages = (users) => {
-    if(users && users[this.state.space.id]) {
-      const user = users[this.state.space.id];
+    if(users && users[this.props.space.id]) {
+      const user = users[this.props.space.id];
 
       if(user.space_status) {
         // Approved space and user
@@ -249,21 +228,22 @@ class Space extends GeneralComponent {
   }
 
   render() {
+    // console.log(this.props.state);
     const users = this.getSessionItem('users');
 
     return (
       <div id="space">
-        <Sidebar spaceID={this.state.space.id} />
+        <Sidebar spaceID={this.props.space.id} />
 
         <AppBar position="sticky">
           <Toolbar>
             {this.displayMenu(users)}
 
             <Typography className="spaceName">
-              {this.state.space.name}
+              {this.props.space.name}
             </Typography>
 
-            <IconButton className="closeSpace" aria-label="close" tabIndex="-1" onClick={() => this.closeSpace('users', this.state.space.id)}>
+            <IconButton className="closeSpace" aria-label="close" tabIndex="-1" onClick={() => this.closeSpace('users', this.props.space.id)}>
               <CloseIcon />
             </IconButton>
           </Toolbar>
