@@ -5,31 +5,27 @@ import { server, api } from '../server';
 
 const generalComponent = new GeneralComponent();
 
-export const getPendingJoinPollInSpaceByName = createAsyncThunk('poll/getPendingJoinInSpaceByName', (user) =>  {
-  return server.get(api.getPendingJoinPollInSpaceByName + user.space + '/' + user.name)
-    .then((res) => {
-      generalComponent.addToSessionArrayItem('users', {
-        ...user,
-        poll: res.data.id
-      });
+export const getPendingJoinPollInSpaceByName = createAsyncThunk('poll/getPendingJoinInSpaceByName', async (user) =>  {
+  const res = await server.get(api.getPendingJoinPollInSpaceByName + user.space + '/' + user.name);
 
-      return res.data;
-    });
+  generalComponent.addToSessionArrayItem('users', {
+    ...user,
+    poll: res.data.id
+  });
+  return res.data;
 });
 
-export const createNameRelatedPoll = createAsyncThunk('poll/createNameRelated', (user) => {
-  return server.post(api.createNameRelatedPoll, {
-      space: user.space,
-      name: user.name
-    })
-    .then((res) => {
-      generalComponent.addToSessionArrayItem('users', {
-          ...user,
-          poll: res.data.id
-      });
+export const createNameRelatedPoll = createAsyncThunk('poll/createNameRelated', async (user) => {
+  const res = await server.post(api.createNameRelatedPoll, {
+    space: user.space,
+    name: user.name
+  });
 
-      return res.data;
-    });
+  generalComponent.addToSessionArrayItem('users', {
+      ...user,
+      poll: res.data.id
+  });
+  return res.data;
 });
 
 const pollSlice = createSlice({

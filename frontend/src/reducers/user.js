@@ -5,22 +5,18 @@ import { server, api } from '../server';
 
 const generalComponent = new GeneralComponent();
 
-export const getUserInSpaceByName = createAsyncThunk('user/getInSpaceByName', (payload) => {
-  return server.get(api.getUserInSpaceByName + payload.spaceID + '/' + payload.userName)
-    .then((res) => {
-      generalComponent.addToSessionArrayItem('users', res.data);
+export const getUserInSpaceByName = createAsyncThunk('user/getInSpaceByName', async (payload) => {
+  const res = await server.get(api.getUserInSpaceByName + payload.spaceID + '/' + payload.userName)
 
-      return res.data;
-    });
+  generalComponent.addToSessionArrayItem('users', res.data);
+  return res.data;
 });
 
-export const createUserNApproveSpace = createAsyncThunk('user/createNApproveSpace', (user) => {
-  return server.post(api.createUserNApproveSpace, user)
-    .then((res) => {
-      generalComponent.addToSessionArrayItem('users', res.data.user);
+export const createUserNApproveSpace = createAsyncThunk('user/createNApproveSpace', async (user) => {
+  const res = await server.post(api.createUserNApproveSpace, user)
 
-      return res.data;
-    });
+  generalComponent.addToSessionArrayItem('users', res.data.user);
+  return res.data;
 });
 
 const userSlice = createSlice({

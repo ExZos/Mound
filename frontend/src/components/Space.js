@@ -31,7 +31,6 @@ const mapStateToProps = (state) => {
     space: state.space.space,
     user: state.user.user,
     poll: state.poll.poll,
-    state: state,
   };
 };
 
@@ -54,27 +53,8 @@ class Space extends GeneralComponent {
   constructor(props) {
     super(props);
 
-    this.props.setSpace(this.props.location.state.space);
-    this.props.setUser({
-      space: this.props.location.state.space.id,
-      space_name: this.props.location.state.space.name,
-      space_status: this.props.location.state.space.status
-    });
-
-    this.state = {
-      space: {
-        id: this.props.location.state.space.id,
-        name: this.props.location.state.space.name,
-        status: this.props.location.state.space.status
-      },
-      user: {
-        name: '',
-        space: this.props.location.state.space.id,
-        space_name: this.props.location.state.space.name,
-        space_status: this.props.location.state.space.status
-      },
-      showDialog: false
-    };
+    props.setShowDialog(false);
+    this.updateState();
   }
 
   getUserInSpaceByName = async () => {
@@ -122,81 +102,67 @@ class Space extends GeneralComponent {
   }
 
   updateState = () => {
-    // this.props.setSpace(this.props.location.state.space);
+    this.props.setSpace(this.props.location.state.space);
 
-    this.setState({
-      space: {
-        id: this.props.location.state.space.id,
-        name: this.props.location.state.space.name,
-        status: this.props.location.state.space.status
-      },
-      user: {
-        name: this.state.user.name,
-        space: this.props.location.state.space.id,
-        space_name: this.props.location.state.space.name,
-        space_status: this.props.location.state.space.status
-      }
+    this.props.setUser(this.user ? this.user : {
+      space: this.props.location.state.space.id,
+      space_name: this.props.location.state.space.name,
+      space_status: this.props.location.state.space.status
     });
   }
 
-  displayMenu = (users) => {
-    if(users) {
-      const user = users[this.props.space.id];
+  displayMenu = () => {
+    if(this.user && this.user.id) {
+      return(
+        <React.Fragment>
+          <IconButton className="openMenu" tabIndex="-1" onClick={(e) => this.setMenuAnchor(e.currentTarget)}>
+            <MenuIcon />
+          </IconButton>
 
-      if(user && user.id) {
-        return(
-          <React.Fragment>
-            <IconButton className="openMenu" tabIndex="-1" onClick={(e) => this.setMenuAnchor(e.currentTarget)}>
-              <MenuIcon />
-            </IconButton>
+          <Menu id="spaceNavMenu" open={Boolean(this.state.menuAnchor)} anchorEl={this.state.menuAnchor} onClose={() => this.setMenuAnchor(null)}
+            getContentAnchorEl={null} anchorOrigin={{ vertical: 'bottom', horizontal: 'left'}} transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
+            <MenuItem disabled>
+              {this.user.name}
+            </MenuItem>
 
-            <Menu id="spaceNavMenu" open={Boolean(this.state.menuAnchor)} anchorEl={this.state.menuAnchor} onClose={() => this.setMenuAnchor(null)}
-              getContentAnchorEl={null} anchorOrigin={{ vertical: 'bottom', horizontal: 'left'}} transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
-              <MenuItem disabled>
-                {users[this.props.space.id].name}
-              </MenuItem>
+            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(undefined)}>
+              Messages
+            </MenuItem>
 
-              <MenuItem onClick={() => this.removeMenuAnchorNSetTab(undefined)}>
-                Messages
-              </MenuItem>
+            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(1)}>
+              Polls
+            </MenuItem>
 
-              <MenuItem onClick={() => this.removeMenuAnchorNSetTab(1)}>
-                Polls
-              </MenuItem>
-
-              <MenuItem onClick={() => this.removeMenuAnchorNSetTab(2)}>
-                Change Name
-              </MenuItem>
-            </Menu>
-          </React.Fragment>
-        );
-      }
+            <MenuItem onClick={() => this.removeMenuAnchorNSetTab(2)}>
+              Change Name
+            </MenuItem>
+          </Menu>
+        </React.Fragment>
+      );
     }
   }
 
-  toggleMessages = (users) => {
-    if(users && users[this.props.space.id]) {
-      const user = users[this.props.space.id];
-
-      if(user.space_status) {
-        // Approved space and user
-        if(user.id) {
+  toggleMessages = () => {
+    if(this.user) {
+      if(this.user.space_status) {
+        if(this.user.id) {
+          // Approved space and user
           return (
             <MessageSpace history={this.props.history} updateState={this.updateState}
-              user={user} tab={this.state.tab}
+              user={this.user} tab={this.state.tab}
             />
           );
         }
 
         // Approved space but pending user
         return (
-          <PendingUser updateState={this.updateState} user={user} />
+          <PendingUser updateState={this.updateState} user={this.user} />
         );
       }
 
       // Pending space
       return (
-        <PendingSpace updateState={this.updateState} user={user} />
+        <PendingSpace updateState={this.updateState} user={this.user} />
       );
     }
 
@@ -228,8 +194,10 @@ class Space extends GeneralComponent {
   }
 
   render() {
-    // console.log(this.props.state);
     const users = this.getSessionItem('users');
+    if(users) {
+      this.user = users[this.props.space.id];
+    }
 
     return (
       <div id="space">
@@ -237,7 +205,7 @@ class Space extends GeneralComponent {
 
         <AppBar position="sticky">
           <Toolbar>
-            {this.displayMenu(users)}
+            {this.displayMenu()}
 
             <Typography className="spaceName">
               {this.props.space.name}
@@ -251,7 +219,7 @@ class Space extends GeneralComponent {
 
         <br />
 
-        {this.toggleMessages(users)}
+        {this.toggleMessages()}
       </div>
     );
   }

@@ -1,18 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { server, api } from '../server';
 
-export const getSpaceByName = createAsyncThunk('space/getByName', (name) => {
-  return server.get(api.getSpaceByName + name)
-    .then((res) => {
-      return res.data;
-    });
+export const getSpaceByName = createAsyncThunk('space/getByName', async (name) => {
+  const res = await server.get(api.getSpaceByName + name)
+
+  return res.data;
 });
 
-export const addSpace = createAsyncThunk('space/add', (space) => {
-  return server.post(api.spaces, space)
-    .then((res) => {
-      return res.data;
-    });
+export const addSpace = createAsyncThunk('space/add', async (space) => {
+  const res = await server.post(api.spaces, space)
+
+  return res.data;
 });
 
 const spaceSlice = createSlice({

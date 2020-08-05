@@ -34,12 +34,19 @@ class Home extends GeneralComponent {
   constructor(props) {
     super(props);
 
-    this.props.setSpace({});
+    props.setShowDialog(false);
+    props.setSpace({});
   }
 
   componentDidMount() {
     // TEMP
     console.log(this.getSessionItem('users'));
+  }
+
+  componentDidUpdate() {
+    window.onpopstate = (e) => {
+      this.props.setSpace({});
+    }
   }
 
   getSpaceByName = async () => {
@@ -74,7 +81,6 @@ class Home extends GeneralComponent {
   }
 
   render() {
-    // console.log(this.props.space);
     return (
       <div id="home">
         <Sidebar />

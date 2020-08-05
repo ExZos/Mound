@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// TODO: store tab as serialized DOM element
 const rootSlice = createSlice({
   name: 'root',
   initialState: {
@@ -12,7 +11,6 @@ const rootSlice = createSlice({
     },
     setMenuAnchor: (state, action) => {
       state.menuAnchor = action.payload;
-      console.log(action.payload);
     },
     removeMenuAnchorNSetTab: (state, action) => {
       state.menuAnchor = null;
